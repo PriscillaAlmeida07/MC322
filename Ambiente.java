@@ -1,7 +1,7 @@
 public class Ambiente{
 
-    private static int largura;
-    private static int altura;
+    private int largura;
+    private int altura;
 
     public Ambiente() {
         largura = 100;
@@ -15,3 +15,7 @@ public class Ambiente{
             return 0;
     }
 }
+//podemos usar o booleano    
+// public static boolean dentroDosLimites(int x, int y) {
+ //       return (largura >= x && x >= 0) && (altura >= y && y >= 0);
+ // }
