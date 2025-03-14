@@ -1,9 +1,9 @@
-public class Ambiente{
+public class Ambiente{ // Atributos.
 
     private int largura;
     private int altura;
 
-    public Ambiente() {
+    public Ambiente() { // Construtor.
         largura = 100;
         altura = 100;
     }
@@ -11,11 +11,7 @@ public class Ambiente{
     public int dentroDosLimites(int x, int y) {
         if ((largura >= x && x >= 0) && (altura >= y && y >= 0))
             return 1;
-        else
+        else // Não está dentro dos limites.
             return 0;
     }
 }
-//podemos usar o booleano    
-// public static boolean dentroDosLimites(int x, int y) {
- //       return (largura >= x && x >= 0) && (altura >= y && y >= 0);
- // }

@@ -1,21 +1,20 @@
-public class Robo{
+public class Robo{ // Atributos.
     
     private String nome;
     private int posicaoX;
     private int posicaoY;
 
-    public Robo(String nome){
+    public Robo(String nome){ // Construtor.
         this.nome = nome;
         this.posicaoX = 50;
-        this.posicaoY = 50;
+        this.posicaoY = 50; 
     }
 
     public String exibirNome(){
         return nome;
     }
 
-
-    public int[] mover(int deltaX, int deltaY){
+    public int[] mover(int deltaX, int deltaY){ // Retornar a posicao X e Y em um vetor.
         int[] vetor = new int[2];
         this.posicaoX += deltaX;
         this.posicaoY += deltaY;
@@ -26,15 +25,7 @@ public class Robo{
         return vetor;
     }
 
-
     public void exibirPosicao(){
         System.out.println("(" + posicaoX + "," + posicaoY + ")");
     }
 }
-
-
-//this nos metodos mover e exibir nao é necessario
-//precisamos de um getnome
-//podemos printar "o robo 1 esta em 0,0, dgite para qual posicao vc quer mover o robo 1"
-
-//release
