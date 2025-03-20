@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args){
 
-        Ambiente ambiente1;
+        Ambiente ambiente1; 
         Robo robo1;
         ambiente1 = new Ambiente(); // Instânciamento dos objetos e inicialização do ambiente.
 

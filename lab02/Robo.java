@@ -1,6 +1,7 @@
 public class Robo{ // Atributos.
     
     private String nome;
+    private String direcao;
     private int posicaoX;
     private int posicaoY;
 
@@ -27,5 +28,9 @@ public class Robo{ // Atributos.
 
     public void exibirPosicao(){
         System.out.println("(" + posicaoX + "," + posicaoY + ")");
+    }
+
+    public void identificarObstaculo(){ // Lembrar de adicionar o tipo dessa função
+
     }
 }
