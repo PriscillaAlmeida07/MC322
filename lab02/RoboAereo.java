@@ -1,4 +1,4 @@
-public class RoboAereo extends Robo {
+/*public class RoboAereo extends Robo {
     
     private int altitude;
     private int altitudeMaxima;
@@ -15,3 +15,4 @@ public class RoboAereo extends Robo {
 
     }
 }
+*/
