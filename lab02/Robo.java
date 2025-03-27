@@ -26,8 +26,12 @@ public class Robo{ // Atributos.
         return vetor;
     }
 
-    public void getPosicao(){
-        System.out.println("(" + posicaoX + "," + posicaoY + ")"); // RETORNAR AO INVÉS DE PRINTAR
+    public int[] getPosicao(){
+        int[] vetor = new int[2];
+        vetor[0] = posicaoX;
+        vetor[1] = posicaoY;
+
+        return vetor;
     }
 
     public void identificarObstaculo(){ // Lembrar de adicionar o tipo dessa função

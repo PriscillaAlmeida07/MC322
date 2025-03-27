@@ -1,21 +1,27 @@
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args){
 
         Ambiente ambiente1; 
         RoboCavador roboCavador1;
-        RoboFlutuador roboFlutuador1;
+        RoboCriaObstaculo roboCriaObstaculo1;
+       // RoboFlutuador roboFlutuador1;
 
         ambiente1 = new Ambiente(); // Instânciamento dos objetos e inicialização do ambiente.
 
-        Scanner entrada = new Scanner(System.in);
-        System.out.print("Digite o nome do Robô Cavador: ");
-        String nome = entrada.nextLine();
 
-        roboCavador1 = new RoboCavador(nome); // Inicialização do robô.
+        // Inicialização de todos os robôs
+        roboCavador1 = new RoboCavador("Cavador-1");
+        roboCriaObstaculo1 = new RoboCriaObstaculo("CriaObstaculo-1");
 
-        String nome_robo= roboCavador1.exibirNome();
+        // ROBO CAVADOR
+
+        int[] posicao = roboCriaObstaculo1.getPosicao() ;
+        roboCriaObstaculo1.soltarBlocos();
+        ambiente1.adicionarBloco(posicao);
+        ambiente1.getBlocos();
+/* 
+        String nome_robo = roboCavador1.exibirNome();
         System.out.print("O/A " + nome_robo + " esta na posição: ");
         roboCavador1.exibirPosicao();
 
@@ -40,6 +46,7 @@ public class Main {
             roboCavador1.exibirPosicao();
         }
 
-        entrada.close();
+
+        */
     }
 }
