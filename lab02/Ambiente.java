@@ -27,9 +27,9 @@ public class Ambiente{ // Atributos.
         numObstaculos++;
     }
 
-    public void getBlocos(){
-        System.out.println(obstaculos[0][0] + "," + obstaculos[0][1]);
-    }
+    public int[][] getBlocos() {
+        return obstaculos;
+    }    
     
     public int dentroDosLimites(int x, int y) {
         if ((largura >= x && x >= 0) && (comprimento >= y && y >= 0))
