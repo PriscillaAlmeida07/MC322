@@ -15,15 +15,9 @@ public class Robo{ // Atributos.
         return nome;
     }
 
-    public int[] mover(int deltaX, int deltaY){ // Retornar a posicao X e Y em um vetor.
-        int[] vetor = new int[2];
+    public void mover(int deltaX, int deltaY){ 
         this.posicaoX += deltaX;
         this.posicaoY += deltaY;
-
-        vetor[0] = posicaoX;
-        vetor[1] = posicaoY;
-
-        return vetor;
     }
 
     public int[] getPosicao(){
