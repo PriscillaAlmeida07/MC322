@@ -11,7 +11,7 @@ public class Robo{ // Atributos.
         this.posicaoY = 50; 
     }
 
-    public String exibirNome(){
+    public String getNome(){
         return nome;
     }
 
@@ -26,8 +26,8 @@ public class Robo{ // Atributos.
         return vetor;
     }
 
-    public void exibirPosicao(){
-        System.out.println("(" + posicaoX + "," + posicaoY + ")");
+    public void getPosicao(){
+        System.out.println("(" + posicaoX + "," + posicaoY + ")"); // RETORNAR AO INVÉS DE PRINTAR
     }
 
     public void identificarObstaculo(){ // Lembrar de adicionar o tipo dessa função

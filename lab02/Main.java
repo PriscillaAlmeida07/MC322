@@ -5,7 +5,7 @@ public class Main {
 
         Ambiente ambiente1; 
         RoboCavador roboCavador1;
-     //   RoboFlutuador roboFlutuador1;
+        RoboFlutuador roboFlutuador1;
 
         ambiente1 = new Ambiente(); // Instânciamento dos objetos e inicialização do ambiente.
 

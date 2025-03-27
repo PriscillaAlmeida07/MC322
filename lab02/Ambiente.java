@@ -5,6 +5,7 @@ public class Ambiente{ // Atributos.
     private int altura;
     private static int numRobos;
     private Robo[] robosAtivos;
+    private int[2][] obstaculos;
 
     public Ambiente() { // Construtor.
         largura = 100;
@@ -25,5 +26,5 @@ public class Ambiente{ // Atributos.
             return 0;
     }
 
-//verificar a altura depois de cavar/voar
+//verificar a altura depois de cavar/voar 
 }
