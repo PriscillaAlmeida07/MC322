@@ -1,6 +1,6 @@
 public class RoboCavador extends RoboTerrestre { 
 
-    // Robo terrestre que consegue perfurar o solo.
+    // Robô terrestre que consegue perfurar o solo.
     private int profundidade;
     private int profundidadeMaxima;
 

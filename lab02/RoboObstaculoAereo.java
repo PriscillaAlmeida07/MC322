@@ -1,6 +1,6 @@
 public class RoboObstaculoAereo extends RoboAereo {
         
-    // Robo capaz de criar obstáculos posicionando nuvens no céu.
+    // Robô capaz de criar obstáculos posicionando nuvens no céu.
     private int numNuvens;
 
     // Construtor.

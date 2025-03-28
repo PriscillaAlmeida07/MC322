@@ -1,6 +1,6 @@
 public class RoboObstaculoTerrestre extends RoboTerrestre {
     
-    // Robo capaz de criar obstáculos posicionando blocos no solo.
+    // Robô capaz de criar obstáculos posicionando blocos no solo.
     private int numBlocos;
 
     // Construtor.
