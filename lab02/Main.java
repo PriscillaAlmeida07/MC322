@@ -1,4 +1,3 @@
-
 public class Main {
     public static void main(String[] args){
 
@@ -26,12 +25,13 @@ public class Main {
         System.out.print("O " + nomeRobo + " esta atualmente na posição: (" + vetorPosicao[0] + "," + vetorPosicao[1] + ")\n");
 
 
-        // Teste 1: Robo está dentro dos limites e a profundidade perfurada é válida.
+        // Teste 1: Robo está dentro dos limites, com velocidade válida e a profundidade perfurada é válida.
         int deltaX = 50;
         int deltaY = 50;
         int deltaZ = 50;
 
         System.out.print("Teste de movimento: (50,50,50)\n");
+        roboCavador1.setVelocidade(20);
         roboCavador1.mover(deltaX, deltaY);
         roboCavador1.cavar(deltaZ); // Perfuração válida.
         vetorPosicao = roboCavador1.getPosicao();
@@ -48,12 +48,13 @@ public class Main {
             System.out.print("(" + vetorPosicao[0] + "," + vetorPosicao[1] + ")\n");
         }
 
-        // Teste 2: Robo não está dentro dos limites e a profundidade perfurada não é válida.
+        // Teste 2: Robo não está dentro dos limites, velocidade superior a permitida e a profundidade perfurada não é válida.
         deltaX = 1;
         deltaY = 1;
         deltaZ = 51;
 
         System.out.print("Teste de movimento: (1,1,51)\n");
+        roboCavador1.setVelocidade(50);
         roboCavador1.mover(deltaX, deltaY);
         roboCavador1.cavar(deltaZ); // Perfuração inválida.
         vetorPosicao = roboCavador1.getPosicao();
@@ -211,7 +212,7 @@ public class Main {
         // Testes do roboFlutuador1
 
 
-        // Testes do robo */
+        // Testes do robo 
 
 
     

@@ -1,12 +1,13 @@
-public class RoboAereo extends Robo {
-    
+public class RoboAereo extends Robo { 
+
     private int altitude;
     private int altitudeMaxima;
 
-    public RoboAereo(String nome){
+    // Construtor.
+    public RoboAereo(String nome){ 
         super(nome);
-        this.altitudeMaxima = 100;
-        this.altitude = 0;
+        altitudeMaxima = 100;
+        altitude = 0;
     }
 
     public int[] getPosicao(int posicaoX, int posicaoY){ 
@@ -39,6 +40,4 @@ public class RoboAereo extends Robo {
     public void setAltitude(int z){
         altitude += z;
     }
-
-
 }

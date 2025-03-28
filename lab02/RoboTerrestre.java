@@ -1,13 +1,26 @@
 public class RoboTerrestre extends Robo {
 
     private int velocidadeMaxima;
+    private int velocidade;
 
+    // Construtor.
     public RoboTerrestre(String nome){
         super(nome);
-        this.velocidadeMaxima = 10;
+        velocidadeMaxima = 50;
+        velocidade = 0;
     }
 
-    public void mover(){
+    public void setVelocidade(int velocidade){
+        this.velocidade = velocidade;
+    }
 
+    @Override
+    public void mover(int deltaX, int deltaY){
+        if(velocidade < velocidadeMaxima){
+            System.out.println(velocidade + " é um valor válido de velocidade");
+            super.mover(deltaX, deltaY);
+        } else {
+            System.out.println("O robo atingiu a velocidade máxima " + velocidadeMaxima +" e não pode se mover");
+        }
     }
 }

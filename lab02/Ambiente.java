@@ -1,4 +1,4 @@
-public class Ambiente{ // Atributos.
+public class Ambiente{ 
 
     private int largura;
     private int comprimento;
@@ -9,7 +9,8 @@ public class Ambiente{ // Atributos.
     private int[][] obstaculosTerrestres;
     private int[][] obstaculosAereos;
 
-    public Ambiente() { // Construtor.
+    // Construtor.
+    public Ambiente() { 
         largura = 100;
         comprimento = 100;
 

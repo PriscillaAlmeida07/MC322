@@ -1,14 +1,15 @@
-public class Robo{ // Atributos.
-    
+public class Robo{
+
     private String nome;
     private String direcao;
     private int posicaoX;
     private int posicaoY;
 
-    public Robo(String nome){ // Construtor.
+    // Construtor.
+    public Robo(String nome){ 
         this.nome = nome;
-        this.posicaoX = 50;
-        this.posicaoY = 50; 
+        posicaoX = 50;
+        posicaoY = 50; 
     }
 
     public String getNome(){
@@ -16,8 +17,8 @@ public class Robo{ // Atributos.
     }
 
     public void mover(int deltaX, int deltaY){ 
-        this.posicaoX += deltaX;
-        this.posicaoY += deltaY;
+        posicaoX += deltaX;
+        posicaoY += deltaY;
     }
 
     public int[] getPosicao(){

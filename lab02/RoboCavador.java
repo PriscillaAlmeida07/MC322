@@ -1,14 +1,14 @@
-public class RoboCavador extends RoboTerrestre {
-    
-    // Robo terrestre oposto ao robo aereo simples.
+public class RoboCavador extends RoboTerrestre { 
+
+    // Robo terrestre que consegue perfurar o solo.
     private int profundidade;
     private int profundidadeMaxima;
 
-    // Construtor
-    public RoboCavador(String nome){
+    // Construtor.
+    public RoboCavador(String nome){ 
         super(nome);
-        this.profundidadeMaxima = 100;
-        this.profundidade = 0;
+        profundidadeMaxima = 100;
+        profundidade = 0;
     }
 
     // Método que permite a movimentação abaixo do solo.
