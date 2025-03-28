@@ -42,7 +42,7 @@ public class Main {
         }
 
         else { // Se sair do ambiente, volta para a posição inicial.
-            System.out.print("O " + nomeRobo + " tentou sair do ambiente, logo ele permanece na posição: ");
+            System.out.print("O " + nomeRobo + " tentou sair do ambiente, logo ele retornou para a posição: ");
             roboCavador1.mover(-deltaX, -deltaY);
             vetorPosicao = roboCavador1.getPosicao();
             System.out.print("(" + vetorPosicao[0] + "," + vetorPosicao[1] + ")\n");
@@ -64,14 +64,13 @@ public class Main {
         }
 
         else { // Se sair do ambiente, volta para a posição inicial.
-            System.out.print("O " + nomeRobo + " tentou sair do ambiente, logo ele permanece na posição: ");
+            System.out.print("O " + nomeRobo + " tentou sair do ambiente, logo ele retornou para a posição: ");
             roboCavador1.mover(-deltaX, -deltaY);
             vetorPosicao = roboCavador1.getPosicao();
             System.out.print("(" + vetorPosicao[0] + "," + vetorPosicao[1] + ")\n\n");
         }
 
         // Testes do roboObstaculoTerrestre1:
-        int[][] blocoPosicao;
         nomeRobo = roboObstaculoTerrestre1.getNome();
         vetorPosicao = roboObstaculoTerrestre1.getPosicao();
         System.out.print("O " + nomeRobo + " esta atualmente na posição: (" + vetorPosicao[0] + "," + vetorPosicao[1] + ")\n");
@@ -79,8 +78,7 @@ public class Main {
         // Teste 1: Deposito de um bloco em uma posição válida
         roboObstaculoTerrestre1.soltarBlocos();
         ambiente1.adicionarBloco(vetorPosicao);
-        blocoPosicao = ambiente1.getBlocos();
-        System.out.println("Um bloco foi depositado na posição (" + blocoPosicao[0][0] + ", " + blocoPosicao[0][1] + ")");
+        System.out.println("Um bloco foi depositado na posição (" + vetorPosicao[0] + ", " + vetorPosicao[1] + ")");
 
         // Teste 2: Robo está dentro dos limites e se move para uma posição válida sem obstáculos
         deltaX = 20;
@@ -96,7 +94,7 @@ public class Main {
         }
 
         else { // Se sair do ambiente, volta para a posição inicial.
-            System.out.print("O " + nomeRobo + " tentou sair do ambiente ou atingiu um obstáculo, logo ele permanece na posição: ");
+            System.out.print("O " + nomeRobo + " tentou sair do ambiente ou atingiu um obstáculo, logo ele retornou para a posição: ");
             roboObstaculoTerrestre1.mover(-deltaX, -deltaY);
             vetorPosicao = roboObstaculoTerrestre1.getPosicao();
             System.out.print("(" + vetorPosicao[0] + "," + vetorPosicao[1] + ")\n");
@@ -116,7 +114,7 @@ public class Main {
         }
 
         else { // Se sair do ambiente, volta para a posição inicial.
-            System.out.print("O " + nomeRobo + " tentou sair do ambiente ou atingiu um obstáculo, logo ele permanece na posição: ");
+            System.out.print("O " + nomeRobo + " tentou sair do ambiente ou atingiu um obstáculo, logo ele retornou para a posição: ");
             roboObstaculoTerrestre1.mover(-deltaX, -deltaY);
             vetorPosicao = roboObstaculoTerrestre1.getPosicao();
             System.out.print("(" + vetorPosicao[0] + "," + vetorPosicao[1] + ")\n\n");
@@ -147,9 +145,9 @@ public class Main {
         }
 
         else { // Se sair do ambiente, volta para a posição inicial.
-            System.out.print("O " + nomeRobo + " tentou sair do ambiente ou atingiu um obstáculo, logo ele permanece na posição: ");
+            System.out.print("O " + nomeRobo + " tentou sair do ambiente ou atingiu um obstáculo, logo ele retornou para a posição: ");
             roboObstaculoAereo1.mover(-deltaX, -deltaY);
-            roboObstaculoAereo1.descer(deltaZ);
+            roboObstaculoAereo1.setAltitude(-deltaZ);
             vetorPosicao = roboObstaculoAereo1.getPosicao();
             vetorPosicao = roboObstaculoAereo1.getPosicao(vetorPosicao[0], vetorPosicao[1]);
             System.out.print("(" + vetorPosicao[0] + "," + vetorPosicao[1] + "," + vetorPosicao[2] + ")\n");
@@ -160,8 +158,56 @@ public class Main {
         ambiente1.adicionarNuvem(vetorPosicao);
         System.out.println("Uma nuvem foi depositada na posição (" + vetorPosicao[0] + ", " + vetorPosicao[1] +  ", " + vetorPosicao[2] + ")");
 
+        // Teste 3: Robo está dentro dos limites e sobe para uma posição válida sem obstáculos
+        deltaX = 30;
+        deltaY = 30;
+        deltaZ = 65;
 
+        System.out.print("Teste de movimento: (30,30,65)\n");
+        roboObstaculoAereo1.mover(deltaX, deltaY);
+        roboObstaculoAereo1.subir(deltaZ);
+        vetorPosicao = roboObstaculoAereo1.getPosicao();
+        vetorPosicao = roboObstaculoAereo1.getPosicao(vetorPosicao[0], vetorPosicao[1]);
 
+        if ((ambiente1.dentroDosLimites(vetorPosicao[0], vetorPosicao[1]) == 1) && (ambiente1.existeObstaculoAereos(vetorPosicao[0], vetorPosicao[1], vetorPosicao[2]) == 1)){
+            System.out.print("O " + nomeRobo + " esta na nova posição: ");
+            System.out.print("(" + vetorPosicao[0] + "," + vetorPosicao[1] + "," + vetorPosicao[2] + ")\n");
+        }
+
+        else { // Se sair do ambiente, volta para a posição inicial.
+            System.out.print("O " + nomeRobo + " tentou sair do ambiente ou atingiu um obstáculo, logo ele retornou para a posição: ");
+            roboObstaculoAereo1.mover(-deltaX, -deltaY);
+            roboObstaculoAereo1.setAltitude(-deltaZ);
+            vetorPosicao = roboObstaculoAereo1.getPosicao();
+            vetorPosicao = roboObstaculoAereo1.getPosicao(vetorPosicao[0], vetorPosicao[1]);
+            System.out.print("(" + vetorPosicao[0] + "," + vetorPosicao[1] + "," + vetorPosicao[2] + ")\n");
+        }
+
+        // Teste 4: Robo esta dentro dos limites e desce para colidir com a nuvem
+        deltaX = -30;
+        deltaY = -30;
+        deltaZ = 65; // O valor é positivo pois há um metodo distinto para descer
+
+        System.out.print("Teste de movimento: (-30,-30,-65)\n");
+        roboObstaculoAereo1.mover(deltaX, deltaY);
+        roboObstaculoAereo1.descer(deltaZ);
+        vetorPosicao = roboObstaculoAereo1.getPosicao();
+        vetorPosicao = roboObstaculoAereo1.getPosicao(vetorPosicao[0], vetorPosicao[1]);
+
+        if ((ambiente1.dentroDosLimites(vetorPosicao[0], vetorPosicao[1]) == 1) && (ambiente1.existeObstaculoAereos(vetorPosicao[0], vetorPosicao[1], vetorPosicao[2]) == 1)){
+            System.out.print("O " + nomeRobo + " esta na nova posição: ");
+            System.out.print("(" + vetorPosicao[0] + "," + vetorPosicao[1] + "," + vetorPosicao[2] + ")\n");
+        }
+
+        else { // Se sair do ambiente, volta para a posição inicial.
+            System.out.print("O " + nomeRobo + " tentou sair do ambiente ou atingiu um obstáculo, logo ele retornou para a posição: ");
+            roboObstaculoAereo1.mover(-deltaX, -deltaY);
+            roboObstaculoAereo1.setAltitude(deltaZ);
+            vetorPosicao = roboObstaculoAereo1.getPosicao();
+            vetorPosicao = roboObstaculoAereo1.getPosicao(vetorPosicao[0], vetorPosicao[1]);
+            System.out.print("(" + vetorPosicao[0] + "," + vetorPosicao[1] + "," + vetorPosicao[2] + ")\n");
+        }
+        
         // Testes do roboFlutuador1
 
 

@@ -35,10 +35,6 @@ public class Ambiente{ // Atributos.
         obstaculosAereos[numObstaculosAereos] = vetorPosicao;
         numObstaculosAereos++;
     }
-
-    public int[][] getBlocos(){
-        return obstaculosTerrestres;
-    }    
     
     public int dentroDosLimites(int x, int y){
         if ((largura >= x && x >= 0) && (comprimento >= y && y >= 0))

@@ -28,12 +28,16 @@ public class RoboAereo extends Robo {
     }
 
     public void descer(int deltaZ){
-        if ((deltaZ - altitude) < 0){
+        if ((altitude - deltaZ) < 0){
             System.out.println(deltaZ + " é um valor inválido de descida, pois ele passou do chão");
         } else {
             altitude -= deltaZ;
             System.out.println(deltaZ + " é um valor válido de descida, ele está na altitude: " + altitude);
         }
+    }
+
+    public void setAltitude(int z){
+        altitude += z;
     }
 
 
