@@ -14,9 +14,11 @@ public class Ambiente{ // Atributos.
         comprimento = 100;
 
         numObstaculosTerrestres = 0;
+        numObstaculosAereos = 0;
         numRobos = 0;
-        this.robosAtivos = new Robo[10];
-        this.obstaculosTerrestres = new int[100][2];
+        robosAtivos = new Robo[10];
+        obstaculosTerrestres = new int[100][2];
+        obstaculosAereos = new int[100][3];
     }
 
     public void adicionarRobo(Robo robo){
@@ -40,7 +42,7 @@ public class Ambiente{ // Atributos.
             return 0;
     }
 
-    public int existeObstaculo(int x, int y){
+    public int existeObstaculoTerrestres(int x, int y){
         for (int i = 0; i < numObstaculosTerrestres; i++){
             if ((obstaculosTerrestres[i][0] == x) && (obstaculosTerrestres[i][1] == y)){
                 return 0;
@@ -49,5 +51,12 @@ public class Ambiente{ // Atributos.
         return 1; // Caso o robô esteja em uma posição válida
     }
 
-//verificar a altura depois de cavar/voar 
+    public int existeObstaculoAereos(int x, int y, int z){
+        for (int i = 0; i < numObstaculosAereos; i++){
+            if ((obstaculosAereos[i][0] == x) && (obstaculosAereos[i][1] == y) && (obstaculosAereos[i][2] == z)){
+                return 0;
+            }
+        }
+        return 1; // Caso o robô esteja em uma posição válida
+    }
 }
