@@ -31,6 +31,11 @@ public class Ambiente{ // Atributos.
         numObstaculosTerrestres++;
     }
 
+    public void adicionarNuvem(int[] vetorPosicao){
+        obstaculosAereos[numObstaculosAereos] = vetorPosicao;
+        numObstaculosAereos++;
+    }
+
     public int[][] getBlocos(){
         return obstaculosTerrestres;
     }    
