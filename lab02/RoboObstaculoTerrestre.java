@@ -1,10 +1,10 @@
-public class RoboCriaObstaculo extends RoboTerrestre {
+public class RoboObstaculoTerrestre extends RoboTerrestre {
     
     // Robo capaz de criar obstáculos posicionando blocos no ambiente
     private int numBlocos;
 
     // Construtor
-    public RoboCriaObstaculo(String nome){
+    public RoboObstaculoTerrestre(String nome){
         super(nome);
         numBlocos = 5;
     }

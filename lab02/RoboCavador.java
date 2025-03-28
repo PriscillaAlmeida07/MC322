@@ -1,6 +1,6 @@
 public class RoboCavador extends RoboTerrestre {
     
-    // Robo terrestre oposto ao robo aereo simples
+    // Robo terrestre oposto ao robo aereo simples.
     private int profundidade;
     private int profundidadeMaxima;
 
@@ -11,13 +11,13 @@ public class RoboCavador extends RoboTerrestre {
         this.profundidade = 0;
     }
 
-    // Método que permite a movimentação abaixo do solo
+    // Método que permite a movimentação abaixo do solo.
     public void cavar(int deltaZ){
-        if (deltaZ > profundidadeMaxima) {
+        if ((deltaZ + profundidade) > profundidadeMaxima) {
             System.out.println(deltaZ + " é um valor inválido de perfuração, pois a profundidade máxima é: " + profundidadeMaxima);
         } else {
-            System.out.println(deltaZ + " é um valor válido de perfuração, pois a profundidade máxima é: " + profundidadeMaxima);
             profundidade += deltaZ;
+            System.out.println(deltaZ + " é um valor válido de perfuração, ele está na profundidadde: " + profundidade);
         }
     }
 }
