@@ -1,7 +1,13 @@
-/* public class RoboFlutuador extends RoboAereo {
+public class RoboFlutuador extends RoboAereo {
     
-    private 
+    // Robo incapaz de realizar subidas e descidas muito bruscas.
+    private int subidaMaxima;
+    private int descidaMaxima;
 
-    public 
+    // Construtor;
+    public RoboFlutuador(String nome){
+        super(nome);
+        subidaMaxima = 10;
+        descidaMaxima = 5;
+    }
 }
-    */
