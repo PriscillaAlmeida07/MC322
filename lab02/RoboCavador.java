@@ -17,7 +17,7 @@ public class RoboCavador extends RoboTerrestre {
             System.out.println(deltaZ + " é um valor inválido de perfuração, pois a profundidade máxima é: " + profundidadeMaxima);
         } else {
             profundidade += deltaZ;
-            System.out.println(deltaZ + " é um valor válido de perfuração, ele está na profundidadde: " + profundidade);
+            System.out.println(deltaZ + " é um valor válido de perfuração, logo ele perfurou o solo");
         }
     }
 }

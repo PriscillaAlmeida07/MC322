@@ -17,7 +17,6 @@ public class RoboTerrestre extends Robo {
     @Override
     public void mover(int deltaX, int deltaY){
         if(velocidade < velocidadeMaxima){
-            System.out.println(velocidade + " é um valor válido de velocidade");
             super.mover(deltaX, deltaY);
         } else {
             System.out.println("O robo atingiu a velocidade máxima " + velocidadeMaxima +" e não pode se mover");
