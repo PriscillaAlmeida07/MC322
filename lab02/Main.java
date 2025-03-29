@@ -55,14 +55,14 @@ public class Main {
             System.out.print("(" + vetorPosicao[0] + "," + vetorPosicao[1] + ")\n");
         }
 
-        // Teste 2: Robo não está dentro dos limites, velocidade superior a permitida e a profundidade perfurada não é válida.
-        System.out.print("Teste de movimento: (+1,+1,-51)\n");
-        deltaX = 1;
-        deltaY = 1;
+        // Teste 2: Robo está dentro dos limites, velocidade superior a permitida e a profundidade perfurada não é válida.
+        System.out.print("Teste de movimento: (-1,-1,-51)\n");
+        deltaX = -1;
+        deltaY = -1;
         deltaZ = 51;
 
         roboCavador1.setVelocidade(51);
-
+        System.out.println("50 é um valor inválido de velocidade");
         roboCavador1.setDirecao(deltaX, deltaY);
         direcao = roboCavador1.getDirecao();
         System.out.println("O " + nomeRobo + " está tentando ir para o " + direcao);
@@ -89,11 +89,20 @@ public class Main {
         System.out.print("O " + nomeRobo + " esta atualmente na posição: (" + vetorPosicao[0] + "," + vetorPosicao[1] + ")\n");
 
         // Teste 1: Deposito de um bloco em uma posição válida
-        roboObstaculoTerrestre1.soltarBlocos();
-        ambiente1.adicionarBloco(vetorPosicao);
-        System.out.println("Um bloco foi depositado na posição (" + vetorPosicao[0] + "," + vetorPosicao[1] + ")");
+        int bloco = roboObstaculoTerrestre1.soltarBlocos();
+        if (bloco == 1){
+            ambiente1.adicionarBloco(vetorPosicao);
+            System.out.println("Um bloco foi depositado na posição (" + vetorPosicao[0] + "," + vetorPosicao[1] + ")");
+        }
 
-        // Teste 2: Robo está dentro dos limites, com velocidade válida e se move para uma posição válida sem obstáculos
+        // Teste 2: Robo não consegue depositar mais blocos, pois a quantitade foi esgotada.
+        bloco = roboObstaculoTerrestre1.soltarBlocos();
+        if (bloco == 1){
+            ambiente1.adicionarBloco(vetorPosicao);
+            System.out.println("Um bloco foi depositado na posição (" + vetorPosicao[0] + "," + vetorPosicao[1] + ")");
+        }
+
+        // Teste 3: Robo está dentro dos limites, com velocidade válida e se move para uma posição válida sem obstáculos
         System.out.print("Teste de movimento: (+20,+20)\n");
         deltaX = 20;
         deltaY = 20;
@@ -118,7 +127,7 @@ public class Main {
             System.out.print("(" + vetorPosicao[0] + "," + vetorPosicao[1] + ")\n");
         }
 
-        // Teste 3: Robo está dentro dos limites, com velocidade válida e se move para uma posição inválida com obstáculos
+        // Teste 4: Robo está dentro dos limites, com velocidade válida e se move para uma posição inválida com obstáculos
         System.out.print("Teste de movimento: (-20,-20)\n");
         deltaX = -20;
         deltaY = -20;
@@ -178,11 +187,20 @@ public class Main {
         }
 
         // Teste 2: Robo deposita uma nuvem em sua posicao
-        roboObstaculoAereo1.soltarNuvens();
-        ambiente1.adicionarNuvem(vetorPosicao);
-        System.out.println("Uma nuvem foi depositada na posição (" + vetorPosicao[0] + ", " + vetorPosicao[1] +  ", " + vetorPosicao[2] + ")");
+        int nuvem = roboObstaculoAereo1.soltarNuvens();
+        if (nuvem == 1){
+            ambiente1.adicionarNuvem(vetorPosicao);
+            System.out.println("Uma nuvem foi depositada na posição (" + vetorPosicao[0] + ", " + vetorPosicao[1] +  ", " + vetorPosicao[2] + ")");
+        } 
 
-        // Teste 3: Robo está dentro dos limites e sobe para uma posição válida sem obstáculos
+        // Teste 3: Robo não consegue depositar mais nuvens, pois a quantitade foi esgotada.
+        nuvem = roboObstaculoAereo1.soltarNuvens();
+        if (nuvem == 1){
+            ambiente1.adicionarNuvem(vetorPosicao);
+            System.out.println("Uma nuvem foi depositada na posição (" + vetorPosicao[0] + ", " + vetorPosicao[1] +  ", " + vetorPosicao[2] + ")");
+        } 
+
+        // Teste 4: Robo está dentro dos limites e sobe para uma posição válida sem obstáculos
         System.out.print("Teste de movimento: (+30,+30,+65)\n");
         deltaX = 30;
         deltaY = 30;
@@ -209,7 +227,7 @@ public class Main {
             System.out.print("(" + vetorPosicao[0] + "," + vetorPosicao[1] + "," + vetorPosicao[2] + ")\n");
         }
 
-        // Teste 4: Robo esta dentro dos limites e desce para colidir com a nuvem
+        // Teste 5: Robo esta dentro dos limites e desce para colidir com a nuvem
         System.out.print("Teste de movimento: (-30,-30,-65)\n");
         deltaX = -30;
         deltaY = -30;
@@ -268,6 +286,7 @@ public class Main {
             vetorPosicao = roboFlutuador1.getPosicao(vetorPosicao[0], vetorPosicao[1]);
             System.out.print("(" + vetorPosicao[0] + "," + vetorPosicao[1] + "," + vetorPosicao[2] + ")\n");
         }
+        
         // Teste 2: Robo esta dentro dos limites, com velocidade de descida inválida e descerá para uma posição válida sem obstáculos
         System.out.print("Teste de movimento: (-60,-70,-23)\n");
         deltaX = -60;
@@ -289,7 +308,7 @@ public class Main {
         } else { // Se sair do ambiente, volta para a posição inicial.
             System.out.print("O " + nomeRobo + " tentou sair do ambiente ou atingiu um obstáculo, logo ele retornou para a posição: ");
             roboFlutuador1.mover(-deltaX, -deltaY);
-            roboFlutuador1.setAltitude(-deltaZ);
+            roboFlutuador1.setAltitude(deltaZ, "descer");
             vetorPosicao = roboFlutuador1.getPosicao();
             vetorPosicao = roboFlutuador1.getPosicao(vetorPosicao[0], vetorPosicao[1]);
             System.out.print("(" + vetorPosicao[0] + "," + vetorPosicao[1] + "," + vetorPosicao[2] + ")\n");
@@ -316,12 +335,13 @@ public class Main {
         } else { // Se sair do ambiente, volta para a posição inicial.
             System.out.print("O " + nomeRobo + " tentou sair do ambiente ou atingiu um obstáculo, logo ele retornou para a posição: ");
             roboFlutuador1.mover(-deltaX, -deltaY);
-            roboFlutuador1.setAltitude(-deltaZ);
+            roboFlutuador1.setAltitude(deltaZ, "subir");
             vetorPosicao = roboFlutuador1.getPosicao();
             vetorPosicao = roboFlutuador1.getPosicao(vetorPosicao[0], vetorPosicao[1]);
             System.out.print("(" + vetorPosicao[0] + "," + vetorPosicao[1] + "," + vetorPosicao[2] + ")\n");
         }
 
+        
 
     }
 }
