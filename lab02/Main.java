@@ -8,13 +8,15 @@ public class Main {
         RoboCavador roboCavador1 = new RoboCavador("roboCavador1");
         RoboObstaculoTerrestre roboObstaculoTerrestre1 = new RoboObstaculoTerrestre("roboObstaculoTerrestre1");
         RoboObstaculoAereo roboObstaculoAereo1 = new RoboObstaculoAereo("roboObstaculoAereo1");
+        RoboFlutuador roboFlutuador1 = new RoboFlutuador("roboFlutuador1");
 
-        // Adicionando robôs ao ambiente
+        // Adicionando robôs ao ambiente.
         ambiente1.adicionarRobo(roboCavador1);
         ambiente1.adicionarRobo(roboObstaculoTerrestre1);
         ambiente1.adicionarRobo(roboObstaculoAereo1);
+        ambiente1.adicionarRobo(roboFlutuador1);
 
-        // Essas variaveis serão usadas em todos os casos de teste
+        // Essas variaveis serão usadas em todos os casos de teste:
         String nomeRobo;
         String direcao;
         int[] vetorPosicao;

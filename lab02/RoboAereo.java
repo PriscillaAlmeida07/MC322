@@ -10,7 +10,7 @@ public class RoboAereo extends Robo {
         altitudeMaxima = 100;
     }
 
-    // Método que obtém a posição (x,y,z) do robô.
+    // Obtém a posição (x,y,z) do robô.
     public int[] getPosicao(int posicaoX, int posicaoY){ 
         int[] vetor = new int[3];
         vetor[0] = posicaoX;
