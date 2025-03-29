@@ -149,10 +149,10 @@ public class Main {
 
 
         // Teste 1: Robo está dentro dos limites e sobe para uma posição válida sem obstáculos
-        System.out.print("Teste de movimento: (+20,+15,+35)\n");
+        System.out.print("Teste de movimento: (+20,+15,+15)\n");
         deltaX = 20;
         deltaY = 15;
-        deltaZ = 35;
+        deltaZ = 15;
 
         roboObstaculoAereo1.setDirecao(deltaX, deltaY);
         direcao = roboObstaculoAereo1.getDirecao();
@@ -235,8 +235,64 @@ public class Main {
         }
         
         // Testes do roboFlutuador1
+        nomeRobo = roboFlutuador1.getNome();
+        vetorPosicao = roboFlutuador1.getPosicao();
+        vetorPosicao = roboFlutuador1.getPosicao(vetorPosicao[0], vetorPosicao[1]);
+        System.out.print("O " + nomeRobo + " esta atualmente na posição: (" + vetorPosicao[0] + "," + vetorPosicao[1] + "," + vetorPosicao[2] + ")\n");
 
+        // Teste 1: Robo está dentro dos limites, com velocidade de subida válida e sobirá para uma posição válida sem obstáculos
+        System.out.print("Teste de movimento: (+10,+20,+3)\n");
+        deltaX = 10;
+        deltaY = 20;
+        deltaZ = 3;
 
+        roboFlutuador1.setDirecao(deltaX, deltaY);
+        direcao = roboFlutuador1.getDirecao();
+        System.out.println("O " + nomeRobo + " está tentando ir para o " + direcao);
+
+        roboFlutuador1.mover(deltaX, deltaY);
+        roboFlutuador1.subir(deltaZ);
+        vetorPosicao = roboFlutuador1.getPosicao();
+        vetorPosicao = roboFlutuador1.getPosicao(vetorPosicao[0], vetorPosicao[1]);
+
+        if ((ambiente1.dentroDosLimites(vetorPosicao[0], vetorPosicao[1]) == 1) && (ambiente1.existeObstaculoAereos(vetorPosicao[0], vetorPosicao[1], vetorPosicao[2]) == 1)){
+            System.out.print("O " + nomeRobo + " esta atualmente na posição: (" + vetorPosicao[0] + "," + vetorPosicao[1] + "," + vetorPosicao[2] + ")\n");
+        
+        } else { // Se sair do ambiente, volta para a posição inicial.
+            System.out.print("O " + nomeRobo + " tentou sair do ambiente ou atingiu um obstáculo, logo ele retornou para a posição: ");
+            roboFlutuador1.mover(-deltaX, -deltaY);
+            roboFlutuador1.setAltitude(-deltaZ);
+            vetorPosicao = roboFlutuador1.getPosicao();
+            vetorPosicao = roboFlutuador1.getPosicao(vetorPosicao[0], vetorPosicao[1]);
+            System.out.print("(" + vetorPosicao[0] + "," + vetorPosicao[1] + "," + vetorPosicao[2] + ")\n");
+        }
+
+        // Teste 2: Robo está dentro dos limites, com velocidade de subida inválida e sobirá para uma posição inválida com obstáculos
+        System.out.print("Teste de movimento: (+60,+45,+12)\n");
+        deltaX = 60;
+        deltaY = 45;
+        deltaZ = 12;
+
+        roboFlutuador1.setDirecao(deltaX, deltaY);
+        direcao = roboFlutuador1.getDirecao();
+        System.out.println("O " + nomeRobo + " está tentando ir para o " + direcao);
+
+        roboFlutuador1.mover(deltaX, deltaY);
+        roboFlutuador1.subir(deltaZ);
+        vetorPosicao = roboFlutuador1.getPosicao();
+        vetorPosicao = roboFlutuador1.getPosicao(vetorPosicao[0], vetorPosicao[1]);
+
+        if ((ambiente1.dentroDosLimites(vetorPosicao[0], vetorPosicao[1]) == 1) && (ambiente1.existeObstaculoAereos(vetorPosicao[0], vetorPosicao[1], vetorPosicao[2]) == 1)){
+            System.out.print("O " + nomeRobo + " esta atualmente na posição: (" + vetorPosicao[0] + "," + vetorPosicao[1] + "," + vetorPosicao[2] + ")\n");
+        
+        } else { // Se sair do ambiente, volta para a posição inicial.
+            System.out.print("O " + nomeRobo + " tentou sair do ambiente ou atingiu um obstáculo, logo ele retornou para a posição: ");
+            roboFlutuador1.mover(-deltaX, -deltaY);
+            roboFlutuador1.setAltitude(-deltaZ);
+            vetorPosicao = roboFlutuador1.getPosicao();
+            vetorPosicao = roboFlutuador1.getPosicao(vetorPosicao[0], vetorPosicao[1]);
+            System.out.print("(" + vetorPosicao[0] + "," + vetorPosicao[1] + "," + vetorPosicao[2] + ")\n");
+        }
 
     }
 }

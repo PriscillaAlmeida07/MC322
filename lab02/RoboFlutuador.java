@@ -17,7 +17,7 @@ public class RoboFlutuador extends RoboAereo {
         if (deltaZ <= subidaMaxima){
             super.subir(deltaZ);
         } else { // Ele é incapaz de subir o tanto indicado
-            System.out.println("O robo tentou subir mais do que o permitido, ao invéz disso, subirá" + subidaMaxima);
+            System.out.println("O robo tentou subir mais do que o permitido, ao invéz disso, subirá " + subidaMaxima);
             super.subir(subidaMaxima);
         }
     }
@@ -28,7 +28,7 @@ public class RoboFlutuador extends RoboAereo {
         if (deltaZ <= descidaMaxima){
             super.descer(deltaZ);
         } else { // Ele é incapaz de descer o tanto indicado
-            System.out.println("O robo tentou descer mais do que o permitido, ao invéz disso, descerá" + descidaMaxima);
+            System.out.println("O robo tentou descer mais do que o permitido, ao invéz disso, descerá " + descidaMaxima);
             super.descer(descidaMaxima);
         }
     }
