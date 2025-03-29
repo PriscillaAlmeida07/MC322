@@ -25,6 +25,11 @@ public class RoboAereo extends Robo {
         altitude += z;
     }
 
+    // 
+    public int getAltitude(){
+        return altitude;
+    }
+
     // Movimentação para cima no eixo z.
     public void subir(int deltaZ){
         if ((altitude + deltaZ) > 100){

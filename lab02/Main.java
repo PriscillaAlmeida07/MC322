@@ -70,6 +70,8 @@ public class Main {
         roboCavador1.mover(deltaX, deltaY);
         roboCavador1.cavar(deltaZ); // Perfuração inválida.
         vetorPosicao = roboCavador1.getPosicao();
+        int profundidade = roboCavador1.getProfundidade();
+        System.out.print("O robo perfurou " + profundidade + " metros o solo\n");
 
         if ((ambiente1.dentroDosLimites(vetorPosicao[0], vetorPosicao[1]) == 1) && (ambiente1.existeObstaculoTerrestres(vetorPosicao[0], vetorPosicao[1]) == 1)){
             System.out.print("O " + nomeRobo + " esta atualmente na posição: (" + vetorPosicao[0] + "," + vetorPosicao[1] + ")\n\n");
@@ -240,7 +242,7 @@ public class Main {
         vetorPosicao = roboFlutuador1.getPosicao(vetorPosicao[0], vetorPosicao[1]);
         System.out.print("O " + nomeRobo + " esta atualmente na posição: (" + vetorPosicao[0] + "," + vetorPosicao[1] + "," + vetorPosicao[2] + ")\n");
 
-        // Teste 1: Robo está dentro dos limites, com velocidade de subida válida e sobirá para uma posição válida sem obstáculos
+        // Teste 1: Robo está dentro dos limites, com velocidade de subida válida e subirá para uma posição válida sem obstáculos
         System.out.print("Teste de movimento: (+10,+20,+3)\n");
         deltaX = 10;
         deltaY = 20;
@@ -266,11 +268,37 @@ public class Main {
             vetorPosicao = roboFlutuador1.getPosicao(vetorPosicao[0], vetorPosicao[1]);
             System.out.print("(" + vetorPosicao[0] + "," + vetorPosicao[1] + "," + vetorPosicao[2] + ")\n");
         }
+        // Teste 2: Robo esta dentro dos limites, com velocidade de descida inválida e descerá para uma posição válida sem obstáculos
+        System.out.print("Teste de movimento: (-60,-70,-23)\n");
+        deltaX = -60;
+        deltaY = -70;
+        deltaZ = 23;  // O valor é positivo pois há um metodo distinto para descer
 
-        // Teste 2: Robo está dentro dos limites, com velocidade de subida inválida e sobirá para uma posição inválida com obstáculos
-        System.out.print("Teste de movimento: (+60,+45,+12)\n");
-        deltaX = 60;
-        deltaY = 45;
+        roboFlutuador1.setDirecao(deltaX, deltaY);
+        direcao = roboFlutuador1.getDirecao();
+        System.out.println("O " + nomeRobo + " está tentando ir para o " + direcao);
+
+        roboFlutuador1.mover(deltaX, deltaY);
+        roboFlutuador1.descer(deltaZ);
+        vetorPosicao = roboFlutuador1.getPosicao();
+        vetorPosicao = roboFlutuador1.getPosicao(vetorPosicao[0], vetorPosicao[1]);
+
+        if ((ambiente1.dentroDosLimites(vetorPosicao[0], vetorPosicao[1]) == 1) && (ambiente1.existeObstaculoAereos(vetorPosicao[0], vetorPosicao[1], vetorPosicao[2]) == 1)){
+            System.out.print("O " + nomeRobo + " esta atualmente na posição: (" + vetorPosicao[0] + "," + vetorPosicao[1] + "," + vetorPosicao[2] + ")\n");
+        
+        } else { // Se sair do ambiente, volta para a posição inicial.
+            System.out.print("O " + nomeRobo + " tentou sair do ambiente ou atingiu um obstáculo, logo ele retornou para a posição: ");
+            roboFlutuador1.mover(-deltaX, -deltaY);
+            roboFlutuador1.setAltitude(-deltaZ);
+            vetorPosicao = roboFlutuador1.getPosicao();
+            vetorPosicao = roboFlutuador1.getPosicao(vetorPosicao[0], vetorPosicao[1]);
+            System.out.print("(" + vetorPosicao[0] + "," + vetorPosicao[1] + "," + vetorPosicao[2] + ")\n");
+        }
+
+        // Teste 3: Robo está dentro dos limites, com velocidade de subida inválida e subirá para uma posição válida sem obstáculos
+        System.out.print("Teste de movimento: (+10,-5,+12)\n");
+        deltaX = 10;
+        deltaY = -5;
         deltaZ = 12;
 
         roboFlutuador1.setDirecao(deltaX, deltaY);
@@ -293,6 +321,7 @@ public class Main {
             vetorPosicao = roboFlutuador1.getPosicao(vetorPosicao[0], vetorPosicao[1]);
             System.out.print("(" + vetorPosicao[0] + "," + vetorPosicao[1] + "," + vetorPosicao[2] + ")\n");
         }
+
 
     }
 }

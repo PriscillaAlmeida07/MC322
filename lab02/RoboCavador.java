@@ -11,6 +11,9 @@ public class RoboCavador extends RoboTerrestre {
         profundidadeMaxima = 100;
     }
 
+    public int getProfundidade(){
+        return profundidade;
+    }
     // Método que permite a movimentação abaixo do solo.
     public void cavar(int deltaZ){
         if ((deltaZ + profundidade) > profundidadeMaxima){
