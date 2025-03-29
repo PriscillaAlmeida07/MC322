@@ -90,14 +90,14 @@ public class Main {
 
         // Teste 1: Deposito de um bloco em uma posição válida
         int bloco = roboObstaculoTerrestre1.soltarBlocos();
-        if (bloco == 1){
+        if (bloco == 1 && (ambiente1.existeObstaculoTerrestres(vetorPosicao[0], vetorPosicao[1]) == 1)){
             ambiente1.adicionarBloco(vetorPosicao);
             System.out.println("Um bloco foi depositado na posição (" + vetorPosicao[0] + "," + vetorPosicao[1] + ")");
         }
 
         // Teste 2: Robo não consegue depositar mais blocos, pois a quantitade foi esgotada.
         bloco = roboObstaculoTerrestre1.soltarBlocos();
-        if (bloco == 1){
+        if (bloco == 1 && (ambiente1.existeObstaculoTerrestres(vetorPosicao[0], vetorPosicao[1]) == 1)){
             ambiente1.adicionarBloco(vetorPosicao);
             System.out.println("Um bloco foi depositado na posição (" + vetorPosicao[0] + "," + vetorPosicao[1] + ")");
         }
@@ -188,14 +188,14 @@ public class Main {
 
         // Teste 2: Robo deposita uma nuvem em sua posicao
         int nuvem = roboObstaculoAereo1.soltarNuvens();
-        if (nuvem == 1){
+        if (nuvem == 1 && (ambiente1.existeObstaculoAereos(vetorPosicao[0], vetorPosicao[1], vetorPosicao[2]) == 1)){
             ambiente1.adicionarNuvem(vetorPosicao);
             System.out.println("Uma nuvem foi depositada na posição (" + vetorPosicao[0] + ", " + vetorPosicao[1] +  ", " + vetorPosicao[2] + ")");
         } 
 
         // Teste 3: Robo não consegue depositar mais nuvens, pois a quantitade foi esgotada.
         nuvem = roboObstaculoAereo1.soltarNuvens();
-        if (nuvem == 1){
+        if (nuvem == 1 && (ambiente1.existeObstaculoAereos(vetorPosicao[0], vetorPosicao[1], vetorPosicao[2]) == 1)){
             ambiente1.adicionarNuvem(vetorPosicao);
             System.out.println("Uma nuvem foi depositada na posição (" + vetorPosicao[0] + ", " + vetorPosicao[1] +  ", " + vetorPosicao[2] + ")");
         } 
