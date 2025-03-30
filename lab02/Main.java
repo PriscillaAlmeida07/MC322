@@ -45,17 +45,7 @@ public class Main {
         vetorPosicao = roboCavador1.getPosicao();
         vetorPosicao = roboCavador1.getPosicao(vetorPosicao[0], vetorPosicao[1]);
 
-        if ((ambiente1.dentroDosLimites(vetorPosicao[0], vetorPosicao[1]) == 1) && (ambiente1.existeObstaculoTerrestres(vetorPosicao[0], vetorPosicao[1]) == 1)){
-            System.out.print("O " + nomeRobo + " esta atualmente na posição: (" + vetorPosicao[0] + "," + vetorPosicao[1] + "," + vetorPosicao[2] + ")\n\n");
-        
-        } else { // Se sair do ambiente, volta para a posição inicial.
-            System.out.print("O " + nomeRobo + " tentou sair do ambiente, logo ele retornou para a posição: ");
-            roboCavador1.mover(-deltaX, -deltaY);
-            vetorPosicao = roboCavador1.getPosicao();
-            vetorPosicao = roboCavador1.getPosicao(vetorPosicao[0], vetorPosicao[1]);
-            System.out.print("(" + vetorPosicao[0] + "," + vetorPosicao[1] + "," + vetorPosicao[2] + ")\n\n\n\n");
-        }
-
+        validarMovimentoCavador(ambiente1, vetorPosicao, nomeRobo, roboCavador1, deltaX, deltaY);
         // Teste 2: Robo está dentro dos limites, velocidade superior a permitida e a profundidade perfurada não é válida.
         System.out.print("Teste de movimento: (-1,-1,-51)\n\n");
         deltaX = -1;
@@ -74,16 +64,7 @@ public class Main {
         vetorPosicao = roboCavador1.getPosicao();
         vetorPosicao = roboCavador1.getPosicao(vetorPosicao[0], vetorPosicao[1]);
 
-        if ((ambiente1.dentroDosLimites(vetorPosicao[0], vetorPosicao[1]) == 1) && (ambiente1.existeObstaculoTerrestres(vetorPosicao[0], vetorPosicao[1]) == 1)){
-            System.out.print("O " + nomeRobo + " esta atualmente na posição: (" + vetorPosicao[0] + "," + vetorPosicao[1] + "," + vetorPosicao[2] + ")\n\n\n\n");
-
-        } else { // Se sair do ambiente, volta para a posição inicial.
-            System.out.print("O " + nomeRobo + " tentou sair do ambiente, logo ele retornou para a posição: ");
-            roboCavador1.mover(-deltaX, -deltaY);
-            vetorPosicao = roboCavador1.getPosicao();
-            vetorPosicao = roboCavador1.getPosicao(vetorPosicao[0], vetorPosicao[1]);
-            System.out.print("(" + vetorPosicao[0] + "," + vetorPosicao[1] + "," + vetorPosicao[2] + ")\n\n\n\n");
-        }
+        validarMovimentoCavador(ambiente1, vetorPosicao, nomeRobo, roboCavador1, deltaX, deltaY);
 
         // Testes do roboObstaculoTerrestre1:
         nomeRobo = roboObstaculoTerrestre1.getNome();
@@ -340,6 +321,19 @@ public class Main {
             roboFlutuador1.setAltitude(deltaZ, "subir");
             vetorPosicao = roboFlutuador1.getPosicao();
             vetorPosicao = roboFlutuador1.getPosicao(vetorPosicao[0], vetorPosicao[1]);
+            System.out.print("(" + vetorPosicao[0] + "," + vetorPosicao[1] + "," + vetorPosicao[2] + ")\n\n");
+        }
+    }
+    
+    private static void validarMovimentoCavador(Ambiente ambiente1, int vetorPosicao[], String nomeRobo, RoboCavador robo, int deltaX, int deltaY){
+        if ((ambiente1.dentroDosLimites(vetorPosicao[0], vetorPosicao[1]) == 1) && (ambiente1.existeObstaculoTerrestres(vetorPosicao[0], vetorPosicao[1]) == 1)){
+            System.out.print("O " + nomeRobo + " esta atualmente na posição: (" + vetorPosicao[0] + "," + vetorPosicao[1] + "," + vetorPosicao[2] + ")\n\n");
+        
+        } else { // Se sair do ambiente, volta para a posição inicial.
+            System.out.print("O " + nomeRobo + " tentou sair do ambiente, logo ele retornou para a posição: ");
+            robo.mover(-deltaX, -deltaY);
+            vetorPosicao = robo.getPosicao();
+            vetorPosicao = robo.getPosicao(vetorPosicao[0], vetorPosicao[1]);
             System.out.print("(" + vetorPosicao[0] + "," + vetorPosicao[1] + "," + vetorPosicao[2] + ")\n\n");
         }
     }
