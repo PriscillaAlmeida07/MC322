@@ -25,7 +25,7 @@ public class RoboAereo extends Robo {
         altitude += z;
     }
 
-    // 
+    // Obtém a altitude do robô.
     public int getAltitude(){
         return altitude;
     }

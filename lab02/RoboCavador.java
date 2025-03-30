@@ -11,9 +11,21 @@ public class RoboCavador extends RoboTerrestre {
         profundidadeMaxima = 100;
     }
 
+    // Obtém a profundidade do robô.
     public int getProfundidade(){
         return profundidade;
     }
+
+    // Obtém a posição (x,y,z) do robô.
+    public int[] getPosicao(int posicaoX, int posicaoY){ 
+        int[] vetor = new int[3];
+        vetor[0] = posicaoX;
+        vetor[1] = posicaoY;
+        vetor[2] = -profundidade;
+
+        return vetor;
+    }
+
     // Método que permite a movimentação abaixo do solo.
     public void cavar(int deltaZ){
         if ((deltaZ + profundidade) > profundidadeMaxima){
