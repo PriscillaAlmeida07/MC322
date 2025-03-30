@@ -33,18 +33,18 @@ public class RoboFlutuador extends RoboAereo {
         }
     }
 
-    // Conserta a altitude do robô casop ele tenha tentado ir para uma posição inadequada.
+    // Conserta a altitude do robô caso ele tenha tentado ir para uma posição inadequada.
     public void setAltitude(int deltaZ, String caso){
         if (caso == "subir"){
             if (deltaZ <= subidaMaxima){
-                super.setAltitude(-deltaZ);
+                super.setAltitude(deltaZ);
             } else { // Ele é incapaz de subir o tanto indicado
-                super.setAltitude(-subidaMaxima);
+                super.setAltitude(subidaMaxima);
             }
             
         } else { // caso == "descer"
             if (deltaZ <= descidaMaxima){
-                super.setAltitude(deltaZ);
+                super.setAltitude(-deltaZ);
             } else { // Ele é incapaz de descer o tanto indicado
                 super.setAltitude(-descidaMaxima);
             } 

@@ -22,7 +22,7 @@ public class RoboAereo extends Robo {
 
     // Define a altitude atual do robô.
     public void setAltitude(int z){
-        altitude += z;
+        altitude -= z;
     }
 
     // Obtém a altitude do robô.

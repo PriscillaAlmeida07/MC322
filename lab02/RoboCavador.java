@@ -35,4 +35,9 @@ public class RoboCavador extends RoboTerrestre {
             System.out.println(deltaZ + " é um valor válido de perfuração, logo ele perfurou o solo");
         }
     }
+
+    //Redefine a profundidade, pois ele nao vai conseguir perfurar pois está em uma posicao invalida
+    public void setProfundidade(int deltaZ){
+        profundidade -= deltaZ;
+    }
 }
