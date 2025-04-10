@@ -1,3 +1,6 @@
+
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args){
 
@@ -21,7 +24,30 @@ public class Main {
         String direcao;
         int[] vetorPosicao;
         
+        Scanner entrada = new Scanner(System.in);
+        System.out.print("Selecione alguma das ações abaixo: \n" +
+        "[1] - Movimentar Robos \n" +
+        "[2] - Exibir posição dos Robos \n" +
+        "[3] - Exibir posição dos Obstáculos  \n" +
+        "[4] - Utilizar sensores \n ");
 
+        int opcao = entrada.nextInt();
+        switch (opcao) {
+            case 1:
+                movimentar();
+                break;
+            case 2:
+                mostrarRobos();
+                break; 
+            case 3:
+                mostrarObstaculos();
+                break;  
+            case 4:
+                sensores();
+                break;     
+            default:
+                break;
+        }
 
     /*  
         // Testes do roboCavador1:
