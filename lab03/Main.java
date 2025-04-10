@@ -21,7 +21,9 @@ public class Main {
         String direcao;
         int[] vetorPosicao;
         
-        
+
+
+    /*  
         // Testes do roboCavador1:
         nomeRobo = roboCavador1.getNome();
         vetorPosicao = roboCavador1.getPosicao();
@@ -329,5 +331,7 @@ public class Main {
             ambiente1.adicionarNuvem(vetorPosicao);
             System.out.println("Uma nuvem foi depositada na posição (" + vetorPosicao[0] + ", " + vetorPosicao[1] +  ", " + vetorPosicao[2] + ")");
         } 
+             */  
     }
+        
 }

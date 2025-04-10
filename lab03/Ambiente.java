@@ -1,44 +1,28 @@
+import java.util.ArrayList;
+
 public class Ambiente { 
 
     private int largura;
     private int comprimento;
-
-    private static int numRobos;
-    private Robo[] robosAtivos;
-
-    private static int numObstaculosTerrestres;
-    private int[][] obstaculosTerrestres;
-
-    private static int numObstaculosAereos;
-    private int[][] obstaculosAereos;
+    private ArrayList<Robo> robosAtivos;
+    private ArrayList<Obstaculo> obstaculosAtivos;
 
     // Construtor.
     public Ambiente() { 
         largura = 100;
         comprimento = 100;
-
-        numRobos = 0; numObstaculosTerrestres = 0; numObstaculosAereos = 0;
-        robosAtivos = new Robo[10];
-        obstaculosTerrestres = new int[20][2];
-        obstaculosAereos = new int[20][3];
+        robosAtivos = new ArrayList<>();
+        obstaculosAtivos = new ArrayList<>();
     }
 
     // Registra um novo robô.
     public void adicionarRobo(Robo robo){
-        robosAtivos[numRobos] = robo;
-        numRobos++;
+        robosAtivos.add(robo);
     }
 
-    // Registra um novo obstáculo terrestre.
-    public void adicionarBloco(int[] vetorPosicao){
-        obstaculosTerrestres[numObstaculosTerrestres] = vetorPosicao;
-        numObstaculosTerrestres++;
-    }
-
-    // Registra um novo obstáculo aéreo
-    public void adicionarNuvem(int[] vetorPosicao){
-        obstaculosAereos[numObstaculosAereos] = vetorPosicao;
-        numObstaculosAereos++;
+    // Registra um novo obstáculo.
+    public void adicionarObstaculo(Obstaculo obstaculo){
+        obstaculosAtivos.add(obstaculo);
     }
     
     // Confere se um robô está dentro dos limites do ambiente
@@ -49,6 +33,7 @@ public class Ambiente {
             return 0;
     }
 
+/* 
     // Confere se um robô irá bater em um obstáculo terrestre.
     public int existeObstaculoTerrestres(int x, int y){
         for (int i = 0; i < numObstaculosTerrestres; i++){
@@ -68,4 +53,5 @@ public class Ambiente {
         }
         return 1; // Caso o robô esteja em uma posição válida
     }
+        */
 }
