@@ -25,29 +25,42 @@ public class Main {
         int[] vetorPosicao;
         
         Scanner entrada = new Scanner(System.in);
-        System.out.print("Selecione alguma das ações abaixo: \n" +
-        "[1] - Movimentar Robos \n" +
-        "[2] - Exibir posição dos Robos \n" +
-        "[3] - Exibir posição dos Obstáculos  \n" +
-        "[4] - Utilizar sensores \n ");
+        boolean continuar = true;
 
-        int opcao = entrada.nextInt();
-        switch (opcao) {
-            case 1:
-                movimentar();
-                break;
-            case 2:
-                mostrarRobos();
-                break; 
-            case 3:
-                mostrarObstaculos();
-                break;  
-            case 4:
-                sensores();
-                break;     
-            default:
-                break;
+        while(continuar){
+            System.out.print("Selecione alguma das ações abaixo: \n" +
+            "[1] - Movimentar Robos \n" +
+            "[2] - Exibir posição dos Robos \n" +
+            "[3] - Exibir posição dos Obstáculos  \n" +
+            "[4] - Utilizar sensores  \n" +
+            "[0] - Sair do programa \n\n ");
+    
+            int opcao = entrada.nextInt();
+
+            switch (opcao) {
+                case 1:
+                    movimentar(entrada);
+                    break;
+                case 2:
+                    mostrarRobos();
+                    break; 
+                case 3:
+                    mostrarObstaculos();
+                    break;  
+                case 4:
+                    sensores();
+                    break; 
+                case 0:
+                System.out.println("Saindo...");
+                continuar = false;
+                    break;    
+                default:
+                System.out.println("Valor inválido, digite novamente\n");
+                    break;
+            }
         }
+        entrada.close();
+
 
     /*  
         // Testes do roboCavador1:
@@ -358,6 +371,50 @@ public class Main {
             System.out.println("Uma nuvem foi depositada na posição (" + vetorPosicao[0] + ", " + vetorPosicao[1] +  ", " + vetorPosicao[2] + ")");
         } 
              */  
+    }
+
+    private static void movimentar(Scanner entrada){
+        boolean continuar = true;
+
+        while(continuar){
+            System.out.print("Selecione alguma das ações abaixo: \n" +
+            "[1] - Movimentar o Robo Cavador \n" +
+            "[2] - Movimentar o Robo Obstáculo Terrestre \n" +
+            "[3] - Movimentar o Robo Flutuador  \n" +
+            "[4] - Movimentar o Robo Obstáculo Aéreo  \n" +
+            "[0] - Voltar \n\n ");
+    
+            int opcao = entrada.nextInt();
+
+            switch (opcao) {
+                case 1:
+                    break;
+                case 2:
+                    break; 
+                case 3:
+                    break;  
+                case 4:
+                    break; 
+                case 0:
+                continuar = false;
+                    break;    
+                default:
+                System.out.println("Valor inválido, digite novamente\n");
+                    break;
+            }
+        }
+    }
+
+    private static void mostrarRobos(){
+        
+    }
+
+    private static void mostrarObstaculos(){
+        
+    }
+
+    private static void sensores(){
+        
     }
         
 }
