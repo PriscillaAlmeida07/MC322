@@ -39,7 +39,7 @@ public class Main {
 
             switch (opcao) {
                 case 1:
-                    movimentar(entrada);
+                    movimentar(entrada, roboCavador1, roboObstaculoTerrestre1, roboObstaculoAereo1, roboFlutuador1);
                     break;
                 case 2:
                     mostrarRobos();
@@ -373,7 +373,7 @@ public class Main {
              */  
     }
 
-    private static void movimentar(Scanner entrada){
+    private static void movimentar(Scanner entrada, RoboCavador roboCavador1, RoboObstaculoTerrestre roboObstaculoTerrestre1, RoboObstaculoAereo roboObstaculoAereo1, RoboFlutuador roboFlutuador1){
         boolean continuar = true;
 
         while(continuar){
@@ -388,12 +388,16 @@ public class Main {
 
             switch (opcao) {
                 case 1:
+                    movimentarCavador(entrada, roboCavador1);
                     break;
                 case 2:
+                    movimentarObstaculoTerrestre(entrada, roboObstaculoTerrestre1);
                     break; 
                 case 3:
+                    movimentarFlutuador(entrada, roboFlutuador1);
                     break;  
                 case 4:
+                    movimentarObstaculoAereo(entrada, roboObstaculoAereo1);
                     break; 
                 case 0:
                 continuar = false;
@@ -403,6 +407,93 @@ public class Main {
                     break;
             }
         }
+    }
+
+    private static void movimentarCavador(Scanner entrada, RoboCavador roboCavador1){
+
+        System.out.print("Informe quantos metros o robo Cavador irá mover:\n" +"Na direcao x:");
+        int deltaX = entrada.nextInt();
+        System.out.print("Na direcao y:");
+        int deltaY = entrada.nextInt();
+        System.out.print("Informe a velocidade:");
+        int velocidade = entrada.nextInt();
+        roboCavador1.setDirecao(deltaX, deltaY);
+        roboCavador1.setVelocidade(velocidade);
+        roboCavador1.mover(deltaX, deltaY);
+                
+        System.out.print("Informe quantos metros o robo cavará:");
+        int deltaZ = entrada.nextInt();
+        roboCavador1.cavar(deltaZ);
+        System.out.println("\n");
+        
+    }
+    private static void movimentarObstaculoTerrestre(Scanner entrada, RoboObstaculoTerrestre roboObstaculoTerrestre1){
+
+        System.out.print("Informe quantos metros o robo Obstaculo Terrestre irá mover:\n" +"Na direcao x:");
+        int deltaX = entrada.nextInt();
+        System.out.print("Na direcao y:");
+        int deltaY = entrada.nextInt();
+        System.out.print("Informe a velocidade:");
+        int velocidade = entrada.nextInt();
+        roboObstaculoTerrestre1.setDirecao(deltaX, deltaY);
+        roboObstaculoTerrestre1.setVelocidade(velocidade);
+        roboObstaculoTerrestre1.mover(deltaX, deltaY);
+
+        System.out.print("O robo soltará um bloco na posição?\n Se sim, digite 1, se não digite 0");
+        int condicao = entrada.nextInt();
+        if(condicao == 1){
+            roboObstaculoTerrestre1.soltarBlocos();
+        }
+        System.out.println("\n");
+    }
+
+    private static void movimentarObstaculoAereo(Scanner entrada, RoboObstaculoAereo roboObstaculoAereo1){
+        System.out.print("Informe quantos metros o robo Obstaculo Aereo irá mover:\n" +"Na direcao x:");
+        int deltaX = entrada.nextInt();
+        System.out.print("Na direcao y:");
+        int deltaY = entrada.nextInt();
+
+        System.out.print("O robo subirá (digite 1) ou descerá (digite 2):");
+        int voo = entrada.nextInt();
+        System.out.print("Quantos metros:");
+        int deltaZ = entrada.nextInt();
+        if(voo == 1){
+            roboObstaculoAereo1.subir(deltaZ);
+        }
+        else if(voo ==2){
+            roboObstaculoAereo1.descer(deltaZ);
+        }
+        roboObstaculoAereo1.setDirecao(deltaX, deltaY);
+        roboObstaculoAereo1.mover(deltaX, deltaY);
+
+        System.out.print("O robo soltará uma nuvem na posição?\n Se sim, digite 1, se não digite 0");
+        int condicao = entrada.nextInt();
+        if(condicao == 1){
+            roboObstaculoAereo1.soltarNuvens();
+        }
+        System.out.println("\n");
+    }
+
+
+    private static void movimentarFlutuador(Scanner entrada, RoboFlutuador roboFlutuador1){
+        System.out.print("Informe quantos metros o robo Flutuador irá mover:\n" +"Na direcao x:");
+        int deltaX = entrada.nextInt();
+        System.out.print("Na direcao y:");
+        int deltaY = entrada.nextInt();
+
+        System.out.print("O robo subirá (digite 1) ou descerá (digite 2):");
+        int voo = entrada.nextInt();
+        System.out.print("Quantos metros:");
+        int deltaZ = entrada.nextInt();
+        if(voo == 1){
+            roboFlutuador1.subir(deltaZ);
+        }
+        else if(voo ==2){
+            roboFlutuador1.descer(deltaZ);
+        }
+        roboFlutuador1.setDirecao(deltaX, deltaY);
+        roboFlutuador1.mover(deltaX, deltaY);
+        System.out.println("\n");
     }
 
     private static void mostrarRobos(){

@@ -64,5 +64,6 @@ public class Robo{
     public void mover(int deltaX, int deltaY){ 
         posicaoX += deltaX;
         posicaoY += deltaY;
+        System.out.println("O robo movimentou-se");
     }
 }
