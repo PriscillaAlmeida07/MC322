@@ -53,6 +53,17 @@ public class Ambiente {
         }
     }
 
+    public void getTodosObstaculos(){
+        TipoObstaculo tipo;
+        int[] posicao;
+        for(int i = 0; i < obstaculosAtivos.size(); i++){
+            tipo = obstaculosAtivos.get(i).getTipo();
+            posicao = obstaculosAtivos.get(i).getPosicao();
+            System.out.print("O obstaculo" + " esta na posição: (" + posicao[0] + "," + posicao[1] + "," + posicao[2] +
+            ")" + "\n");
+        }
+    }
+
 /* 
     // Confere se um robô irá bater em um obstáculo terrestre.
     public int existeObstaculoTerrestres(int x, int y){

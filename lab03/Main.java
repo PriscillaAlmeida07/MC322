@@ -45,7 +45,7 @@ public class Main {
                     mostrarRobos(ambiente1);
                     break; 
                 case 3:
-                    mostrarObstaculos();
+                    mostrarObstaculos(ambiente1);
                     break;  
                 case 4:
                     sensores();
@@ -500,8 +500,8 @@ public class Main {
         ambiente1.getTodosRobos();
     }
 
-    private static void mostrarObstaculos(){
-        
+    private static void mostrarObstaculos(Ambiente ambiente1){
+        ambiente1.getTodosObstaculos();
     }
 
     private static void sensores(){
