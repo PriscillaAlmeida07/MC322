@@ -17,13 +17,15 @@ public class RoboCavador extends RoboTerrestre {
     }
 
     // Obtém a posição (x,y,z) do robô.
-    public int[] getPosicao(int posicaoX, int posicaoY){ 
-        int[] vetor = new int[3];
-        vetor[0] = posicaoX;
-        vetor[1] = posicaoY;
-        vetor[2] = -profundidade;
+    public int[] getPosicao(){ 
+        int[] vetor1 = new int[2];
+        int[] vetor2 = new int[3];
+        vetor1 = super.getPosicao();
+        vetor2[0] = vetor1[0];
+        vetor2[1] = vetor1[1];
+        vetor2[2] = -profundidade;
 
-        return vetor;
+        return vetor2;
     }
 
     // Método que permite a movimentação abaixo do solo.
@@ -32,7 +34,7 @@ public class RoboCavador extends RoboTerrestre {
             System.out.println(deltaZ + " é um valor inválido de perfuração, pois a profundidade máxima é: " + profundidadeMaxima);
         } else { // Valor válido de perfuração
             profundidade += deltaZ;
-            System.out.println(deltaZ + " é um valor válido de perfuração, logo ele perfurou o solo");
+            System.out.println(deltaZ + " é um valor válido de perfuração");
         }
     }
 

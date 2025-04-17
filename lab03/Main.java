@@ -30,28 +30,24 @@ public class Main {
         ambiente1.adicionarRobo(roboObstaculoTerrestre1);
         ambiente1.adicionarRobo(roboObstaculoAereo1);
         ambiente1.adicionarRobo(roboFlutuador1);
-
-        // Essas variaveis serão usadas em todos os casos de teste:
-        String nomeRobo;
-        String direcao;
-        int[] vetorPosicao;
         
+        // Variáveis de funcionamento do sistema.
         Scanner entrada = new Scanner(System.in);
         boolean continuar = true;
 
+        // Loop de funcionamento do sistema:
         while(continuar){
-            System.out.print("Selecione alguma das ações abaixo: \n" +
-            "[1] - Movimentar Robos \n" +
-            "[2] - Exibir posição dos Robos \n" +
-            "[3] - Exibir posição dos Obstáculos  \n" +
-            "[4] - Utilizar sensores  \n" +
-            "[0] - Sair do programa \n\n ");
+            System.out.println("Selecione alguma das ações abaixo:\n" +
+            "[1] - Movimentar Robos\n" +
+            "[2] - Exibir posição dos Robos\n" +
+            "[3] - Exibir posição dos Obstáculos\n" +
+            "[4] - Utilizar sensores\n" +
+            "[0] - Sair do programa\n");
     
             int opcao = entrada.nextInt();
-
             switch (opcao) {
                 case 1:
-                    movimentar(entrada, roboCavador1, roboObstaculoTerrestre1, roboObstaculoAereo1, roboFlutuador1);
+                    movimentar(entrada, ambiente1, roboCavador1, roboObstaculoTerrestre1, roboObstaculoAereo1, roboFlutuador1);
                     break;
                 case 2:
                     mostrarRobos(ambiente1);
@@ -75,70 +71,6 @@ public class Main {
 
 
     /*  
-        // Testes do roboCavador1:
-        nomeRobo = roboCavador1.getNome();
-        vetorPosicao = roboCavador1.getPosicao();
-        System.out.print("O " + nomeRobo + " esta atualmente na posição: (" + vetorPosicao[0] + "," + vetorPosicao[1] + ",0)\n\n");
-
-        // Teste 1: Robo está dentro dos limites, com velocidade válida e a profundidade perfurada é válida.
-        System.out.print("Teste de movimento: (+50,+50,-50)\n\n");
-        int deltaX = 50; 
-        int deltaY = 50; 
-        int deltaZ = 50;
-
-        roboCavador1.setVelocidade(20);
-        System.out.println("20 é um valor válido de velocidade");
-
-        roboCavador1.setDirecao(deltaX, deltaY);
-        direcao = roboCavador1.getDirecao();
-        System.out.println("O " + nomeRobo + " está tentando ir para o " + direcao);
-        
-        roboCavador1.mover(deltaX, deltaY);
-        roboCavador1.cavar(deltaZ); // Perfuração válida
-        vetorPosicao = roboCavador1.getPosicao();
-        vetorPosicao = roboCavador1.getPosicao(vetorPosicao[0], vetorPosicao[1]);
-
-        validarMovimentoCavador(ambiente1, vetorPosicao, nomeRobo, roboCavador1, deltaX, deltaY, deltaZ);
-
-        // Teste 2: Robo está dentro dos limites, velocidade superior a permitida e a profundidade perfurada não é válida.
-        System.out.print("Teste de movimento: (-1,-1,-51)\n\n");
-        deltaX = -1;
-        deltaY = -1;
-        deltaZ = 51;
-
-        roboCavador1.setVelocidade(51);
-        System.out.println("50 é um valor inválido de velocidade");
-
-        roboCavador1.setDirecao(deltaX, deltaY);
-        direcao = roboCavador1.getDirecao();
-        System.out.println("O " + nomeRobo + " está tentando ir para o " + direcao);
-
-        roboCavador1.mover(deltaX, deltaY);
-        roboCavador1.cavar(deltaZ); // Perfuração inválida.
-        vetorPosicao = roboCavador1.getPosicao();
-        vetorPosicao = roboCavador1.getPosicao(vetorPosicao[0], vetorPosicao[1]);
-
-        validarMovimentoCavador(ambiente1, vetorPosicao, nomeRobo, roboCavador1, deltaX, deltaY, deltaZ);
-    
-        // Teste 3: Robo não está dentro dos limites, velocidade válida e a profundidade perfurada é válida.
-        System.out.print("Teste de movimento: (1,1,-30)\n\n");
-        deltaX = 1;
-        deltaY = 1;
-        deltaZ = 30;
-
-        roboCavador1.setVelocidade(25);
-        System.out.println("25 é um valor válido de velocidade");
-
-        roboCavador1.setDirecao(deltaX, deltaY);
-        direcao = roboCavador1.getDirecao();
-        System.out.println("O " + nomeRobo + " está tentando ir para o " + direcao);
-
-        roboCavador1.mover(deltaX, deltaY);
-        roboCavador1.cavar(deltaZ); // Perfuração inválida.
-        vetorPosicao = roboCavador1.getPosicao();
-        vetorPosicao = roboCavador1.getPosicao(vetorPosicao[0], vetorPosicao[1]);
-
-        validarMovimentoCavador(ambiente1, vetorPosicao, nomeRobo, roboCavador1, deltaX, deltaY, deltaZ);
 
         // Testes do roboObstaculoTerrestre1:
         nomeRobo = roboObstaculoTerrestre1.getNome();
@@ -310,20 +242,7 @@ public class Main {
         validarMovimentoFlutuador(ambiente1, vetorPosicao, nomeRobo, roboFlutuador1, deltaX, deltaY, deltaZ, "subir");
     }
 
-    // Esse metodo verifica se o roboCavador1 esta dentro dos limites, se não estiver move o robo para a ultima posição que ele estava
-    private static void validarMovimentoCavador(Ambiente ambiente1, int vetorPosicao[], String nomeRobo, RoboCavador robo, int deltaX, int deltaY, int deltaZ){
-        if ((ambiente1.dentroDosLimites(vetorPosicao[0], vetorPosicao[1]) == 1) && (ambiente1.existeObstaculoTerrestres(vetorPosicao[0], vetorPosicao[1]) == 1)){
-            System.out.print("O " + nomeRobo + " esta atualmente na posição: (" + vetorPosicao[0] + "," + vetorPosicao[1] + "," + vetorPosicao[2] + ")\n\n");
-        
-        } else { // Se sair do ambiente, volta para a posição inicial.
-            System.out.print("O " + nomeRobo + " tentou sair do ambiente, logo ele retornou para a posição: ");
-            robo.mover(-deltaX, -deltaY);
-            robo.setProfundidade(deltaZ); // Redefine a profundidade, pois ele nao vai conseguir perfurar pois está em uma posicao invalida
-            vetorPosicao = robo.getPosicao();
-            vetorPosicao = robo.getPosicao(vetorPosicao[0], vetorPosicao[1]);
-            System.out.print("(" + vetorPosicao[0] + "," + vetorPosicao[1] + "," + vetorPosicao[2] + ")\n\n");
-        }
-    }
+
 
     // Esse metodo verifica se o roboObstaculoTerrestre1 esta dentro dos limites, se não estiver move o robo para a ultima posição que ele estava
     private static void validarMovimentoObstaculoTerrestre(Ambiente ambiente1, int vetorPosicao[], String nomeRobo, RoboObstaculoTerrestre robo, int deltaX, int deltaY){
@@ -385,22 +304,22 @@ public class Main {
              */  
     }
 
-    private static void movimentar(Scanner entrada, RoboCavador roboCavador1, RoboObstaculoTerrestre roboObstaculoTerrestre1, RoboObstaculoAereo roboObstaculoAereo1, RoboFlutuador roboFlutuador1){
+    // Escolhemos movimentar algum dos robôs, agora precisamos decidir qual deles:
+    private static void movimentar(Scanner entrada, Ambiente ambiente1, RoboCavador roboCavador1, RoboObstaculoTerrestre roboObstaculoTerrestre1, RoboObstaculoAereo roboObstaculoAereo1, RoboFlutuador roboFlutuador1){
         boolean continuar = true;
 
         while(continuar){
-            System.out.print("Selecione alguma das ações abaixo: \n" +
-            "[1] - Movimentar o Robo Cavador \n" +
-            "[2] - Movimentar o Robo Obstáculo Terrestre \n" +
-            "[3] - Movimentar o Robo Flutuador  \n" +
-            "[4] - Movimentar o Robo Obstáculo Aéreo  \n" +
-            "[0] - Voltar \n\n ");
+            System.out.println("Selecione alguma das ações abaixo:\n" +
+            "[1] - Movimentar o Robo Cavador\n" +
+            "[2] - Movimentar o Robo Obstáculo Terrestre\n" +
+            "[3] - Movimentar o Robo Flutuador\n" +
+            "[4] - Movimentar o Robo Obstáculo Aéreo\n" +
+            "[0] - Voltar\n");
     
             int opcao = entrada.nextInt();
-
             switch (opcao) {
                 case 1:
-                    movimentarCavador(entrada, roboCavador1);
+                    movimentarCavador(entrada, roboCavador1, ambiente1);
                     break;
                 case 2:
                     movimentarObstaculoTerrestre(entrada, roboObstaculoTerrestre1);
@@ -421,14 +340,18 @@ public class Main {
         }
     }
 
-    private static void movimentarCavador(Scanner entrada, RoboCavador roboCavador1){
+    // Movimento do robô cavador.
+    private static void movimentarCavador(Scanner entrada, RoboCavador roboCavador1, Ambiente ambiente1){
 
-        System.out.print("Informe quantos metros o robo Cavador irá mover:\n" +"Na direcao x:");
+        System.out.print("Informe quantos metros o robo Cavador irá mover:\n" +"Na direcao x: ");
         int deltaX = entrada.nextInt();
-        System.out.print("Na direcao y:");
+
+        System.out.print("Na direcao y: ");
         int deltaY = entrada.nextInt();
+
         System.out.print("Informe a velocidade:");
         int velocidade = entrada.nextInt();
+
         roboCavador1.setDirecao(deltaX, deltaY);
         roboCavador1.setVelocidade(velocidade);
         roboCavador1.mover(deltaX, deltaY);
@@ -436,9 +359,29 @@ public class Main {
         System.out.print("Informe quantos metros o robo cavará:");
         int deltaZ = entrada.nextInt();
         roboCavador1.cavar(deltaZ);
+
+        validarMovimentoCavador(ambiente1, roboCavador1, deltaX, deltaY, deltaZ);
+
         System.out.println("\n");
-        
     }
+
+    // Verifica se o RoboCavador está dentro dos limites, se não estiver, move ele para a sua posição válida anterior
+    private static void validarMovimentoCavador(Ambiente ambiente1, RoboCavador robo, int deltaX, int deltaY, int deltaZ){
+        int[] posicao = new int[3];
+        posicao = robo.getPosicao();
+
+        if ((ambiente1.dentroDosLimites(posicao[0], posicao[1]) == 1)){
+            System.out.println("O robô movimentado está atualmente na posição: (" + posicao[0] + "," + posicao[1] + "," + posicao[2] + ")\n");
+        
+        } else { // Se sair do ambiente, volta para a posição inicial.
+            System.out.print("O robô movimentado tentou sair do ambiente, logo ele retornou para a posição: ");
+            robo.mover(-deltaX, -deltaY);
+            robo.setProfundidade(deltaZ); // Redefine a profundidade, pois ele nao vai conseguir perfurar
+            posicao = robo.getPosicao();
+            System.out.println("(" + posicao[0] + "," + posicao[1] + "," + posicao[2] + ")\n");
+        }
+    }
+
     private static void movimentarObstaculoTerrestre(Scanner entrada, RoboObstaculoTerrestre roboObstaculoTerrestre1){
 
         System.out.print("Informe quantos metros o robo Obstaculo Terrestre irá mover:\n" +"Na direcao x:");
@@ -519,5 +462,10 @@ public class Main {
     private static void sensores(){
         
     }
-        
+      
+
 }
+
+
+
+// LEMBRAR QUE ESTÁ FALTANDO CONFERIR OS OBSTÁCULOS!!!!!!!!

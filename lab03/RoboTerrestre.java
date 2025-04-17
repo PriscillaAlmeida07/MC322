@@ -21,7 +21,7 @@ public class RoboTerrestre extends Robo {
         if (velocidade <= velocidadeMaxima){
             super.mover(deltaX, deltaY);
         } else { // Velocidade acima da permitida
-            System.out.println("O robo atingiu a velocidade máxima " + velocidadeMaxima + " e não pode se mover");
+            System.out.println("O robo atingiu a velocidade máxima " + velocidadeMaxima + " e não pode se mover\n");
         }
     }
 }
