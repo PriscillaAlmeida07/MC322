@@ -33,6 +33,26 @@ public class Ambiente {
             return 0;
     }
 
+    public void getTodosRobos(){
+        String nome;
+        int[] posicao;
+        String direcao;
+        for(int i = 0; i < robosAtivos.size(); i++){
+            nome = robosAtivos.get(i).getNome();
+            posicao = robosAtivos.get(i).getPosicao();
+            direcao = robosAtivos.get(i).getDirecao() ;
+            if (posicao.length == 2){
+                System.out.print("O robo " +  nome + " esta na posição: (" + posicao[0] + "," + posicao[1] +
+                ") e esta virado para o: " + direcao +"\n");
+            }
+            else if(posicao.length == 3){
+                System.out.print("O robo " +  nome + " esta na posição: (" + posicao[0] + "," + posicao[1] + "," + posicao[2] +
+                ") e esta virado para o: " + direcao +"\n");
+            }
+
+        }
+    }
+
 /* 
     // Confere se um robô irá bater em um obstáculo terrestre.
     public int existeObstaculoTerrestres(int x, int y){

@@ -42,7 +42,7 @@ public class Main {
                     movimentar(entrada, roboCavador1, roboObstaculoTerrestre1, roboObstaculoAereo1, roboFlutuador1);
                     break;
                 case 2:
-                    mostrarRobos();
+                    mostrarRobos(ambiente1);
                     break; 
                 case 3:
                     mostrarObstaculos();
@@ -496,8 +496,8 @@ public class Main {
         System.out.println("\n");
     }
 
-    private static void mostrarRobos(){
-        
+    private static void mostrarRobos(Ambiente ambiente1){
+        ambiente1.getTodosRobos();
     }
 
     private static void mostrarObstaculos(){

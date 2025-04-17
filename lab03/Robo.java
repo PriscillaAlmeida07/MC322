@@ -10,6 +10,7 @@ public class Robo{
         this.nome = nome;
         posicaoX = 50;
         posicaoY = 50; 
+        direcao = "Norte";
     }
 
     // Obtém o nome do robô.
