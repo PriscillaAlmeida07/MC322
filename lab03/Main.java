@@ -7,6 +7,18 @@ public class Main {
         // Instânciamento do ambiente.
         Ambiente ambiente1 = new Ambiente(); 
 
+        // Instânciamento de alguns obstáculos.
+        Obstaculo arvore1 = new Obstaculo(TipoObstaculo.ARVORE, 25, 25, 0);
+        Obstaculo arvore2 = new Obstaculo(TipoObstaculo.ARVORE, 25, 75, 0);
+        Obstaculo arvore3 = new Obstaculo(TipoObstaculo.ARVORE, 75, 25, 0);
+        Obstaculo arvore4 = new Obstaculo(TipoObstaculo.ARVORE, 75, 75, 0);
+
+        // Adicionando obstáculos ao ambiente.
+        ambiente1.adicionarObstaculo(arvore1);
+        ambiente1.adicionarObstaculo(arvore2);
+        ambiente1.adicionarObstaculo(arvore3);
+        ambiente1.adicionarObstaculo(arvore4);
+
         // Instânciamento de todos os robôs.
         RoboCavador roboCavador1 = new RoboCavador("roboCavador1");
         RoboObstaculoTerrestre roboObstaculoTerrestre1 = new RoboObstaculoTerrestre("roboObstaculoTerrestre1");

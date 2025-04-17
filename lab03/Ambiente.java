@@ -2,13 +2,13 @@ import java.util.ArrayList;
 
 public class Ambiente { 
 
-    private int largura;
-    private int comprimento;
+    private final int largura;
+    private final int comprimento;
     private ArrayList<Robo> robosAtivos;
     private ArrayList<Obstaculo> obstaculosAtivos;
 
     // Construtor.
-    public Ambiente() { 
+    public Ambiente(){ 
         largura = 100;
         comprimento = 100;
         robosAtivos = new ArrayList<>();
@@ -25,7 +25,7 @@ public class Ambiente {
         obstaculosAtivos.add(obstaculo);
     }
     
-    // Confere se um robô está dentro dos limites do ambiente
+    // Confere se um robô está dentro dos limites do ambiente.
     public int dentroDosLimites(int x, int y){
         if ((largura >= x && x >= 0) && (comprimento >= y && y >= 0))
             return 1;
@@ -33,35 +33,42 @@ public class Ambiente {
             return 0;
     }
 
+    // Lista todos os robôs que estão no ambiente e as suas informações.
     public void getTodosRobos(){
-        String nome;
-        int[] posicao;
-        String direcao;
-        for(int i = 0; i < robosAtivos.size(); i++){
+        String nome; int[] posicao; String direcao;
+
+        for (int i = 0; i < robosAtivos.size(); i++){
             nome = robosAtivos.get(i).getNome();
             posicao = robosAtivos.get(i).getPosicao();
-            direcao = robosAtivos.get(i).getDirecao() ;
-            if (posicao.length == 2){
-                System.out.print("O robo " +  nome + " esta na posição: (" + posicao[0] + "," + posicao[1] +
-                ") e esta virado para o: " + direcao +"\n");
-            }
-            else if(posicao.length == 3){
-                System.out.print("O robo " +  nome + " esta na posição: (" + posicao[0] + "," + posicao[1] + "," + posicao[2] +
-                ") e esta virado para o: " + direcao +"\n");
-            }
+            direcao = robosAtivos.get(i).getDirecao();
 
+            if (posicao.length == 2){
+                System.out.println("O robô " + nome + " está na posição (" + posicao[0] + "," + posicao[1] + ") e está virado para o " + direcao);
+
+            } else { // posicao.length == 3
+                System.out.println("O robô " + nome + " está na posição (" + posicao[0] + "," + posicao[1] + "," + posicao[2] + ") e está virado para o " + direcao);
+            }
         }
+        System.out.print("\n");
     }
 
+    // Lista todos os obstáculos que estão no ambiente e suas informações.
     public void getTodosObstaculos(){
-        TipoObstaculo tipo;
-        int[] posicao;
-        for(int i = 0; i < obstaculosAtivos.size(); i++){
+        TipoObstaculo tipo; int[] posicao;
+
+        for (int i = 0; i < obstaculosAtivos.size(); i++){
             tipo = obstaculosAtivos.get(i).getTipo();
             posicao = obstaculosAtivos.get(i).getPosicao();
-            System.out.print("O obstaculo" + " esta na posição: (" + posicao[0] + "," + posicao[1] + "," + posicao[2] +
-            ")" + "\n");
+
+            System.out.print("Existe um(a) " + tipo.getNome() + " na posição mínima (" + posicao[0] + "," + posicao[1] + "," + posicao[2] +") e máxima (");
+
+            posicao[0] += tipo.getLargura();
+            posicao[1] += tipo.getComprimento();
+            posicao[2] += tipo.getAltura();
+
+            System.out.println(posicao[0] + "," + posicao[1] + "," + posicao[2] +")");
         }
+        System.out.print("\n");
     }
 
 /* 
