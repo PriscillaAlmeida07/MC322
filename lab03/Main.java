@@ -246,20 +246,6 @@ public class Main {
 
 
 
-    // Esse metodo verifica se o roboObstaculoAereo1 esta dentro dos limites, se não estiver move o robo para a ultima posição que ele estava
-    private static void validarMovimentoObstaculoAereo(Ambiente ambiente1, int vetorPosicao[], String nomeRobo, RoboObstaculoAereo robo, int deltaX, int deltaY, int deltaZ){
-        if ((ambiente1.dentroDosLimites(vetorPosicao[0], vetorPosicao[1]) == 1) && (ambiente1.existeObstaculoAereos(vetorPosicao[0], vetorPosicao[1], vetorPosicao[2]) == 1)){
-            System.out.print("O " + nomeRobo + " esta atualmente na posição: (" + vetorPosicao[0] + "," + vetorPosicao[1] + "," + vetorPosicao[2] + ")\n\n");
-        
-        } else { // Se sair do ambiente, volta para a posição inicial.
-            System.out.print("O " + nomeRobo + " tentou sair do ambiente ou atingiu um obstáculo, logo ele retornou para a posição: ");
-            robo.mover(-deltaX, -deltaY);
-            robo.setAltitude(deltaZ);
-            vetorPosicao = robo.getPosicao();
-            vetorPosicao = robo.getPosicao(vetorPosicao[0], vetorPosicao[1]);
-            System.out.print("(" + vetorPosicao[0] + "," + vetorPosicao[1] + "," + vetorPosicao[2] + ")\n\n");
-        }
-    }
 
     // Esse metodo verifica se o roboFlutuador1 esta dentro dos limites, se não estiver move o robo para a ultima posição que ele estava    
     private static void validarMovimentoFlutuador(Ambiente ambiente1, int vetorPosicao[], String nomeRobo, RoboFlutuador robo, int deltaX, int deltaY, int deltaZ, String caso){
@@ -356,6 +342,7 @@ public class Main {
 
     // Verifica se o RoboCavador está dentro dos limites, se não estiver, move ele para a sua posição válida anterior
     private static void validarMovimentoCavador(Ambiente ambiente1, RoboCavador robo, int deltaX, int deltaY, int deltaZ){
+
         int[] posicao = new int[3];
         posicao = robo.getPosicao();
 
@@ -386,19 +373,22 @@ public class Main {
         roboObstaculoTerrestre1.setVelocidade(velocidade);
         roboObstaculoTerrestre1.mover(deltaX, deltaY);
 
-        if(validarMovimentoObstaculoTerrestre(ambiente1, roboObstaculoTerrestre1, deltaX, deltaY)== 1){
+        if(validarMovimentoObstaculoTerrestre(ambiente1, roboObstaculoTerrestre1, deltaX, deltaY) == 1){
             System.out.print("O robo soltará um bloco na posição?\nSe sim, digite 1, se não digite 0: ");
             int condicao = entrada.nextInt();
             if(condicao == 1){
                 roboObstaculoTerrestre1.soltarBlocos();
+                System.out.print("O robo soltou um bloco");
             }
             System.out.println("\n");
         }
     }
     // Esse metodo verifica se o roboObstaculoTerrestre1 esta dentro dos limites, se não estiver move o robo para a ultima posição que ele estava
     private static int validarMovimentoObstaculoTerrestre(Ambiente ambiente1, RoboObstaculoTerrestre robo, int deltaX, int deltaY){
+
         int[] posicao = new int[2];
         posicao = robo.getPosicao();
+
         if ((ambiente1.dentroDosLimites(posicao[0], posicao[1]) == 1) && (ambiente1.existeObstaculoTerrestres(posicao[0], posicao[1]) == 1)){
             System.out.println("O robô movimentado está atualmente na posição: (" + posicao[0] + "," + posicao[1] + ")\n");
             return 1;
@@ -413,8 +403,10 @@ public class Main {
     }
 
     private static void movimentarObstaculoAereo(Scanner entrada, RoboObstaculoAereo roboObstaculoAereo1, Ambiente ambiente1){
+
         System.out.print("Informe quantos metros o robo Obstaculo Aereo irá mover:\n" +"Na direcao x:");
         int deltaX = entrada.nextInt();
+
         System.out.print("Na direcao y:");
         int deltaY = entrada.nextInt();
 
@@ -422,23 +414,53 @@ public class Main {
         int voo = entrada.nextInt();
         System.out.print("Quantos metros:");
         int deltaZ = entrada.nextInt();
+
         if(voo == 1){
             roboObstaculoAereo1.subir(deltaZ);
-        }
-        else if(voo ==2){
+        } else if(voo ==2) {
             roboObstaculoAereo1.descer(deltaZ);
         }
+
         roboObstaculoAereo1.setDirecao(deltaX, deltaY);
         roboObstaculoAereo1.mover(deltaX, deltaY);
 
-        System.out.print("O robo soltará uma nuvem na posição?\n Se sim, digite 1, se não digite 0");
-        int condicao = entrada.nextInt();
-        if(condicao == 1){
-            roboObstaculoAereo1.soltarNuvens();
+        if (validarMovimentoObstaculoAereo(ambiente1, roboObstaculoAereo1, deltaX, deltaY, deltaZ) == 1){
+            System.out.print("O robo soltará uma nuvem na posição?\nSe sim, digite 1, se não digite 0: ");
+            int condicao = entrada.nextInt();
+            if (condicao == 1){
+                int[] posicao;
+                posicao = roboObstaculoAereo1.getPosicao();
+
+                Obstaculo nuvem = roboObstaculoAereo1.soltarNuvens(posicao[0], posicao[1], posicao[2]);
+                if(nuvem != null){
+                    ambiente1.adicionarObstaculo(nuvem);
+                    System.out.print("O robo soltou uma nuvem");
+                }
+
+            }
+            System.out.println("\n");
         }
-        System.out.println("\n");
     }
 
+    // Esse metodo verifica se o roboObstaculoAereo1 esta dentro dos limites, se não estiver move o robo para a ultima posição que ele estava
+    private static int validarMovimentoObstaculoAereo(Ambiente ambiente1, RoboObstaculoAereo robo, int deltaX, int deltaY, int deltaZ){
+
+        int[] posicao = new int[3];
+        posicao = robo.getPosicao();
+
+        if ((ambiente1.dentroDosLimites(posicao[0], posicao[1]) == 1) && (ambiente1.existeObstaculoAereos(posicao[0], posicao[1], posicao[2]) == 1)){
+            System.out.println("O robô movimentado está atualmente na posição: (" + posicao[0] + "," + posicao[1] + "," + posicao[2] + ")\n");
+            return 1;
+
+        } else { // Se sair do ambiente, volta para a posição inicial.
+            System.out.print("O robô movimentado tentou sair do ambiente, ou colidiu com algum obstáculo, logo ele retornou para a posição: ");
+            robo.mover(-deltaX, -deltaY);
+            robo.setAltitude(deltaZ); //Aqui tem algum erro, no teste que eu fiz nao voltou para a posicao em z
+            posicao = robo.getPosicao();
+            System.out.print("(" + posicao[0] + "," + posicao[1] + "," + posicao[2] + ")\n\n");
+            return 0;
+        }
+    }
 
     private static void movimentarFlutuador(Scanner entrada, RoboFlutuador roboFlutuador1, Ambiente ambiente1){
         System.out.print("Informe quantos metros o robo Flutuador irá mover:\n" +"Na direcao x:");

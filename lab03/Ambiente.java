@@ -74,7 +74,9 @@ public class Ambiente {
  
     // Confere se um robô irá bater em um obstáculo terrestre.
     public int existeObstaculoTerrestres(int x, int y){
-        TipoObstaculo tipo; int[] posicaoInicial; int[] posicaoFinal = new int[3];
+
+        TipoObstaculo tipo; int[] posicaoInicial; int[] posicaoFinal = new int[2];
+
         for (int i = 0; i < obstaculosAtivos.size(); i++){
             tipo = obstaculosAtivos.get(i).getTipo();
             posicaoInicial = obstaculosAtivos.get(i).getPosicao();
@@ -89,15 +91,25 @@ public class Ambiente {
         }
         return 1; // Caso o robô esteja em uma posição válida
     }
-/*
+
     // Confere se um robô irá bater em um obstáculo aéreo.
     public int existeObstaculoAereos(int x, int y, int z){
-        for (int i = 0; i < numObstaculosAereos; i++){
-            if ((obstaculosAereos[i][0] == x) && (obstaculosAereos[i][1] == y) && (obstaculosAereos[i][2] == z)){
+
+        TipoObstaculo tipo; int[] posicaoInicial; int[] posicaoFinal = new int[3];
+
+        for (int i = 0; i < obstaculosAtivos.size(); i++){
+            tipo = obstaculosAtivos.get(i).getTipo();
+            posicaoInicial = obstaculosAtivos.get(i).getPosicao();
+
+            // Calcula a posição final do obsaculo com base na posicao inicial
+            posicaoFinal[0] = posicaoInicial[0] + tipo.getLargura();
+            posicaoFinal[1] = posicaoInicial[1] + tipo.getComprimento();
+            posicaoFinal[2] = posicaoInicial[2] + tipo.getAltura();
+
+            if (((x >= posicaoInicial[0]) && (x <= posicaoFinal[0])) && ((y >= posicaoInicial[1]) && (y <= posicaoFinal[1])) && ((z >= posicaoInicial[2]) && (z <= posicaoFinal[2]))){
                 return 0;
             }
         }
         return 1; // Caso o robô esteja em uma posição válida
     }
-        */
 }
