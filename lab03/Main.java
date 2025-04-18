@@ -334,27 +334,41 @@ public class Main {
         System.out.print("Informe quantos metros o robo cavará:");
         int deltaZ = entrada.nextInt();
         roboCavador1.cavar(deltaZ);
+        
+        // Se o movimento foi válido o buraco será adicionado ao ambiente
+        if (validarMovimentoCavador(ambiente1, roboCavador1, deltaX, deltaY, deltaZ) == 1){
+            int[] posicao;
+            posicao = roboCavador1.getPosicao();
 
-        validarMovimentoCavador(ambiente1, roboCavador1, deltaX, deltaY, deltaZ);
-
+            Obstaculo buraco = roboCavador1.criarBuraco(posicao[0], posicao[1], posicao[2]);
+            if(buraco != null){
+                ambiente1.adicionarObstaculo(buraco);
+                System.out.print("O robo conseguiu cavar, pois a posição é válida");
+            }
+        } else{
+            System.out.print("O robo não conseguiu cavar, pois a posição não é válida");
+        }
+        
         System.out.println("\n");
     }
 
     // Verifica se o RoboCavador está dentro dos limites, se não estiver, move ele para a sua posição válida anterior
-    private static void validarMovimentoCavador(Ambiente ambiente1, RoboCavador robo, int deltaX, int deltaY, int deltaZ){
+    private static int validarMovimentoCavador(Ambiente ambiente1, RoboCavador robo, int deltaX, int deltaY, int deltaZ){
 
         int[] posicao = new int[3];
         posicao = robo.getPosicao();
 
         if ((ambiente1.dentroDosLimites(posicao[0], posicao[1]) == 1) && (ambiente1.existeObstaculoTerrestres(posicao[0], posicao[1]) == 1)){
             System.out.println("O robô movimentado está atualmente na posição: (" + posicao[0] + "," + posicao[1] + "," + posicao[2] + ")\n");
-        
+            return 1;
+
         } else { // Se sair do ambiente, volta para a posição inicial.
             System.out.print("O robô movimentado tentou sair do ambiente, ou colidiu com algum obstáculo, logo ele retornou para a posição: ");
             robo.mover(-deltaX, -deltaY);
             robo.setProfundidade(deltaZ); // Redefine a profundidade, pois ele nao vai conseguir perfurar
             posicao = robo.getPosicao();
             System.out.println("(" + posicao[0] + "," + posicao[1] + "," + posicao[2] + ")\n");
+            return 0;
         }
     }
 
@@ -377,12 +391,19 @@ public class Main {
             System.out.print("O robo soltará um bloco na posição?\nSe sim, digite 1, se não digite 0: ");
             int condicao = entrada.nextInt();
             if(condicao == 1){
-                roboObstaculoTerrestre1.soltarBlocos();
-                System.out.print("O robo soltou um bloco");
+                int[] posicao;
+                posicao = roboObstaculoTerrestre1.getPosicao();
+
+                Obstaculo bloco = roboObstaculoTerrestre1.soltarBlocos(posicao[0], posicao[1]);
+                if(bloco != null){
+                    ambiente1.adicionarObstaculo(bloco);
+                    System.out.print("O robo soltou um bloco");
+                }
             }
             System.out.println("\n");
         }
     }
+    
     // Esse metodo verifica se o roboObstaculoTerrestre1 esta dentro dos limites, se não estiver move o robo para a ultima posição que ele estava
     private static int validarMovimentoObstaculoTerrestre(Ambiente ambiente1, RoboObstaculoTerrestre robo, int deltaX, int deltaY){
 
@@ -427,6 +448,7 @@ public class Main {
         if (validarMovimentoObstaculoAereo(ambiente1, roboObstaculoAereo1, deltaX, deltaY, deltaZ) == 1){
             System.out.print("O robo soltará uma nuvem na posição?\nSe sim, digite 1, se não digite 0: ");
             int condicao = entrada.nextInt();
+
             if (condicao == 1){
                 int[] posicao;
                 posicao = roboObstaculoAereo1.getPosicao();

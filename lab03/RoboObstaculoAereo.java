@@ -9,7 +9,7 @@ public class RoboObstaculoAereo extends RoboAereo {
         numNuvens = 1;
     }
 
-    // Posiciona uma nuvem em sua posição, criando um obstáculo para outros robôs.
+    // Posiciona uma nuvem em sua posição, criando um obstáculo para outros robôs. Adicionaremos ao ambiente na main
     public Obstaculo soltarNuvens(int posicaoX, int posicaoY, int posicaoZ){
         if ((numNuvens == 0)){
             System.out.println("Não há mais nuvens disponíveis\n");
@@ -21,6 +21,7 @@ public class RoboObstaculoAereo extends RoboAereo {
         }
     }
 
+    // Criamos uma nova nuvem na posição  
     private Obstaculo criarNuvem(int posicaoX, int posicaoY, int posicaoZ){
         Obstaculo nuvem = new Obstaculo(TipoObstaculo.NUVEM, posicaoX, posicaoY, posicaoZ);
         return nuvem;

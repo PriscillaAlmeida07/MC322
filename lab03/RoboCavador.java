@@ -28,6 +28,11 @@ public class RoboCavador extends RoboTerrestre {
         return vetor2;
     }
 
+    //Redefine a profundidade, pois ele nao vai conseguir perfurar pois está em uma posicao invalida
+    public void setProfundidade(int deltaZ){
+        profundidade -= deltaZ;
+    }
+
     // Método que permite a movimentação abaixo do solo.
     public void cavar(int deltaZ){
         if ((deltaZ + profundidade) > profundidadeMaxima){
@@ -38,8 +43,10 @@ public class RoboCavador extends RoboTerrestre {
         }
     }
 
-    //Redefine a profundidade, pois ele nao vai conseguir perfurar pois está em uma posicao invalida
-    public void setProfundidade(int deltaZ){
-        profundidade -= deltaZ;
+    // Criamos um novo buraco na posição  
+    public Obstaculo criarBuraco(int posicaoX, int posicaoY, int posicaoZ){
+
+        Obstaculo buraco = new Obstaculo(TipoObstaculo.BURACO, posicaoX, posicaoY, posicaoZ);
+        return buraco;
     }
 }

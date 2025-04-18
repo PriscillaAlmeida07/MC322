@@ -9,14 +9,23 @@ public class RoboObstaculoTerrestre extends RoboTerrestre {
         numBlocos = 1;
     }
 
-    // Posiciona um bloco em sua posição, criando um obstáculo para outros robôs.
-    public int soltarBlocos(){
+    // Posiciona um bloco em sua posição, criando um obstáculo para outros robôs. Adicionaremos ao ambiente na main
+    public Obstaculo soltarBlocos(int posicaoX, int posicaoY){
+
         if (numBlocos == 0){
             System.out.println("Não há mais blocos disponíveis\n");
-            return 0;
+            return null;
         } else { // Ainda tem blocos.
+            Obstaculo bloco = criarBloco(posicaoX, posicaoY);
             numBlocos--;
-            return 1;
+            return bloco;
         }
+    }
+
+    // Criamos um novo bloco na posição  
+    private Obstaculo criarBloco(int posicaoX, int posicaoY){
+
+        Obstaculo bloco = new Obstaculo(TipoObstaculo.BLOCO, posicaoX, posicaoY, 0);
+        return bloco;
     }
 }
