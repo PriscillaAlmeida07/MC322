@@ -11,7 +11,7 @@ public class RoboObstaculoAereo extends RoboAereo {
 
     // Posiciona uma nuvem em sua posição, criando um obstáculo para outros robôs. Adicionaremos ao ambiente na main
     public Obstaculo soltarNuvens(int posicaoX, int posicaoY, int posicaoZ){
-        if ((numNuvens == 0)){
+        if ((numNuvens == 0) && ((posicaoX < 97) && (posicaoY < 97) && (posicaoZ < 100))){
             System.out.println("Não há mais nuvens disponíveis\n");
             return null;
         } else { // Ainda tem nuvens.

@@ -6,6 +6,7 @@ public enum TipoObstaculo {
     NUVEM("nuvem", 5, 5, 2),
     BURACO("buraco",1, 1, 0); // Profundidade do buraco começa em 0, mas pode ser alterada.
 
+
     private final String nome;
     private final int largura;
     private final int comprimento;

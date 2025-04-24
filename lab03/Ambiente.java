@@ -6,6 +6,7 @@ public class Ambiente {
     private final int comprimento;
     private ArrayList<Robo> robosAtivos;
     private ArrayList<Obstaculo> obstaculosAtivos;
+    private ArrayList<TapeteReposicao> tapetes;
 
     // Construtor.
     public Ambiente(){ 
@@ -13,11 +14,16 @@ public class Ambiente {
         comprimento = 100;
         robosAtivos = new ArrayList<>();
         obstaculosAtivos = new ArrayList<>();
+        tapetes = new ArrayList<>();
     }
 
     // Registra um novo robô.
     public void adicionarRobo(Robo robo){
         robosAtivos.add(robo);
+    }
+
+    public void adicionarTapete(TapeteReposicao tapete){
+        tapetes.add(tapete);
     }
 
     // Registra um novo obstáculo.
@@ -85,7 +91,7 @@ public class Ambiente {
             posicaoFinal[0] = posicaoInicial[0] + tipo.getLargura();
             posicaoFinal[1] = posicaoInicial[1] + tipo.getComprimento();
 
-            if (((x >= posicaoInicial[0]) && (x <= posicaoFinal[0])) && ((y >= posicaoInicial[1]) && (y <= posicaoFinal[1]))){
+            if (((x >= posicaoInicial[0]) && (x <= posicaoFinal[0])) && ((y >= posicaoInicial[1]) && (y <= posicaoFinal[1])) && (tipo != tipo.TAPETE)){
                 return 0;
             }
         }

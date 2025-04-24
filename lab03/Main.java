@@ -13,6 +13,16 @@ public class Main {
         Obstaculo arvore3 = new Obstaculo(TipoObstaculo.ARVORE, 75, 25, 0);
         Obstaculo arvore4 = new Obstaculo(TipoObstaculo.ARVORE, 75, 75, 0);
 
+        TapeteReposicao tapete1 = new TapeteReposicao(20, 20);
+        TapeteReposicao tapete2 = new TapeteReposicao(80,80);
+        TapeteReposicao tapete3 = new TapeteReposicao(80, 20);
+        TapeteReposicao tapete4 = new TapeteReposicao(20, 80);
+
+        ambiente1.adicionarTapete(tapete1);
+        ambiente1.adicionarTapete(tapete2);
+        ambiente1.adicionarTapete(tapete3);
+        ambiente1.adicionarTapete(tapete4);
+
         // Adicionando obstáculos ao ambiente.
         ambiente1.adicionarObstaculo(arvore1);
         ambiente1.adicionarObstaculo(arvore2);
@@ -56,7 +66,7 @@ public class Main {
                     mostrarObstaculos(ambiente1);
                     break;  
                 case 4:
-                    sensores();
+                    sensores(entrada, ambiente1, roboCavador1, roboObstaculoTerrestre1, roboObstaculoAereo1, roboFlutuador1);
                     break; 
                 case 0:
                 System.out.println("Saindo...");

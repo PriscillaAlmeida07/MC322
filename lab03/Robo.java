@@ -1,5 +1,9 @@
+
+import java.util.ArrayList;
+
 public class Robo{
 
+    private ArrayList<Sensor> sensores;
     private String nome;
     private String direcao;
     private int posicaoX;
@@ -7,10 +11,17 @@ public class Robo{
 
     // Construtor.
     public Robo(String nome){ 
+        sensores = new ArrayList<>();
+        sensores.add(new SensorObstaculos());
+
         this.nome = nome;
         posicaoX = 50;
         posicaoY = 50; 
         direcao = "Norte";
+    }
+
+    public void adicionaSensorReporBlocos(SensorReporBlocos sensorReporBlocos) {
+        sensores.add(sensorReporBlocos);
     }
 
     // Obtém o nome do robô.
