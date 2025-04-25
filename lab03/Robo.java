@@ -77,4 +77,10 @@ public class Robo{
         posicaoX += deltaX;
         posicaoY += deltaY;
     }
+
+    public void usarSensores(Ambiente ambiente, int[] vetorPosicao){
+        for (int i=0; i< sensores.size(); i++ ){
+            sensores.get(i).monitorar(ambiente, vetorPosicao);
+        }
+    }
 }

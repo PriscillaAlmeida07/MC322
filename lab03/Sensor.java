@@ -1,4 +1,4 @@
-public class Sensor {
+public abstract class Sensor {
     private double raio;
 
     public Sensor(){
@@ -13,7 +13,5 @@ public class Sensor {
         this.raio = raio; 
     }
 
-    public void monitorar(){
-
-    }
+    public abstract void monitorar(Ambiente ambiente, int[] vetorPosicao);
 }

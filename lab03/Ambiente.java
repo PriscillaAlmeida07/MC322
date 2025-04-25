@@ -118,4 +118,12 @@ public class Ambiente {
         }
         return 1; // Caso o robô esteja em uma posição válida
     }
+
+    public ArrayList<Obstaculo> getArrayObstaculos(){
+        return obstaculosAtivos;
+    }
+
+    public ArrayList<TapeteReposicao> getArrayTapetes(){
+        return tapetes;
+    }
 }
