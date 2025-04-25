@@ -26,5 +26,16 @@ public class RoboObstaculoAereo extends RoboAereo {
         Obstaculo nuvem = new Obstaculo(TipoObstaculo.NUVEM, posicaoX, posicaoY, posicaoZ);
         return nuvem;
     }
+
+    // Conserta a altitude do robô caso ele tenha tentado ir para uma posição inadequada.
+    public void setAltitude(int deltaZ, int caso){
+        if (caso == 1){ // Caso == 1. Ele tentou subir, mas descerá para retornar a posição anterior
+            super.setAltitude(deltaZ);
+
+            
+        } else { // caso == 2. Ele tentou descer, mas subirá para retornar a posição anterior
+            super.setAltitude(-deltaZ);
+        }
+    }
 }
 

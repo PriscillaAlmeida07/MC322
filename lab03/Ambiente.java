@@ -91,7 +91,7 @@ public class Ambiente {
             posicaoFinal[0] = posicaoInicial[0] + tipo.getLargura();
             posicaoFinal[1] = posicaoInicial[1] + tipo.getComprimento();
 
-            if (((x >= posicaoInicial[0]) && (x <= posicaoFinal[0])) && ((y >= posicaoInicial[1]) && (y <= posicaoFinal[1])) && (tipo != tipo.TAPETE)){
+            if (((x >= posicaoInicial[0]) && (x <= posicaoFinal[0])) && ((y >= posicaoInicial[1]) && (y <= posicaoFinal[1]))){
                 return 0;
             }
         }
