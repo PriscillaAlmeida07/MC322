@@ -390,26 +390,23 @@ public class Main {
             "[0] - Voltar\n");
     
             int opcao = entrada.nextInt();
+            int[] vetorPosicao;
             switch (opcao) {
                 case 1:
-                    int[] vetorPosicao1 = new int[2];
-                    vetorPosicao1 = roboCavador1.getPosicao();
-                    roboCavador1.usarSensores(ambiente1, vetorPosicao1);
+                    vetorPosicao = roboCavador1.getPosicao();
+                    roboCavador1.usarSensores(ambiente1, vetorPosicao);
                     break;
                 case 2:
-                    int[] vetorPosicao2 = new int[2];
-                    vetorPosicao2 = roboObstaculoTerrestre1.getPosicao();
-                    roboObstaculoTerrestre1.usarSensores(ambiente1, vetorPosicao2);
+                    vetorPosicao = roboObstaculoTerrestre1.getPosicao();
+                    roboObstaculoTerrestre1.usarSensores(ambiente1, vetorPosicao);
                     break; 
                 case 3:
-                    int[] vetorPosicao3 = new int[3];
-                    vetorPosicao3 = roboFlutuador1.getPosicao();
-                    roboFlutuador1.usarSensores(ambiente1, vetorPosicao3);
+                    vetorPosicao = roboFlutuador1.getPosicao();
+                    roboFlutuador1.usarSensores(ambiente1, vetorPosicao);
                     break;  
                 case 4:
-                    int[] vetorPosicao4 = new int[3];
-                    vetorPosicao4 = roboObstaculoAereo1.getPosicao();
-                    roboObstaculoAereo1.usarSensores(ambiente1, vetorPosicao4);               
+                    vetorPosicao = roboObstaculoAereo1.getPosicao();
+                    roboObstaculoAereo1.usarSensores(ambiente1, vetorPosicao);               
                     break; 
                 case 0:
                 continuar = false;
