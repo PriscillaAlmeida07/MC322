@@ -27,4 +27,9 @@ public class RoboObstaculoTerrestre extends RoboTerrestre {
         Obstaculo bloco = new Obstaculo(TipoObstaculo.BLOCO, posicaoX, posicaoY, 0);
         return bloco;
     }
+
+    // Aumenta a quantidade de blocos que o robô carrega
+    public void reporBlocos(){
+        numBlocos += 3;
+    }
 }

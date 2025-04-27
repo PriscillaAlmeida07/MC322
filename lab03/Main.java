@@ -230,6 +230,9 @@ public class Main {
             robo.setDirecao(deltaX, deltaY);
             direcao = robo.getDirecao();
             System.out.println("O robô movimentado está atualmente na posição: (" + posicao[0] + "," + posicao[1] + ") e virado para o " + direcao + "\n");
+            if (ambiente1.existeTapeteReposicao(posicao) == 1) {
+                robo.reporBlocos();
+            }
             return 1;
        
         } else { // Se sair do ambiente, volta para a posição inicial.
@@ -413,5 +416,4 @@ public class Main {
     }   
 }
 
-// Na movimentação no eixo Z o usuário não pode digitar números negativos
 // Adicionar sistema de reposição de blocos

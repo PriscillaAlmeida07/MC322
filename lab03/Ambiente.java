@@ -126,4 +126,17 @@ public class Ambiente {
         }
         return 1; // Caso o robô esteja em uma posição válida
     }
+
+    // Confere se o robô irá parar em um tapete de reposição de blocos
+    public int existeTapeteReposicao(int[] posicaoRobo){
+        int[] posicaoTapete;
+
+        for (int i = 0; i < tapetes.size(); i++){
+            posicaoTapete = tapetes.get(i).getPosicao();
+            if ((posicaoRobo[0] == posicaoTapete[0]) && (posicaoRobo[1] == posicaoTapete[1])) {
+                return 1;
+            }
+        }
+        return 0; // Se ele não estiver parado em um tapete de reposição
+    }
 }
