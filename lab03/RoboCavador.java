@@ -36,7 +36,9 @@ public class RoboCavador extends RoboTerrestre {
 
     // Método que permite a movimentação abaixo do solo.
     public void cavar(int deltaZ){
-        if ((deltaZ + profundidade) > profundidadeMaxima){
+        if (deltaZ < 0) {
+            System.out.println("Valor inválido de perfuração inserido");
+        } else if ((deltaZ + profundidade) > profundidadeMaxima){
             System.out.println(deltaZ + " é um valor inválido de perfuração, pois a profundidade máxima é: " + profundidadeMaxima);
         } else if (deltaZ == 0){
             System.out.println("O robô não cavou");
