@@ -142,7 +142,7 @@ public class Main {
         roboCavador1.cavar(deltaZ);
         
         // Se o movimento foi válido o buraco será adicionado ao ambiente
-        if ((validarMovimentoCavador(ambiente1, roboCavador1, deltaX, deltaY, velocidade) == 1) && (deltaZ != 0)){
+        if ((validarMovimentoCavador(ambiente1, roboCavador1, deltaX, deltaY,deltaZ, velocidade) == 1) && (deltaZ != 0)){
             int[] posicao = roboCavador1.getPosicao();
             Obstaculo buraco = roboCavador1.criarBuraco(posicao[0], posicao[1], posicao[2]);
 
@@ -150,14 +150,12 @@ public class Main {
                 ambiente1.adicionarObstaculo(buraco);
             }
 
-        } else {
-            System.out.print("O robô não conseguiu cavar, pois a posição não é válida");
         }
         System.out.println("\n");
     }
 
     // Verifica se o RoboCavador está dentro dos limites, se não estiver, move ele para a sua posição válida anterior.
-    private static int validarMovimentoCavador(Ambiente ambiente1, RoboCavador robo, int deltaX, int deltaY, int velocidade){
+    private static int validarMovimentoCavador(Ambiente ambiente1, RoboCavador robo, int deltaX, int deltaY, int deltaZ, int velocidade){
         String direcao;
         int[] posicao = robo.getPosicao();
 
@@ -174,6 +172,7 @@ public class Main {
 
         } else { // Se sair do ambiente, volta para a posição inicial.
             robo.mover(-deltaX, -deltaY);
+            robo.setProfundidade(deltaZ);
             posicao = robo.getPosicao();
             direcao = robo.getDirecao();
             System.out.println("O robô tentou sair do ambiente ou colidiu com algum obstáculo, logo ele retornou para a posição: (" + posicao[0] + "," + posicao[1] + "," + posicao[2] + ") e voltado para o " + direcao);
@@ -232,6 +231,7 @@ public class Main {
             System.out.println("O robô movimentado está atualmente na posição: (" + posicao[0] + "," + posicao[1] + ") e virado para o " + direcao + "\n");
             if (ambiente1.existeTapeteReposicao(posicao) == 1) {
                 robo.reporBlocos();
+                System.out.println("O robô recarregou sua quantidade de blocos, pois está em um tapete de reposição");
             }
             return 1;
        
