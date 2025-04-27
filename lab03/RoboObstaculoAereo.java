@@ -6,22 +6,22 @@ public class RoboObstaculoAereo extends RoboAereo {
     // Construtor.
     public RoboObstaculoAereo(String nome){
         super(nome);
-        numNuvens = 1;
+        numNuvens = 3;
     }
 
     // Posiciona uma nuvem em sua posição, criando um obstáculo para outros robôs. Adicionaremos ao ambiente na main
     public Obstaculo soltarNuvens(int posicaoX, int posicaoY, int posicaoZ){
-        if ((numNuvens == 0) && ((posicaoX < 97) && (posicaoY < 97) && (posicaoZ < 100))){
-            System.out.println("Não há mais nuvens disponíveis\n");
+        if ((numNuvens == 0) || ((posicaoX > 96) || (posicaoY > 96) || (posicaoZ > 99))){
+            System.out.println("Não há mais nuvens disponíveis e/ou posição inválida para adicionar uma nuvem ao ambiente\n");
             return null;
-        } else { // Ainda tem nuvens.
+        } else { // Ainda tem nuvens e a posição é válida.
             Obstaculo nuvem = criarNuvem(posicaoX, posicaoY, posicaoZ);
             numNuvens--;
             return nuvem;
         }
     }
 
-    // Criamos uma nova nuvem na posição  
+    // Cria uma nova nuvem na posição.
     private Obstaculo criarNuvem(int posicaoX, int posicaoY, int posicaoZ){
         Obstaculo nuvem = new Obstaculo(TipoObstaculo.NUVEM, posicaoX, posicaoY, posicaoZ);
         return nuvem;
@@ -29,11 +29,10 @@ public class RoboObstaculoAereo extends RoboAereo {
 
     // Conserta a altitude do robô caso ele tenha tentado ir para uma posição inadequada.
     public void setAltitude(int deltaZ, int caso){
-        if (caso == 1){ // Caso == 1. Ele tentou subir, mas descerá para retornar a posição anterior
+        if (caso == 1){ // Ele tentou subir, mas descerá para retornar a posição anterior
             super.setAltitude(deltaZ);
 
-            
-        } else { // caso == 2. Ele tentou descer, mas subirá para retornar a posição anterior
+        } else { // (caso == 2) Ele tentou descer, mas subirá para retornar a posição anterior
             super.setAltitude(-deltaZ);
         }
     }

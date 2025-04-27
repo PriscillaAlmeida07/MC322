@@ -2,7 +2,7 @@ public class RoboCavador extends RoboTerrestre {
 
     // Robô terrestre que consegue perfurar o solo.
     private int profundidade;
-    private int profundidadeMaxima;
+    private final int profundidadeMaxima;
 
     // Construtor.
     public RoboCavador(String nome){ 
@@ -17,10 +17,11 @@ public class RoboCavador extends RoboTerrestre {
     }
 
     // Obtém a posição (x,y,z) do robô.
+    @Override
     public int[] getPosicao(){ 
-        int[] vetor1 = new int[2];
+        int[] vetor1 = super.getPosicao();
+
         int[] vetor2 = new int[3];
-        vetor1 = super.getPosicao();
         vetor2[0] = vetor1[0];
         vetor2[1] = vetor1[1];
         vetor2[2] = -profundidade;
@@ -28,7 +29,7 @@ public class RoboCavador extends RoboTerrestre {
         return vetor2;
     }
 
-    //Redefine a profundidade, pois ele nao vai conseguir perfurar pois está em uma posicao invalida
+    // Define a profundidade do robô.
     public void setProfundidade(int deltaZ){
         profundidade -= deltaZ;
     }
@@ -37,15 +38,16 @@ public class RoboCavador extends RoboTerrestre {
     public void cavar(int deltaZ){
         if ((deltaZ + profundidade) > profundidadeMaxima){
             System.out.println(deltaZ + " é um valor inválido de perfuração, pois a profundidade máxima é: " + profundidadeMaxima);
+        } else if (deltaZ == 0){
+            System.out.println("O robô não cavou");
         } else { // Valor válido de perfuração
             profundidade += deltaZ;
             System.out.println(deltaZ + " é um valor válido de perfuração");
         }
     }
 
-    // Criamos um novo buraco na posição  
+    // Cria um novo buraco na posição
     public Obstaculo criarBuraco(int posicaoX, int posicaoY, int posicaoZ){
-
         Obstaculo buraco = new Obstaculo(TipoObstaculo.BURACO, posicaoX, posicaoY, posicaoZ);
         return buraco;
     }

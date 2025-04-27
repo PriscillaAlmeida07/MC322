@@ -1,7 +1,7 @@
 public class RoboAereo extends Robo { 
 
     private int altitude;
-    private int altitudeMaxima;
+    private final int altitudeMaxima;
 
     // Construtor.
     public RoboAereo(String nome){ 
@@ -10,11 +10,22 @@ public class RoboAereo extends Robo {
         altitudeMaxima = 100;
     }
 
+    // Obtém a altitude do robô.
+    public int getAltitude(){
+        return altitude;
+    }
+    
+    // Define a altitude do robô.
+    public void setAltitude(int deltaZ){
+        altitude -= deltaZ;
+    }
+
     // Obtém a posição (x,y,z) do robô.
+    @Override
     public int[] getPosicao(){ 
-        int[] vetor1 = new int[2];
+        int[] vetor1 = super.getPosicao();
+
         int[] vetor2 = new int[3];
-        vetor1 = super.getPosicao();
         vetor2[0] = vetor1[0];
         vetor2[1] = vetor1[1];
         vetor2[2] = altitude;
@@ -22,21 +33,11 @@ public class RoboAereo extends Robo {
         return vetor2;
     }
 
-    // Define a altitude atual do robô.
-    public void setAltitude(int z){
-        altitude -= z;
-    }
-
-    // Obtém a altitude do robô.
-    public int getAltitude(){
-        return altitude;
-    }
-
     // Movimentação para cima no eixo z.
     public void subir(int deltaZ){
         if ((altitude + deltaZ) > 100){
             System.out.println(deltaZ + " é um valor inválido de voo, pois a altitude máxima é: " + altitudeMaxima);
-        } else {
+        } else { // Movimento válido
             altitude += deltaZ;
             System.out.println(deltaZ + " é um valor válido de voo, ele está na altitude: " + altitude);
         }
@@ -46,7 +47,7 @@ public class RoboAereo extends Robo {
     public void descer(int deltaZ){
         if ((altitude - deltaZ) < 0){
             System.out.println(deltaZ + " é um valor inválido de descida, pois ele passou do chão");
-        } else {
+        } else { // Movimento válido
             altitude -= deltaZ;
             System.out.println(deltaZ + " é um valor válido de descida, ele está na altitude: " + altitude);
         }

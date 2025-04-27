@@ -1,13 +1,18 @@
 public class RoboTerrestre extends Robo {
 
     private int velocidade;
-    private int velocidadeMaxima;
+    private final int velocidadeMaxima;
 
     // Construtor.
     public RoboTerrestre(String nome){
         super(nome);
         velocidade = 0;
         velocidadeMaxima = 50;
+    }
+
+    // Obtém a velocidade máxima do robô.
+    public int getVelocidadeMaxima(){
+        return velocidadeMaxima;
     }
 
     // Define a velocidade atual.
@@ -21,7 +26,7 @@ public class RoboTerrestre extends Robo {
         if (velocidade <= velocidadeMaxima){
             super.mover(deltaX, deltaY);
         } else { // Velocidade acima da permitida
-            System.out.println("O robo atingiu a velocidade máxima " + velocidadeMaxima + " e não pode se mover\n");
+            System.out.println("O robo atingiu a velocidade máxima " + velocidadeMaxima + " e não pode se mover");
         }
     }
 }

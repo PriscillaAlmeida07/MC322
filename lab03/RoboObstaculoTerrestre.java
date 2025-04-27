@@ -6,26 +6,24 @@ public class RoboObstaculoTerrestre extends RoboTerrestre {
     // Construtor.
     public RoboObstaculoTerrestre(String nome){
         super(nome);
-        adicionaSensorReporBlocos(new SensorReporBlocos());
         numBlocos = 1;
+        adicionaSensorReporBlocos(new SensorReporBlocos());
     }
 
     // Posiciona um bloco em sua posição, criando um obstáculo para outros robôs. Adicionaremos ao ambiente na main
     public Obstaculo soltarBlocos(int posicaoX, int posicaoY){
-
-        if ((numBlocos == 0) && ((posicaoX < 97) && (posicaoY < 97))){
-            System.out.println("Não há mais blocos disponíveis\n");
+        if ((numBlocos == 0) || ((posicaoX > 96) || (posicaoY > 96))){
+            System.out.println("Não há mais blocos disponíveis e/ou posição inválida para adicionar um bloco ao ambiente\n");
             return null;
-        } else{ // Ainda tem blocos.
+        } else { // Ainda tem blocos e a posição é válida.
             Obstaculo bloco = criarBloco(posicaoX, posicaoY);
             numBlocos--;
             return bloco;
         }
     }
 
-    // Criamos um novo bloco na posição  
+    // Cria um novo bloco na posição.
     private Obstaculo criarBloco(int posicaoX, int posicaoY){
-
         Obstaculo bloco = new Obstaculo(TipoObstaculo.BLOCO, posicaoX, posicaoY, 0);
         return bloco;
     }

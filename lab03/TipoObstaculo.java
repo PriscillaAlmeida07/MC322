@@ -12,7 +12,7 @@ public enum TipoObstaculo {
     private int altura;
 
     // Construtor.
-    TipoObstaculo(String nome, int largura, int comprimento, int altura) {
+    TipoObstaculo(String nome, int largura, int comprimento, int altura){
         this.nome = nome;
         this.largura = largura;
         this.comprimento = comprimento;
@@ -20,27 +20,27 @@ public enum TipoObstaculo {
     }
 
     // Obtém o nome do obstáculo.
-    public String getNome() {
+    public String getNome(){
         return nome;
     }
 
     // Obtém a largura do obstáculo.
-    public int getLargura() {
+    public int getLargura(){
         return largura;
     }
 
     // Obtém o comprimento do obstáculo.
-    public int getComprimento() {
+    public int getComprimento(){
         return comprimento;
     }
 
     // Obtém a altura do obstáculo.
-    public int getAltura() {
+    public int getAltura(){
         return altura;
     }
 
     // Define a profundidade do buraco.
-    public void setAltura(int altura) {
+    public void setAltura(int altura){
         this.altura = altura;
     }
 }

@@ -8,7 +8,7 @@ public class Obstaculo {
     private final TipoObstaculo tipo;
 
     // Construtor.
-    public Obstaculo(TipoObstaculo tipo, int posicaoX, int posicaoY, int posicaoZ) {
+    public Obstaculo(TipoObstaculo tipo, int posicaoX, int posicaoY, int posicaoZ){
         this.tipo = tipo;
         this.posicaoX = posicaoX;
         this.posicaoY = posicaoY;
@@ -26,7 +26,7 @@ public class Obstaculo {
     }
 
     // Obtém o tipo do obstáculo.
-    public TipoObstaculo getTipo() {
+    public TipoObstaculo getTipo(){
         return tipo;
     }
 }

@@ -1,10 +1,10 @@
 
 import java.util.ArrayList;
 
-public class Robo{
+public class Robo {
 
-    private ArrayList<Sensor> sensores;
-    private String nome;
+    private final ArrayList<Sensor> sensores;
+    private final String nome;
     private String direcao;
     private int posicaoX;
     private int posicaoY;
@@ -20,7 +20,8 @@ public class Robo{
         direcao = "Norte";
     }
 
-    public void adicionaSensorReporBlocos(SensorReporBlocos sensorReporBlocos) {
+    // Adiciona um sensor de reposição de blocos, se o robô o possuir.
+    public void adicionaSensorReporBlocos(SensorReporBlocos sensorReporBlocos){
         sensores.add(sensorReporBlocos);
     }
 
@@ -32,6 +33,15 @@ public class Robo{
     // Obtém a direção do robô.
     public String getDirecao(){
         return direcao;
+    }
+
+    // Obtém a posição (x,y) do robô.
+    public int[] getPosicao(){
+        int[] vetor = new int[2];
+        vetor[0] = posicaoX;
+        vetor[1] = posicaoY;
+
+        return vetor;
     }
         
     // Descobre e define a direção do robô.
@@ -48,7 +58,7 @@ public class Robo{
         } else if (deltaX == 0){
             if (deltaY > 0){
                 direcao = "Norte";
-            } else { // deltaY < 0
+            } else if (deltaY < 0){
                 direcao = "Sul";
             }
             
@@ -63,21 +73,13 @@ public class Robo{
         }
     }
 
-    // Obtém a posição (x,y) do robô.
-    public int[] getPosicao(){
-        int[] vetor = new int[2];
-        vetor[0] = posicaoX;
-        vetor[1] = posicaoY;
-
-        return vetor;
-    }
-
     // Realiza um movimento no plano XY.
     public void mover(int deltaX, int deltaY){ 
         posicaoX += deltaX;
         posicaoY += deltaY;
     }
 
+    // Utiliza todos os sensores do robô.
     public void usarSensores(Ambiente ambiente, int[] vetorPosicao){
         for (int i=0; i< sensores.size(); i++ ){
             sensores.get(i).monitorar(ambiente, vetorPosicao);

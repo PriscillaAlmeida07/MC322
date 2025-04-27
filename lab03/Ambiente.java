@@ -4,9 +4,9 @@ public class Ambiente {
 
     private final int largura;
     private final int comprimento;
-    private ArrayList<Robo> robosAtivos;
-    private ArrayList<Obstaculo> obstaculosAtivos;
-    private ArrayList<TapeteReposicao> tapetes;
+    private final ArrayList<Robo> robosAtivos;
+    private final ArrayList<Obstaculo> obstaculosAtivos;
+    private final ArrayList<TapeteReposicao> tapetes;
 
     // Construtor.
     public Ambiente(){ 
@@ -22,13 +22,14 @@ public class Ambiente {
         robosAtivos.add(robo);
     }
 
-    public void adicionarTapete(TapeteReposicao tapete){
-        tapetes.add(tapete);
-    }
-
     // Registra um novo obstáculo.
     public void adicionarObstaculo(Obstaculo obstaculo){
         obstaculosAtivos.add(obstaculo);
+    }
+    
+    // Registra um novo tapete.
+    public void adicionarTapete(TapeteReposicao tapete){
+        tapetes.add(tapete);
     }
     
     // Confere se um robô está dentro dos limites do ambiente.
@@ -37,6 +38,16 @@ public class Ambiente {
             return 1;
         else // Não está dentro dos limites.
             return 0;
+    }
+
+    // Obtém o array de obstáculos que estão no ambiente.
+    public ArrayList<Obstaculo> getArrayObstaculos(){
+        return obstaculosAtivos;
+    }
+
+    // Obtém o array de tapetes de reposição que estão no ambiente
+    public ArrayList<TapeteReposicao> getArrayTapetes(){
+        return tapetes;
     }
 
     // Lista todos os robôs que estão no ambiente e as suas informações.
@@ -76,11 +87,9 @@ public class Ambiente {
         }
         System.out.print("\n");
     }
-
  
     // Confere se um robô irá bater em um obstáculo terrestre.
     public int existeObstaculoTerrestres(int x, int y){
-
         TipoObstaculo tipo; int[] posicaoInicial; int[] posicaoFinal = new int[2];
 
         for (int i = 0; i < obstaculosAtivos.size(); i++){
@@ -100,7 +109,6 @@ public class Ambiente {
 
     // Confere se um robô irá bater em um obstáculo aéreo.
     public int existeObstaculoAereos(int x, int y, int z){
-
         TipoObstaculo tipo; int[] posicaoInicial; int[] posicaoFinal = new int[3];
 
         for (int i = 0; i < obstaculosAtivos.size(); i++){
@@ -117,13 +125,5 @@ public class Ambiente {
             }
         }
         return 1; // Caso o robô esteja em uma posição válida
-    }
-
-    public ArrayList<Obstaculo> getArrayObstaculos(){
-        return obstaculosAtivos;
-    }
-
-    public ArrayList<TapeteReposicao> getArrayTapetes(){
-        return tapetes;
     }
 }

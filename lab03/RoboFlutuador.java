@@ -1,8 +1,8 @@
 public class RoboFlutuador extends RoboAereo {
     
     // Robo incapaz de realizar subidas e descidas muito bruscas.
-    private int subidaMaxima;
-    private int descidaMaxima;
+    private final int subidaMaxima;
+    private final int descidaMaxima;
 
     // Construtor.
     public RoboFlutuador(String nome){
@@ -35,14 +35,14 @@ public class RoboFlutuador extends RoboAereo {
 
     // Conserta a altitude do robô caso ele tenha tentado ir para uma posição inadequada.
     public void setAltitude(int deltaZ, int caso){
-        if (caso == 1){ // Caso == 1. Ele tentou subir, mas descerá para retornar a posição anterior
+        if (caso == 1){ // Ele tentou subir, mas descerá para retornar a posição anterior
             if (deltaZ <= subidaMaxima){
                 super.setAltitude(deltaZ);
             } else { // Ele é incapaz de subir o tanto indicado
                 super.setAltitude(subidaMaxima);
             }
             
-        } else { // caso == 2. Ele tentou descer, mas subirá para retornar a posição anterior
+        } else { // (caso == 2) Ele tentou descer, mas subirá para retornar a posição anterior
             if (deltaZ <= descidaMaxima){
                 super.setAltitude(-deltaZ);
             } else { // Ele é incapaz de descer o tanto indicado

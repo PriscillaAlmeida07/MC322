@@ -3,12 +3,12 @@ public abstract class Sensor {
     private final double raio;
 
     // Construtor.
-    public Sensor() {
+    public Sensor(){
         raio = 40;
     }
     
     // Obtém o raio do sensor.
-    public double getRaio() {
+    public double getRaio(){
         return raio;
     }
 
