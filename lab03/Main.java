@@ -116,7 +116,7 @@ public class Main {
                     break;    
 
                 default:
-                System.out.print("Valor inválido, digite novamente: ");
+                System.out.println("Valor inválido, digite novamente\n");
                     break;
             }
         }
@@ -161,7 +161,7 @@ public class Main {
         String direcao;
         int[] posicao = robo.getPosicao();
 
-        if (velocidade > robo.getVelocidadeMaxima()) {
+        if ((velocidade > robo.getVelocidadeMaxima()) || (velocidade < 0)){
             direcao = robo.getDirecao();
             System.out.println("O robô está atualmente na posição: (" + posicao[0] + "," + posicao[1] + "," + posicao[2] + ") e virado para o " + direcao);
             return 1;
@@ -184,19 +184,19 @@ public class Main {
     // Movimento do robô obstáculo terrestre.
     private static void movimentarObstaculoTerrestre(Scanner entrada, RoboObstaculoTerrestre roboObstaculoTerrestre1, Ambiente ambiente1){
 
-        System.out.print("Informe quantos metros o robô Obstáculo Terrestre irá mover:\n" +"Na direção x:");
+        System.out.print("Informe quantos metros o robô Obstáculo Terrestre irá mover:\n" +"Na direção x: ");
         int deltaX = entrada.nextInt();
 
-        System.out.print("Na direção y:");
+        System.out.print("Na direção y: ");
         int deltaY = entrada.nextInt();
 
-        System.out.print("Informe a velocidade:");
+        System.out.print("Informe a velocidade: ");
         int velocidade = entrada.nextInt();
 
         roboObstaculoTerrestre1.setVelocidade(velocidade);
         roboObstaculoTerrestre1.mover(deltaX, deltaY);
 
-        if (validarMovimentoObstaculoTerrestre(ambiente1, roboObstaculoTerrestre1, deltaX, deltaY) == 1){
+        if (validarMovimentoObstaculoTerrestre(ambiente1, roboObstaculoTerrestre1, deltaX, deltaY, velocidade) == 1){
             System.out.print("O robô soltará um bloco na posição?\n" + "Se sim, digite 1, se não digite 0: ");
             int condicao = entrada.nextInt();
 
@@ -206,22 +206,27 @@ public class Main {
 
                 if (bloco != null){
                     ambiente1.adicionarObstaculo(bloco);
-                    System.out.print("O robo soltou um bloco");
+                    System.out.print("O robo soltou um bloco\n");
                 }
 
             } else if ((condicao != 1) && (condicao != 0)) {
-                System.out.print("Valor inválido inserido, o robô não soltará um bloco");
+                System.out.println("Valor inválido inserido, o robô não soltará um bloco");
             }
-            System.out.println("\n");
+            System.out.print("\n");
         }
     }
     
     // Verifica se o roboObstaculoTerrestre está dentro dos limites, se não estiver, move ele para a sua posição válida anterior.
-    private static int validarMovimentoObstaculoTerrestre(Ambiente ambiente1, RoboObstaculoTerrestre robo, int deltaX, int deltaY){
+    private static int validarMovimentoObstaculoTerrestre(Ambiente ambiente1, RoboObstaculoTerrestre robo, int deltaX, int deltaY, int velocidade){
         String direcao;
         int[] posicao = robo.getPosicao();
 
-        if ((ambiente1.dentroDosLimites(posicao[0], posicao[1]) == 1) && (ambiente1.existeObstaculoTerrestres(posicao[0], posicao[1]) == 1)){
+        if ((velocidade > robo.getVelocidadeMaxima()) || (velocidade < 0)){
+            direcao = robo.getDirecao();
+            System.out.println("O robô está atualmente na posição: (" + posicao[0] + "," + posicao[1] + ") e virado para o " + direcao + "\n");
+            return 1;
+            
+        } else if ((ambiente1.dentroDosLimites(posicao[0], posicao[1]) == 1) && (ambiente1.existeObstaculoTerrestres(posicao[0], posicao[1]) == 1)){
             robo.setDirecao(deltaX, deltaY);
             direcao = robo.getDirecao();
             System.out.println("O robô movimentado está atualmente na posição: (" + posicao[0] + "," + posicao[1] + ") e virado para o " + direcao + "\n");
@@ -395,7 +400,7 @@ public class Main {
                     break;   
 
                 default:
-                System.out.print("Valor inválido, digite novamente: ");
+                System.out.println("Valor inválido, digite novamente\n");
                     break;
             }
         }
