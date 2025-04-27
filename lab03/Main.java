@@ -34,14 +34,14 @@ public class Main {
         // Instânciamento de todos os robôs.
         RoboCavador roboCavador1 = new RoboCavador("roboCavador1");
         RoboObstaculoTerrestre roboObstaculoTerrestre1 = new RoboObstaculoTerrestre("roboObstaculoTerrestre1");
-        RoboObstaculoAereo roboObstaculoAereo1 = new RoboObstaculoAereo("roboObstaculoAereo1");
         RoboFlutuador roboFlutuador1 = new RoboFlutuador("roboFlutuador1");
+        RoboObstaculoAereo roboObstaculoAereo1 = new RoboObstaculoAereo("roboObstaculoAereo1");
 
         // Adicionando robôs ao ambiente.
         ambiente1.adicionarRobo(roboCavador1);
         ambiente1.adicionarRobo(roboObstaculoTerrestre1);
-        ambiente1.adicionarRobo(roboObstaculoAereo1);
         ambiente1.adicionarRobo(roboFlutuador1);
+        ambiente1.adicionarRobo(roboObstaculoAereo1);
         
         // Variáveis de funcionamento do sistema.
         Scanner entrada = new Scanner(System.in);
@@ -206,7 +206,7 @@ public class Main {
 
                 if (bloco != null){
                     ambiente1.adicionarObstaculo(bloco);
-                    System.out.print("O robo soltou um bloco\n");
+                    System.out.print("O robô soltou um bloco\n");
                 }
 
             } else if ((condicao != 1) && (condicao != 0)) {
@@ -243,17 +243,20 @@ public class Main {
 
     // Movimento do robô flutuador.
     private static void movimentarFlutuador(Scanner entrada, RoboFlutuador roboFlutuador1, Ambiente ambiente1){
+        int deltaZ = 0;
 
-        System.out.print("Informe quantos metros o robô Flutuador irá mover:\n" +"Na direção x:");
+        System.out.print("Informe quantos metros o robô Flutuador irá mover:\n" +"Na direção x: ");
         int deltaX = entrada.nextInt();
 
-        System.out.print("Na direção y:");
+        System.out.print("Na direção y: ");
         int deltaY = entrada.nextInt();
 
-        System.out.print("O robo subirá (digite 1) ou descerá (digite 2):");
+        System.out.print("O robo subirá (digite 1) ou descerá (digite 2): ");
         int voo = entrada.nextInt();
-        System.out.print("Quantos metros:");
-        int deltaZ = entrada.nextInt();
+        if ((voo == 1) || (voo == 2)) {
+            System.out.print("Quantos metros: ");
+            deltaZ = entrada.nextInt();
+        }
 
         roboFlutuador1.mover(deltaX, deltaY);
 
@@ -264,7 +267,7 @@ public class Main {
         }
 
         validarMovimentoFlutuador(ambiente1, roboFlutuador1, deltaX, deltaY, deltaZ, voo);
-        System.out.println("\n");
+        System.out.print("\n");
     }
 
     // Verifica se o roboFlutuador está dentro dos limites, se não estiver, move ele para a sua posição válida anterior.
@@ -276,43 +279,46 @@ public class Main {
         if (caso != 1 && caso != 2){
             robo.mover(-deltaX, -deltaY);
             posicao = robo.getPosicao();
-            System.out.println("Valor inválido inserido, logo o robô permanece na posição (" + posicao[0] + "," + posicao[1] + "," + posicao[2] + ")\n");
+            System.out.println("Valor inválido inserido, logo o robô permanece na posição (" + posicao[0] + "," + posicao[1] + "," + posicao[2] + ")");
 
         } else if ((ambiente1.dentroDosLimites(posicao[0], posicao[1]) == 1) && (ambiente1.existeObstaculoAereos(posicao[0], posicao[1], posicao[2]) == 1)){
             robo.setDirecao(deltaX, deltaY);
             direcao = robo.getDirecao();
-            System.out.println("O robô movimentado está atualmente na posição: (" + posicao[0] + "," + posicao[1] + "," + posicao[2] + ") e virado para o " + direcao + "\n");
+            System.out.println("O robô movimentado está atualmente na posição: (" + posicao[0] + "," + posicao[1] + "," + posicao[2] + ") e virado para o " + direcao);
         
         } else { // Se sair do ambiente, volta para a posição inicial.
             robo.mover(-deltaX, -deltaY);
             robo.setAltitude(deltaZ, caso);
             posicao = robo.getPosicao();
             direcao = robo.getDirecao();
-            System.out.println("O robô tentou sair do ambiente ou colidiu com algum obstáculo, logo ele retornou para a posição: (" + posicao[0] + "," + posicao[1] + "," + posicao[2] + ") e voltado para o " + direcao + "\n");
+            System.out.println("O robô tentou sair do ambiente ou colidiu com algum obstáculo, logo ele retornou para a posição: (" + posicao[0] + "," + posicao[1] + "," + posicao[2] + ") e voltado para o " + direcao);
         }
     }
 
     // Movimento do robô obstáculo aereo.
     private static void movimentarObstaculoAereo(Scanner entrada, RoboObstaculoAereo roboObstaculoAereo1, Ambiente ambiente1){
+        int deltaZ = 0;
 
-        System.out.print("Informe quantos metros o robô Obstaculo Aereo irá mover:\n" +"Na direção x:");
+        System.out.print("Informe quantos metros o robô Obstaculo Aereo irá mover:\n" +"Na direção x: ");
         int deltaX = entrada.nextInt();
 
-        System.out.print("Na direção y:");
+        System.out.print("Na direção y: ");
         int deltaY = entrada.nextInt();
 
-        System.out.print("O robo subirá (digite 1) ou descerá (digite 2):");
+        System.out.print("O robo subirá (digite 1) ou descerá (digite 2): ");
         int voo = entrada.nextInt();
-        System.out.print("Quantos metros:");
-        int deltaZ = entrada.nextInt();
-
-        if(voo == 1){
-            roboObstaculoAereo1.subir(deltaZ);
-        } else if (voo == 2) {
-            roboObstaculoAereo1.descer(deltaZ);
+        if ((voo == 1) || (voo == 2)) {
+            System.out.print("Quantos metros: ");
+            deltaZ = entrada.nextInt();
         }
 
         roboObstaculoAereo1.mover(deltaX, deltaY);
+
+        if (voo == 1){
+            roboObstaculoAereo1.subir(deltaZ);
+        } else if (voo == 2){
+            roboObstaculoAereo1.descer(deltaZ);
+        }
 
         if (validarMovimentoObstaculoAereo(ambiente1, roboObstaculoAereo1, deltaX, deltaY, deltaZ, voo) == 1){
             System.out.print("O robô soltará uma nuvem na posição?\n" + "Se sim, digite 1, se não digite 0: ");
@@ -324,7 +330,7 @@ public class Main {
 
                 if(nuvem != null){
                     ambiente1.adicionarObstaculo(nuvem);
-                    System.out.print("O robo soltou uma nuvem");
+                    System.out.print("O robô soltou uma nuvem");
                 }
 
             } else if ((condicao != 1) && (condicao != 0)) {
@@ -407,6 +413,5 @@ public class Main {
     }   
 }
 
-
+// Na movimentação no eixo Z o usuário não pode digitar números negativos
 // Adicionar sistema de reposição de blocos
-// Há algum problema com os robos aereos quando eles passam do ambiente, eles nao voltam para a posicao correta. (o setAltitude esta errado). Acho que acabei de consertar kkkkkk
