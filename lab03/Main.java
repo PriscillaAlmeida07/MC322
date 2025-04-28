@@ -37,12 +37,21 @@ public class Main {
         RoboFlutuador roboFlutuador1 = new RoboFlutuador("roboFlutuador1");
         RoboObstaculoAereo roboObstaculoAereo1 = new RoboObstaculoAereo("roboObstaculoAereo1");
 
+        // Criamos esse robô apenas para testar o metodo removerRobo
+        RoboObstaculoAereo roboObstaculoAereo2 = new RoboObstaculoAereo("roboObstaculoAereo2");
+
         // Adicionando robôs ao ambiente.
         ambiente1.adicionarRobo(roboCavador1);
         ambiente1.adicionarRobo(roboObstaculoTerrestre1);
         ambiente1.adicionarRobo(roboFlutuador1);
         ambiente1.adicionarRobo(roboObstaculoAereo1);
+        ambiente1.adicionarRobo(roboObstaculoAereo2);
         
+        System.out.print("\n");
+        
+        // Testando o metodo removerRobo
+        ambiente1.removerRobo(roboObstaculoAereo2);
+
         // Variáveis de funcionamento do sistema.
         Scanner entrada = new Scanner(System.in);
         boolean continuar = true;

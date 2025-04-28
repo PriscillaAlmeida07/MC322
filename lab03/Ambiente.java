@@ -20,7 +20,20 @@ public class Ambiente {
     // Registra um novo robô.
     public void adicionarRobo(Robo robo){
         robosAtivos.add(robo);
+        System.out.println("O robô " + robo.getNome() + " foi adicionado ao ambiente");
     }
+
+    // Remove um robô do ambiente
+    public void removerRobo(Robo robo){
+        for (int i = 0; i < robosAtivos.size(); i++) {
+            if (robosAtivos.get(i) == robo) {
+                robosAtivos.remove(i);
+                System.out.println("O robô " + robo.getNome() + " foi removido do ambiente\n");
+                break; // sair do laço quando o robô for encontrado e removido
+            }
+        }
+    }
+    
 
     // Registra um novo obstáculo.
     public void adicionarObstaculo(Obstaculo obstaculo){
