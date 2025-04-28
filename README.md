@@ -14,4 +14,4 @@ Ana Luiza Mota Gomes (242389)
   java Main.java
 
 ### Diagrama de classes:
-![Diagrama](/images/Diagrama_de_classes.jpeg)
+![Diagrama](images/Diagrama_de_Classes.jpg)
