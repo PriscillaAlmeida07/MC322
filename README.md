@@ -7,6 +7,10 @@ Este é o repositório do projeto da disciplina de MC322.
 O projeto está organizado em diferentes laboratórios (labs), cada um representa uma etapa de seu desenvolvimento.
 Há também uma pasta images que contém o Diagrama de Classes.
 
+### Informações sobre IDE e Java:
+IDE utilizada: VScode
+Versão do Java utilizada: 21.0.5
+
 ### Execução:
 Para executar o programa siga os seguintes passos:
 - Entre na pasta do projeto e depois na pasta do laboratório desejado.
