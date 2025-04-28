@@ -26,4 +26,4 @@ Para executar o programa siga os seguintes passos:
   java Main.java
 
 ### Diagrama de classes:
-![Diagrama](images/Diagrama_de_Classes.jpg)
+![Diagrama](images/Diagrama_Classes.jpg)
