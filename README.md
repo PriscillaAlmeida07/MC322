@@ -1,9 +1,17 @@
-Nomes e RAs:
+### Nomes e RAs:
 Priscilla Almeida (176205)
 Ana Luiza Mota Gomes (242389)
 
-Para compilar utilize no terminal:
-javac Main.java
+### Descrição do repositório:
 
-Para rodar utilize no terminal:
-java Main.java
+### Execução:
+- Para compilar utilize no terminal:
+  ``` bash
+  javac Main.java
+
+- Para rodar utilize no terminal:
+  ``` bash
+  java Main.java
+
+### Diagrama de classes:
+![Diagrama](/images/Diagrama_de_classes.jpeg)
