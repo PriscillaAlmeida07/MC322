@@ -1,21 +1,24 @@
 
 import java.util.ArrayList;
 
-abstract class Robo {
+abstract class Robo implements Sensoreavel, Comunicavel, Entidade{
 
     private final ArrayList<Sensor> sensores;
     private final String nome;
-    private String id;
+    private final String id;
     private String direcao;
     private EstadoRobo estado;
-    private TipoEntidade tipo;
+    private final TipoEntidade tipo;
     private int posicaoX, posicaoY, posicaoZ;
 
     // Construtor.
-    public Robo(String nome){ 
+    public Robo(String nome, String id){ 
         sensores = new ArrayList<>();
         sensores.add(new SensorObstaculos());
 
+        tipo = TipoEntidade.ROBO;
+        estado = EstadoRobo.DESLIGADO;
+        this.id = id;
         this.nome = nome;
         posicaoX = 25;
         posicaoY = 25; 
@@ -40,9 +43,10 @@ abstract class Robo {
 
     // Obtém a posição (x,y) do robô.
     public int[] getPosicao(){
-        int[] vetor = new int[2];
+        int[] vetor = new int[3];
         vetor[0] = posicaoX;
         vetor[1] = posicaoY;
+        vetor[2] = posicaoY;
 
         return vetor;
     }
@@ -94,9 +98,23 @@ abstract class Robo {
     public abstract void executarTarefa();
 
     // Utiliza todos os sensores do robô.
-    public void usarSensores(Ambiente ambiente, int[] vetorPosicao){
+    public void acionarSensores(Ambiente ambiente, int[] vetorPosicao){
         for (int i=0; i< sensores.size(); i++ ){
             sensores.get(i).monitorar(ambiente, vetorPosicao);
         }
     }
+
+    public void enviarMensagem(Comunicavel destinatario, String mensagem){
+
+    }
+    public void receberMensagem(String mensagem){
+
+    }
+
+    public int getX(){return posicaoX;}
+    public int getY(){ return posicaoY;}
+    public int getZ(){return posicaoZ;}
+    public TipoEntidade getTipo(){return tipo;}
+    public abstract String getDescricao();
+    public char getRepresentacao(){return 'R';}
 }

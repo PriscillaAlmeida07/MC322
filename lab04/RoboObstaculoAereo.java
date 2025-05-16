@@ -1,12 +1,48 @@
+
+import java.util.Scanner;
+
 public class RoboObstaculoAereo extends RoboAereo {
         
     // Robô capaz de criar obstáculos posicionando nuvens no céu.
     private int numNuvens;
 
     // Construtor.
-    public RoboObstaculoAereo(String nome){
-        super(nome);
+    public RoboObstaculoAereo(String nome, String id){
+        super(nome, id);
         numNuvens = 3;
+    }
+
+    public void executarTarefa(Scanner entrada){
+        int deltaZ = 0;
+        System.out.print("O robo subirá (digite 1) ou descerá (digite 2): ");
+        int voo = entrada.nextInt();
+        if ((voo == 1) || (voo == 2)) {
+            System.out.print("Quantos metros: ");
+            deltaZ = entrada.nextInt();
+        }
+        
+        if (voo == 1){
+            super.subir(deltaZ);
+        } else if (voo == 2){
+            super.descer(deltaZ);
+        }
+
+        System.out.print("O robô soltará uma nuvem na posição?\n" + "Se sim, digite 1, se não digite 0: ");
+        int condicao = entrada.nextInt();
+
+        if (condicao == 1){
+            int[] posicao = this.getPosicao();
+            Obstaculo nuvem = this.soltarNuvens(posicao[0], posicao[1], posicao[2]);
+
+            if(nuvem != null){
+                ambiente1.adicionarObstaculo(nuvem);
+                System.out.print("O robô soltou uma nuvem");
+            }
+
+        } else if ((condicao != 1) && (condicao != 0)) {
+            System.out.print("Valor inválido inserido, o robô não soltará um bloco");
+        }
+        System.out.println("\n");
     }
 
     // Posiciona uma nuvem em sua posição, criando um obstáculo para outros robôs. Adicionaremos ao ambiente na main

@@ -1,16 +1,34 @@
+
+import java.util.Scanner;
+
 public class RoboFlutuador extends RoboAereo {
     
-    // Robo incapaz de realizar subidas e descidas muito bruscas.
+    // Robo flutuador: ele é incapaz de realizar subidas e descidas muito bruscas.
     private final int subidaMaxima;
     private final int descidaMaxima;
 
     // Construtor.
-    public RoboFlutuador(String nome){
-        super(nome);
+    public RoboFlutuador(String nome, String id){
+        super(nome, id);
         subidaMaxima = 10;
         descidaMaxima = 5;
     }
 
+    public void executarTarefa(Scanner entrada){
+        int deltaZ = 0;
+        System.out.print("O robo subirá (digite 1) ou descerá (digite 2): ");
+        int voo = entrada.nextInt();
+        if ((voo == 1) || (voo == 2)) {
+            System.out.print("Quantos metros: ");
+            deltaZ = entrada.nextInt();
+        }
+
+        if (voo == 1){
+            this.subir(deltaZ);
+        } else if (voo == 2){
+            this.descer(deltaZ);
+        }
+    }
     // Confere a velocidade de subida antes de realizar o movimento.
     @Override
     public void subir(int deltaZ){
@@ -32,7 +50,7 @@ public class RoboFlutuador extends RoboAereo {
             super.descer(descidaMaxima);
         }
     }
-
+/* 
     // Conserta a altitude do robô caso ele tenha tentado ir para uma posição inadequada.
     public void setAltitude(int deltaZ, int caso){
         if (caso == 1){ // Ele tentou subir, mas descerá para retornar a posição anterior
@@ -50,4 +68,6 @@ public class RoboFlutuador extends RoboAereo {
             } 
         }
     }
+*/
+    public String getDescricao(){return  "Robo flutuador: ele é incapaz de realizar subidas e descidas muito bruscas.";}
 }
