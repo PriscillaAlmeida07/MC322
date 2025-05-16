@@ -8,9 +8,9 @@ public class Ambiente {
 
     // Construtor.
     public Ambiente(){ 
-        largura = 100;
-        comprimento = 100;
-        altura = 200;
+        largura = 50;
+        comprimento = 50;
+        altura = 100;
         entidades = new ArrayList<>();
         mapa = new TipoEntidade[100][100][200];
     }
@@ -83,6 +83,24 @@ public class Ambiente {
         } else {
             return  1;
        }
+    }
+
+    public void executarSensores(){
+        for (int i = 0; i < entidades.size(); i++) {
+            if (entidades.get(i) instanceof Robo robo) {
+                int[] vetorPosicao = robo.getPosicao();
+                robo.usarSensores(this, vetorPosicao);
+            }
+        }
+    }
+
+    public void visualizarAmbiente(){
+        for(int x=0; x< largura; x++){
+            for(int y=0; y< comprimento; y++){
+                System.out.print( '|' + mapa[x][y][altura/2].getCaractere() + '|');
+            }
+            System.out.print("\n");
+        }
     }
 /* 
     // Lista todos os robôs que estão no ambiente e as suas informações.

@@ -17,8 +17,9 @@ abstract class Robo {
         sensores.add(new SensorObstaculos());
 
         this.nome = nome;
-        posicaoX = 50;
-        posicaoY = 50; 
+        posicaoX = 25;
+        posicaoY = 25; 
+        posicaoZ = 50;
         direcao = "Norte";
     }
 
@@ -90,7 +91,7 @@ abstract class Robo {
         estado = EstadoRobo.DESLIGADO;
     }
 
-    public abstract void executar();
+    public abstract void executarTarefa();
 
     // Utiliza todos os sensores do robô.
     public void usarSensores(Ambiente ambiente, int[] vetorPosicao){
