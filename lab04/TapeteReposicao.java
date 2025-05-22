@@ -1,4 +1,4 @@
-public class TapeteReposicao {
+public class TapeteReposicao implements Entidade{
 
     // Local do ambiente em que os robôs obstáculo terrestre podem repor os seus blocos.
     private final int posicaoX;

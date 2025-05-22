@@ -5,8 +5,8 @@ public class RoboCavador extends RoboTerrestre {
     private final int profundidadeMaxima;
 
     // Construtor.
-    public RoboCavador(String nome){ 
-        super(nome);
+    public RoboCavador(String nome, String id){ 
+        super(nome, id);
         profundidade = 0;
         profundidadeMaxima = 100;
     }

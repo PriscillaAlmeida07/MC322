@@ -10,6 +10,7 @@ abstract class Robo implements Sensoreavel, Comunicavel, Entidade{
     private EstadoRobo estado;
     private final TipoEntidade tipo;
     private int posicaoX, posicaoY, posicaoZ;
+    private int vida;
 
     // Construtor.
     public Robo(String nome, String id){ 

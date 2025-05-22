@@ -4,8 +4,8 @@ public class RoboObstaculoTerrestre extends RoboTerrestre {
     private int numBlocos;
 
     // Construtor.
-    public RoboObstaculoTerrestre(String nome){
-        super(nome);
+    public RoboObstaculoTerrestre(String nome, String id){
+        super(nome, id);
         numBlocos = 1;
         adicionaSensorReporBlocos(new SensorReporBlocos());
     }
