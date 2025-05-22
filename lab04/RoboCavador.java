@@ -1,4 +1,4 @@
-public class RoboCavador extends RoboTerrestre { 
+public class RoboCavador extends RoboTerrestre implements Atacante { 
 
     // Robô terrestre que consegue perfurar o solo.
     private int profundidade;
@@ -52,5 +52,9 @@ public class RoboCavador extends RoboTerrestre {
     public Obstaculo criarBuraco(int posicaoX, int posicaoY, int posicaoZ){
         Obstaculo buraco = new Obstaculo(TipoObstaculo.BURACO, posicaoX, posicaoY, posicaoZ);
         return buraco;
+    }
+
+    public void atacar(){
+        
     }
 }

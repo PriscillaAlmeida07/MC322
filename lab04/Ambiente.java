@@ -102,6 +102,18 @@ public class Ambiente {
             System.out.print("\n");
         }
     }
+
+    public int existeEntidade(int posicaoX, int posicaoY, int posicaoZ){
+        if((mapa[posicaoX][posicaoY][posicaoZ] == TipoEntidade.VAZIO) || (mapa[posicaoX][posicaoY][posicaoZ] == TipoEntidade.TAPETE))
+            return 0;
+        else 
+            return 1;
+
+    }
+
+    public ArrayList<Entidade> getArrayEntidades(){
+        return entidades;
+    }
 /* 
     // Lista todos os robôs que estão no ambiente e as suas informações.
     public void getTodosRobos(){

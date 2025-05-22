@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public abstract class Sensor {
 
     private final double raio;
@@ -13,5 +15,5 @@ public abstract class Sensor {
     }
 
     // Declaração de que todas as classes que herdam de sensor devem ter uma função "monitorar".
-    public abstract void monitorar(Ambiente ambiente, int[] vetorPosicao);
+    public abstract ArrayList<Entidade> monitorar(Ambiente ambiente, int[] vetorPosicao, int caso);
 }

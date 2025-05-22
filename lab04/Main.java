@@ -335,6 +335,16 @@ public class Main {
 
     }
 
+    public static void ligarDesligar(Robo robo){
+        if(robo.getEstadoRobo() == EstadoRobo.LIGADO) {
+            robo.desligar();
+            System.out.println("O robô foi desligado");
+        } else {
+            robo.ligar();
+            System.out.println("O robô foi ligado");
+        }
+    }
+
     // Movimento do robô cavador.
     private static void movimentarCavador(Scanner entrada, RoboCavador roboCavador1, Ambiente ambiente1){
 
@@ -348,48 +358,51 @@ public class Main {
         int velocidade = entrada.nextInt();
 
         roboCavador1.setVelocidade(velocidade);
-        roboCavador1.mover(deltaX, deltaY);
-                
+        roboCavador1.moverPara(deltaX, deltaY, 0);
+          
+        /*
         System.out.print("Informe quantos metros o robo cavará: ");
         int deltaZ = entrada.nextInt();
         roboCavador1.cavar(deltaZ);
-        
+        */
+
         // Se o movimento foi válido o buraco será adicionado ao ambiente
-        if ((validarMovimentoCavador(ambiente1, roboCavador1, deltaX, deltaY,deltaZ, velocidade) == 1) && (deltaZ != 0)){
-            int[] posicao = roboCavador1.getPosicao();
-            Obstaculo buraco = roboCavador1.criarBuraco(posicao[0], posicao[1], posicao[2]);
-
-            if (buraco != null){
-                ambiente1.adicionarEntidade(arvore4);(buraco);
-            }
-
-        }
+        validarMovimentoCavador(ambiente1, roboCavador1, deltaX, deltaY, 0, velocidade);
         System.out.println("\n");
     }
 
     // Verifica se o RoboCavador está dentro dos limites, se não estiver, move ele para a sua posição válida anterior.
-    private static int validarMovimentoCavador(Ambiente ambiente1, RoboCavador robo, int deltaX, int deltaY, int deltaZ, int velocidade){
+    private static void validarMovimentoCavador(Ambiente ambiente1, RoboCavador robo, int deltaX, int deltaY, int deltaZ, int velocidade){
         String direcao;
         int[] posicao = robo.getPosicao();
 
         if ((velocidade > robo.getVelocidadeMaxima()) || (velocidade < 0)){
             direcao = robo.getDirecao();
             System.out.println("O robô está atualmente na posição: (" + posicao[0] + "," + posicao[1] + "," + posicao[2] + ") e virado para o " + direcao);
-            return 1;
 
-        } else if ((ambiente1.dentroDosLimites(posicao[0], posicao[1]) == 1) && (ambiente1.existeObstaculoTerrestres(posicao[0], posicao[1]) == 1)){
+        } else if ((ambiente1.dentroDosLimites(posicao[0], posicao[1], posicao[2]) == 1) && (ambiente1.existeEntidade(posicao[0], posicao[1], posicao[2]) == 0)){
             robo.setDirecao(deltaX, deltaY);
             direcao = robo.getDirecao();
             System.out.println("O robô movimentado está atualmente na posição: (" + posicao[0] + "," + posicao[1] + "," + posicao[2] + ") e virado para o " + direcao);
-            return 1;
+            
 
         } else { // Se sair do ambiente, volta para a posição inicial.
-            robo.mover(-deltaX, -deltaY);
-            robo.setProfundidade(deltaZ);
+            robo.moverPara(-deltaX, -deltaY, 0);
             posicao = robo.getPosicao();
             direcao = robo.getDirecao();
             System.out.println("O robô tentou sair do ambiente ou colidiu com algum obstáculo, logo ele retornou para a posição: (" + posicao[0] + "," + posicao[1] + "," + posicao[2] + ") e voltado para o " + direcao);
-            return 0;
+            
+        }
+    }
+
+    public static void cavar( Scanner entrada, RoboCavador robo, Ambiente ambiente){
+        System.out.print("Quantos metros o robo cavará:");
+        int deltaZ = entrada.nextInt();
+        if(deltaZ < 0){
+            System.out.println("Valor invalido digitado");
+        } else {
+            robo.moverPara(0,0, -deltaZ);
+            System.out.println("O robo cavou "+ deltaZ + " metros\n");
         }
     }
 

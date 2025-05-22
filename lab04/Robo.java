@@ -42,6 +42,9 @@ abstract class Robo implements Sensoreavel, Comunicavel, Entidade{
         return direcao;
     }
 
+    public EstadoRobo getEstadoRobo(){
+        return  estado;
+    }
     // Obtém a posição (x,y) do robô.
     public int[] getPosicao(){
         int[] vetor = new int[3];
@@ -92,7 +95,7 @@ abstract class Robo implements Sensoreavel, Comunicavel, Entidade{
         estado = EstadoRobo.LIGADO;
     }
 
-    public void desligado(){
+    public void desligar(){
         estado = EstadoRobo.DESLIGADO;
     }
 

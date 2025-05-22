@@ -11,40 +11,38 @@ public class SensorObstaculos extends Sensor {
 
     // Encontra e imprime os obstáculos próximos.
     @Override
-    public void monitorar(Ambiente ambiente, int[] posicaoRobo){
+    public ArrayList<Entidade> monitorar(Ambiente ambiente, int[] posicaoRobo, int caso){
 
         // Obtendo as variáveis necessárias para o sensor
-        ArrayList<Obstaculo> obstaculos = ambiente.getArrayObstaculos();
-        int[] posicaoObstaculo;
+        ArrayList<Entidade> entidades = ambiente.getArrayEntidades();
         double raio = getRaio();
-        int capturado = 0;
+        ArrayList<Entidade> resultado = new ArrayList<>();
 
-        if (posicaoRobo.length == 2){ // Caso robô obstáculo terrestre
+        if (caso == 1){ // Caso robô obstáculo terrestre
             System.out.println("Resultado do sensor de obstáculos para o robô na posição: (" + posicaoRobo[0] + "," + posicaoRobo[1] + ")");
 
-            for (int i = 0; i < obstaculos.size(); i++){
-                posicaoObstaculo = obstaculos.get(i).getPosicao();
-                if ((posicaoObstaculo[2] == 0) && Math.pow(raio, 2) >= (Math.pow((posicaoRobo[0] - posicaoObstaculo[0]), 2)) + (Math.pow((posicaoRobo[1] - posicaoObstaculo[1]), 2))) { // Obstáculo no chão e próximo
-                    System.out.println("Foi capturado um(a) " + obstaculos.get(i).getTipo().getNome() + " na posição (" + posicaoObstaculo[0] + "," + posicaoObstaculo[1] + ")");
-                    capturado++;
+            for (int i = 0; i < entidades.size(); i++){
+                if (entidades.get(i) instanceof Obstaculo obstaculo) {
+                    if ((obstaculo.getZ() == 0) && Math.pow(raio, 2) >= (Math.pow((posicaoRobo[0] - obstaculo.getX()), 2)) + (Math.pow((posicaoRobo[1] - obstaculo.getY()), 2))) { // Obstáculo no chão e próximo
+                        resultado.add(obstaculo);
+                    }
                 }
             }
 
         } else { // (posicaoRobo.length == 3) *Outros robôs*
             System.out.println("Resultado do sensor de obstáculos para o robô na posição: (" + posicaoRobo[0] + "," + posicaoRobo[1] + "," + posicaoRobo[2] + ")");
 
-            for (int i = 0; i < obstaculos.size(); i++){
-                posicaoObstaculo = obstaculos.get(i).getPosicao();
-                if (Math.pow(raio, 2) >= (Math.pow((posicaoRobo[0] - posicaoObstaculo[0]), 2)) + (Math.pow((posicaoRobo[1] - posicaoObstaculo[1]), 2)) + (Math.pow((posicaoRobo[2] - posicaoObstaculo[2]), 2))) {
-                    System.out.println("Foi capturado um(a) " + obstaculos.get(i).getTipo().getNome() + " na posição (" + posicaoObstaculo[0] + "," + posicaoObstaculo[1] + "," + posicaoObstaculo[2] + ")");
-                    capturado++;
+            for (int i = 0; i < entidades.size(); i++){
+                if (entidades.get(i) instanceof Obstaculo obstaculo) {
+                    if (Math.pow(raio, 2) >= (Math.pow((posicaoRobo[0] - obstaculo.getX()), 2)) + (Math.pow((posicaoRobo[1] - obstaculo.getY()), 2)) + (Math.pow((posicaoRobo[2] - obstaculo.getZ()), 2))) {
+                        resultado.add(obstaculo);
+                    }
                 }
             } 
         }
-
-        if (capturado == 0){
-            System.out.println("Nenhum obstáculo capturado");
-        }
-        System.out.print("\n");
+        return resultado;
     }
 }
+
+// System.out.println("Foi capturado um(a) " + obstaculo.getTipoObstaculo().getNome() + " na posição (" + obstaculo.getX() + "," + obstaculo.getY() + ")");
+// System.out.println("Foi capturado um(a) " + obstaculo.getTipoObstaculo().getNome() + " na posição (" + obstaculo.getX() + "," + obstaculo.getY() + "," + obstaculo.getZ() + ")");
