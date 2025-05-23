@@ -2,8 +2,8 @@ import java.util.ArrayList;
 
 public class SensorRobo extends Sensor {
     
-    public SensorRobo() {
-        super();
+    public SensorRobo(double raio, TipoSensor tipo) {
+        super(raio, tipo);
     }
     @Override
     public ArrayList<Entidade> monitorar(Ambiente ambiente, int[] posicaoRobo, int caso){

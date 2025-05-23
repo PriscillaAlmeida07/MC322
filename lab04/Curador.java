@@ -1,5 +1,5 @@
 public interface Curador {
-    void curar();
+    void curar(Ambiente ambiente);
     int getVida();
     int getReparo();
 }

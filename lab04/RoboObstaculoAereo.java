@@ -1,15 +1,18 @@
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
-public class RoboObstaculoAereo extends RoboAereo {
+public class RoboObstaculoAereo extends RoboAereo implements  Atacante {
         
     // Robô capaz de criar obstáculos posicionando nuvens no céu.
     private int numNuvens;
+    private final int dano;
 
     // Construtor.
     public RoboObstaculoAereo(String nome, String id){
         super(nome, id);
         numNuvens = 3;
+        dano = 2;
     }
 
     public void executarTarefa(Scanner entrada){
@@ -70,6 +73,24 @@ public class RoboObstaculoAereo extends RoboAereo {
 
         } else { // (caso == 2) Ele tentou descer, mas subirá para retornar a posição anterior
             super.setAltitude(-deltaZ);
+        }
+    }
+
+    @Override
+    public int getDano(){
+        return dano;
+    }
+
+    @Override
+    public void atacar(Ambiente ambiente){
+        Sensor sensor = getSensorRobo();
+        int[] vetorPosicao = getPosicao();
+        ArrayList<Entidade> robos = sensor.monitorar(ambiente, vetorPosicao, 1);
+
+        for (int i = 0; i < robos.size(); i++){
+            if (robos.get(i) instanceof Robo robo) {
+                robo.setVida(-dano);
+            }
         }
     }
 }

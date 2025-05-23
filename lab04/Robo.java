@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 abstract class Robo implements Sensoreavel, Comunicavel, Entidade{
 
@@ -15,7 +16,8 @@ abstract class Robo implements Sensoreavel, Comunicavel, Entidade{
     // Construtor.
     public Robo(String nome, String id){ 
         sensores = new ArrayList<>();
-        sensores.add(new SensorObstaculos());
+        sensores.add(new SensorObstaculos(40));
+        sensores.add(new SensorRobo(2, TipoSensor.ROBO));
 
         tipo = TipoEntidade.ROBO;
         estado = EstadoRobo.DESLIGADO;
@@ -25,6 +27,7 @@ abstract class Robo implements Sensoreavel, Comunicavel, Entidade{
         posicaoY = 25; 
         posicaoZ = 50;
         direcao = "Norte";
+        vida = 10;
     }
 
     // Adiciona um sensor de reposição de blocos, se o robô o possuir.
@@ -99,12 +102,21 @@ abstract class Robo implements Sensoreavel, Comunicavel, Entidade{
         estado = EstadoRobo.DESLIGADO;
     }
 
-    public abstract void executarTarefa();
+    public abstract void executarTarefa(Scanner entrada);
+
+    public Sensor getSensorRobo() {
+        for (int i=0; i< sensores.size(); i++ ){
+            if (sensores.get(i).getTipo() == TipoSensor.ROBO)
+                return sensores.get(i);
+        }
+        return null;
+    }
 
     // Utiliza todos os sensores do robô.
-    public void acionarSensores(Ambiente ambiente, int[] vetorPosicao){
+    public void acionarSensores(Ambiente ambiente, int caso){
+        int[] vetorPosicao = getPosicao();
         for (int i=0; i< sensores.size(); i++ ){
-            sensores.get(i).monitorar(ambiente, vetorPosicao);
+            sensores.get(i).monitorar(ambiente, vetorPosicao, caso);
         }
     }
 
@@ -113,6 +125,14 @@ abstract class Robo implements Sensoreavel, Comunicavel, Entidade{
     }
     public void receberMensagem(String mensagem){
 
+    }
+
+    public void setVida(int dano){
+        vida += dano;
+    }
+
+    public int getVida(){
+        return vida;
     }
 
     public int getX(){return posicaoX;}

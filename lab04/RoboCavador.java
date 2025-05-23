@@ -1,14 +1,23 @@
+import java.util.ArrayList;
+
 public class RoboCavador extends RoboTerrestre implements Atacante { 
 
     // Robô terrestre que consegue perfurar o solo.
     private int profundidade;
     private final int profundidadeMaxima;
+    private final int dano;
 
     // Construtor.
     public RoboCavador(String nome, String id){ 
         super(nome, id);
         profundidade = 0;
         profundidadeMaxima = 100;
+        dano = 3;
+    }
+
+    @Override
+    public int getDano(){
+        return dano;
     }
 
     // Obtém a profundidade do robô.
@@ -54,7 +63,16 @@ public class RoboCavador extends RoboTerrestre implements Atacante {
         return buraco;
     }
 
-    public void atacar(){
-        
+    @Override
+    public void atacar(Ambiente ambiente){
+        Sensor sensor = getSensorRobo();
+        int[] vetorPosicao = getPosicao();
+        ArrayList<Entidade> robos = sensor.monitorar(ambiente, vetorPosicao, 1);
+
+        for (int i = 0; i < robos.size(); i++){
+            if (robos.get(i) instanceof Robo robo) {
+                robo.setVida(-dano);
+            }
+        }
     }
 }

@@ -42,7 +42,7 @@ public class Main {
         RoboObstaculoAereo roboObstaculoAereo2 = new RoboObstaculoAereo("roboObstaculoAereo2", "ROA02");
 
         // Criamos esse robô apenas para testar o metodo removerEntidade
-        RoboObstaculoAereo roboObstaculoAereo2 = new RoboObstaculoAereo("roboObstaculoAereo2", "ROA02");
+        RoboObstaculoAereo roboObstaculoAereo3 = new RoboObstaculoAereo("roboObstaculoAereo3", "ROA03");
         System.out.print("\n");
 
         // Adicionando robôs ao ambiente.
@@ -53,8 +53,8 @@ public class Main {
         
         // Testando o metodo removerEntidade
         System.out.println("\nTeste de remoção de um robô:");
-        ambiente1.adicionarEntidade(roboObstaculoAereo2);
-        ambiente1.removerEntidade(roboObstaculoAereo2);
+        ambiente1.adicionarEntidade(roboObstaculoAereo3);
+        ambiente1.removerEntidade(roboObstaculoAereo3);
 
         // Variáveis de funcionamento do sistema.
         Scanner entrada = new Scanner(System.in);
@@ -73,7 +73,7 @@ public class Main {
             int opcao = entrada.nextInt();
             switch (opcao){
                 case 1:
-                    selecionarRobo(entrada, ambiente1, roboCavador1, roboObstaculoTerrestre1, roboObstaculoAereo1, roboFlutuador1);
+                    selecionarRobo(entrada, ambiente1, roboCavador1, roboCavador2, roboObstaculoTerrestre1, roboObstaculoTerrestre2, roboObstaculoAereo1, roboObstaculoAereo2, roboFlutuador1, roboFlutuador2);
                     break;
                 case 2:
                     listarTodosRobos();
@@ -99,7 +99,7 @@ public class Main {
     }
 
     // Escolhemos movimentar algum dos robôs, agora precisamos decidir qual deles:
-    private static void selecionarRobo(Scanner entrada, Ambiente ambiente1, RoboCavador roboCavador2, RoboObstaculoTerrestre roboObstaculoTerrestre2, RoboObstaculoAereo roboObstaculoAereo2, RoboFlutuador roboFlutuador2, RoboCavador roboCavador1, RoboObstaculoTerrestre roboObstaculoTerrestre1, RoboObstaculoAereo roboObstaculoAereo1, RoboFlutuador roboFlutuador1){
+    private static void selecionarRobo(Scanner entrada, Ambiente ambiente1, RoboCavador roboCavador1, RoboCavador roboCavador2, RoboObstaculoTerrestre roboObstaculoTerrestre1, RoboObstaculoTerrestre roboObstaculoTerrestre2, RoboObstaculoAereo roboObstaculoAereo1, RoboObstaculoAereo roboObstaculoAereo2, RoboFlutuador roboFlutuador1, RoboFlutuador roboFlutuador2){
         boolean continuar = true;
 
         while(continuar){
@@ -169,7 +169,7 @@ public class Main {
             int opcao = entrada.nextInt();
             switch (opcao) {
                 case 1:
-                    ligarDesligar(entrada, robo, ambiente);
+                    ligarDesligar(robo);
                     break;
                 case 2:
                     movimentarCavador(entrada, robo, ambiente);
@@ -181,10 +181,10 @@ public class Main {
                     interagir(entrada, robo, ambiente);
                     break;  
                 case 5:
-                    atacar(entrada, robo, ambiente);
+                    robo.atacar(ambiente);
                     break; 
                 case 6:
-                    utilizarSensores(entrada, robo, ambiente);
+                    robo.acionarSensores(ambiente, 1);
                     break; 
 
                 case 0:
@@ -216,7 +216,7 @@ public class Main {
             int opcao = entrada.nextInt();
             switch (opcao) {
                 case 1:
-                    ligarDesligar(entrada, robo, ambiente);
+                    ligarDesligar(robo);
                     break;
                 case 2:
                     movimentarObstaculoTerrestre(entrada, robo, ambiente);
@@ -228,10 +228,10 @@ public class Main {
                     interagir(entrada, robo, ambiente);
                     break;  
                 case 5:
-                    curar(entrada, robo, ambiente);
+                    robo.curar(ambiente);
                     break; 
                 case 6:
-                    utilizarSensores(entrada, robo, ambiente);
+                    robo.acionarSensores(ambiente, 1);
                     break; 
 
                 case 0:
@@ -262,7 +262,7 @@ public class Main {
             switch (opcao) {
                             
                 case 1:
-                    ligarDesligar(entrada, robo, ambiente);
+                    ligarDesligar(robo);
                     break;
                 case 2:
                     movimentarFlutuador(entrada, robo, ambiente);
@@ -271,10 +271,10 @@ public class Main {
                     interagir(entrada, robo, ambiente);
                     break;  
                 case 4:
-                    curar(entrada, robo, ambiente);
+                    robo.curar(ambiente);
                     break; 
                 case 5:
-                    utilizarSensores(entrada, robo, ambiente);
+                    robo.acionarSensores(ambiente, 2);
                     break; 
 
                 case 0:
@@ -305,7 +305,7 @@ public class Main {
             int opcao = entrada.nextInt();
             switch (opcao) {
                 case 1:
-                    ligarDesligar(entrada, robo, ambiente);
+                    ligarDesligar(robo);
                     break;
                 case 2:
                     movimentarObstaculoAereo(entrada, robo, ambiente);
@@ -317,10 +317,10 @@ public class Main {
                     interagir(entrada, robo, ambiente);
                     break;  
                 case 5:
-                    atacar(entrada, robo, ambiente);
+                    robo.atacar(ambiente);
                     break; 
                 case 6:
-                    utilizarSensores(entrada, robo, ambiente);
+                    robo.acionarSensores(ambiente, 2);
                     break; 
 
                 case 0:
@@ -419,55 +419,58 @@ public class Main {
         int velocidade = entrada.nextInt();
 
         roboObstaculoTerrestre1.setVelocidade(velocidade);
-        roboObstaculoTerrestre1.mover(deltaX, deltaY);
+        roboObstaculoTerrestre1.moverPara(deltaX, deltaY, 0);
 
-        if (validarMovimentoObstaculoTerrestre(ambiente1, roboObstaculoTerrestre1, deltaX, deltaY, velocidade) == 1){
-            System.out.print("O robô soltará um bloco na posição?\n" + "Se sim, digite 1, se não digite 0: ");
-            int condicao = entrada.nextInt();
-
-            if (condicao == 1){
-                int[] posicao = roboObstaculoTerrestre1.getPosicao();
-                Obstaculo bloco = roboObstaculoTerrestre1.soltarBlocos(posicao[0], posicao[1]);
-
-                if (bloco != null){
-                    ambiente1.adicionarEntidade(arvore4);(bloco);
-                    System.out.print("O robô soltou um bloco\n");
-                }
-
-            } else if ((condicao != 1) && (condicao != 0)) {
-                System.out.println("Valor inválido inserido, o robô não soltará um bloco");
-            }
-            System.out.print("\n");
-        }
+        validarMovimentoObstaculoTerrestre(ambiente1, roboObstaculoTerrestre1, deltaX, deltaY, velocidade);
     }
     
+    public static void posicionarNuvem(Ambiente ambiente1, RoboObstaculoAereo robo){
+        int[] posicao = robo.getPosicao();
+        Obstaculo nuvem = robo.soltarNuvens(posicao[0], posicao[1], posicao[2]);
+
+        if (nuvem != null){
+            ambiente1.adicionarEntidade(nuvem);
+            System.out.print("O robô soltou um nuvem\n");
+        }
+        System.out.print("\n");
+    }
     // Verifica se o roboObstaculoTerrestre está dentro dos limites, se não estiver, move ele para a sua posição válida anterior.
-    private static int validarMovimentoObstaculoTerrestre(Ambiente ambiente1, RoboObstaculoTerrestre robo, int deltaX, int deltaY, int velocidade){
+    private static void validarMovimentoObstaculoTerrestre(Ambiente ambiente1, RoboObstaculoTerrestre robo, int deltaX, int deltaY, int velocidade){
         String direcao;
         int[] posicao = robo.getPosicao();
 
         if ((velocidade > robo.getVelocidadeMaxima()) || (velocidade < 0)){
             direcao = robo.getDirecao();
             System.out.println("O robô está atualmente na posição: (" + posicao[0] + "," + posicao[1] + ") e virado para o " + direcao + "\n");
-            return 1;
             
-        } else if ((ambiente1.dentroDosLimites(posicao[0], posicao[1]) == 1) && (ambiente1.existeObstaculoTerrestres(posicao[0], posicao[1]) == 1)){
+        } else if ((ambiente1.dentroDosLimites(posicao[0], posicao[1], posicao[2]) == 1) && (ambiente1.existeEntidade(posicao[0], posicao[1], 100) == 1)){
             robo.setDirecao(deltaX, deltaY);
             direcao = robo.getDirecao();
             System.out.println("O robô movimentado está atualmente na posição: (" + posicao[0] + "," + posicao[1] + ") e virado para o " + direcao + "\n");
-            if (ambiente1.existeTapeteReposicao(posicao) == 1) {
+            if (ambiente1.existeTapete(posicao[0], posicao[1], posicao[2]) == 1) {
                 robo.reporBlocos();
                 System.out.println("O robô recarregou sua quantidade de blocos, pois está em um tapete de reposição");
             }
-            return 1;
        
         } else { // Se sair do ambiente, volta para a posição inicial.
             robo.mover(-deltaX, -deltaY);
             posicao = robo.getPosicao();
             direcao = robo.getDirecao();
             System.out.println("O robô tentou sair do ambiente ou colidiu com algum obstáculo, logo ele retornou para a posição: (" + posicao[0] + "," + posicao[1] + ") e voltado para o " + direcao + "\n");
-            return 0;
+            
         }
+    }
+
+    public static void posicionarBloco(Ambiente ambiente1, RoboObstaculoTerrestre robo){
+
+            int[] posicao = robo.getPosicao();
+            Obstaculo bloco = robo.soltarBlocos(posicao[0], posicao[1]);
+
+            if (bloco != null){
+                ambiente1.adicionarEntidade(bloco);
+                System.out.print("O robô soltou um bloco\n");
+            }
+            System.out.print("\n");
     }
 
     // Movimento do robô flutuador.
@@ -487,7 +490,7 @@ public class Main {
             deltaZ = entrada.nextInt();
         }
 
-        roboFlutuador1.mover(deltaX, deltaY);
+        roboFlutuador1.moverPara(deltaX, deltaY, deltaZ);
 
         if (voo == 1){
             roboFlutuador1.subir(deltaZ);

@@ -114,6 +114,13 @@ public class Ambiente {
     public ArrayList<Entidade> getArrayEntidades(){
         return entidades;
     }
+
+    public int existeTapete(int posicaoX, int posicaoY, int posicaoZ){
+        if((mapa[posicaoX][posicaoY][posicaoZ] == TipoEntidade.TAPETE))
+            return 1;
+        else 
+            return 0;
+    }
 /* 
     // Lista todos os robôs que estão no ambiente e as suas informações.
     public void getTodosRobos(){

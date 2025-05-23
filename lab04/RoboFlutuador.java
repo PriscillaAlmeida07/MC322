@@ -1,19 +1,23 @@
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
-public class RoboFlutuador extends RoboAereo {
+public class RoboFlutuador extends RoboAereo implements Curador{
     
     // Robo flutuador: ele é incapaz de realizar subidas e descidas muito bruscas.
     private final int subidaMaxima;
     private final int descidaMaxima;
+    private final int reparo;
 
     // Construtor.
     public RoboFlutuador(String nome, String id){
         super(nome, id);
         subidaMaxima = 10;
         descidaMaxima = 5;
+        reparo = 2;
     }
 
+    @Override
     public void executarTarefa(Scanner entrada){
         int deltaZ = 0;
         System.out.print("O robo subirá (digite 1) ou descerá (digite 2): ");
@@ -70,4 +74,22 @@ public class RoboFlutuador extends RoboAereo {
     }
 */
     public String getDescricao(){return  "Robo flutuador: ele é incapaz de realizar subidas e descidas muito bruscas.";}
+
+    @Override
+    public int getReparo(){
+        return reparo;
+    }
+
+    @Override
+    public void curar(Ambiente ambiente){
+        Sensor sensor = getSensorRobo();
+        int[] vetorPosicao = getPosicao();
+        ArrayList<Entidade> robos = sensor.monitorar(ambiente, vetorPosicao, 1);
+
+        for (int i = 0; i < robos.size(); i++){
+            if (robos.get(i) instanceof Robo robo) {
+                robo.setVida(reparo);
+            }
+        }
+    }
 }
