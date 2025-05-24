@@ -1,4 +1,5 @@
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -353,21 +354,35 @@ public class Main {
     private static void movimentarCavador(Scanner entrada, RoboCavador roboCavador1, Ambiente ambiente1){
 
         if (roboCavador1.getEstadoRobo() == EstadoRobo.LIGADO){
-            System.out.print("Informe quantos metros o robô Cavador irá mover:\n" +"Na direção x: ");
-            int deltaX = entrada.nextInt();
+            // Poderia ser uma excecao tbm o robo estar desligado e pagariamos com o catch comentado
+            // estará faltando o caso da velocidade que podemos fazer uma exceção no setVelocidade e pega-la com o catch comentado
+            // assim nao precisaria do validar movimento
+            while (true) {
+            try {
+                System.out.print("Informe quantos metros o robô Cavador irá mover:\n" +"Na direção x: ");
+                int deltaX = entrada.nextInt();
 
-            System.out.print("Na direção y: ");
-            int deltaY = entrada.nextInt();
+                System.out.print("Na direção y: ");
+                int deltaY = entrada.nextInt();
 
-            System.out.print("Informe a velocidade: ");
-            int velocidade = entrada.nextInt();
+                System.out.print("Informe a velocidade: ");
+                int velocidade = entrada.nextInt();
 
-            roboCavador1.setVelocidade(velocidade);
-            roboCavador1.moverPara(deltaX, deltaY, 0);
-            
-            // Se o movimento foi válido o buraco será adicionado ao ambiente
-            validarMovimentoCavador(ambiente1, roboCavador1, deltaX, deltaY, 0, velocidade);
-            System.out.println("\n");
+                roboCavador1.setVelocidade(velocidade);
+                roboCavador1.moverPara(deltaX, deltaY, 0, ambiente1);
+                break; // movimento válido, sai do loop
+
+            } catch (ForaDosLimitesException e) {
+                System.out.println("Erro: " + e.getMessage());
+                System.out.println("Tente novamente.\n");
+            }
+            //catch (RoboDesligadoException e){}
+            //catch (LimiteVelocidadeException e){}
+            catch (InputMismatchException e) {
+                System.out.println("Entrada inválida. Digite números inteiros.");
+                entrada.nextLine(); // limpar buffer
+            }
+        }
         } else {
             System.out.println("O robô está desligado");
         }

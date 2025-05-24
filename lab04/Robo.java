@@ -88,11 +88,15 @@ abstract class Robo implements Sensoreavel, Comunicavel, Entidade{
     }
 
     // Realiza um movimento no plano XY.
+    public void moverPara(int deltaX, int deltaY, int deltaZ, Ambiente ambiente) throws ForaDosLimitesException{
+        ambiente.foraDosLimites(deltaX, deltaY, deltaZ);
+    }
+    /* 
     public void moverPara(int deltaX, int deltaY, int deltaZ){ 
         posicaoX += deltaX;
         posicaoY += deltaY;
         posicaoZ += deltaZ;
-    }
+    }*/
     
     public void ligar(){
         estado = EstadoRobo.LIGADO;

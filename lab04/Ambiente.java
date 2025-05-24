@@ -70,6 +70,11 @@ public class Ambiente {
     }
 
     // Confere se um robô está dentro dos limites do ambiente.
+    public void foraDosLimites(int x, int y, int z) throws ForaDosLimitesException{
+        if ((x < 0 || x >= largura || y < 0 || y >= comprimento || z < 0 || z >= altura))
+            throw new ForaDosLimitesException();
+    }
+
     public int dentroDosLimites(int x, int y, int z){
         if ((largura >= x && x >= 0) && (comprimento >= y && y >= 0) && (altura >= z && z >= 0))
             return 1;
