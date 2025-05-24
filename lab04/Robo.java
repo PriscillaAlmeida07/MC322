@@ -46,7 +46,7 @@ abstract class Robo implements Sensoreavel, Comunicavel, Entidade{
     }
 
     public EstadoRobo getEstadoRobo(){
-        return  estado;
+        return estado;
     }
     // Obtém a posição (x,y) do robô.
     public int[] getPosicao(){
@@ -116,6 +116,8 @@ abstract class Robo implements Sensoreavel, Comunicavel, Entidade{
     public void acionarSensores(Ambiente ambiente, int caso){
         int[] vetorPosicao = getPosicao();
         for (int i=0; i< sensores.size(); i++ ){
+            // acredito que precisaremos guardar o array de entidades
+            
             sensores.get(i).monitorar(ambiente, vetorPosicao, caso);
         }
     }

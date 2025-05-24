@@ -5,8 +5,8 @@ public class SensorObstaculos extends Sensor {
     // Sensor capaz de descobrir a posição e o tipo dos obstáculos que estão a um raio ou menos do robô que o contém.
     
     // Construtor.
-    public SensorObstaculos(double raio){
-        super(raio);
+    public SensorObstaculos(double raio, TipoSensor tipo){
+        super(raio, tipo);
     }
 
     // Encontra e imprime os obstáculos próximos.

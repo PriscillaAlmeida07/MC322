@@ -5,8 +5,6 @@ abstract class RoboAereo extends Robo {
         super(nome, id);
         
     }
-
-
     // Movimentação para cima no eixo z.
     public void subir(int deltaZ){
         if (deltaZ < 0) {

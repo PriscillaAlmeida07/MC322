@@ -5,8 +5,8 @@ public class SensorReporBlocos extends Sensor {
     // Sensor capaz de descobrir os tapetes de reposição de blocos que estão a um raio ou menos do robô que o contém.
 
     // Construtor.
-    public SensorReporBlocos(){
-        super();
+    public SensorReporBlocos(double raio, TipoSensor tipo){
+        super(raio, tipo);
     }
 
     // Encontra e imprime os tapetes de reposição próximos.

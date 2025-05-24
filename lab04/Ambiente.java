@@ -121,6 +121,25 @@ public class Ambiente {
         else 
             return 0;
     }
+
+    public void listarTodosRobos(){
+        for (int i = 0; i < entidades.size(); i++){
+            if (entidades.get(i) instanceof Robo robo){
+                System.out.print(robo);
+            }
+        }
+    }
+
+    public void listarObjetos(){
+        for (int i = 0; i < entidades.size(); i++){
+            if (entidades.get(i) instanceof Obstaculo obstaculo){
+                System.out.print(obstaculo.getTipoObstaculo().getNome() + ": " + "("+ obstaculo.getX() + "," + obstaculo.getY() + "," + obstaculo.getZ() + ")\n");
+            }
+            if (entidades.get(i) instanceof TapeteReposicao tapete){
+                System.out.print("Tapete: " + "("+ tapete.getX() + "," + tapete.getY() + "," + tapete.getZ() + ")\n");
+            }
+        }
+    }
 /* 
     // Lista todos os robôs que estão no ambiente e as suas informações.
     public void getTodosRobos(){
