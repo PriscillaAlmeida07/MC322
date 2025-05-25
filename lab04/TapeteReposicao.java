@@ -1,6 +1,5 @@
-public class TapeteReposicao implements Entidade{
+public class TapeteReposicao implements Entidade {
 
-    // Local do ambiente em que os robôs obstáculo terrestre podem repor os seus blocos.
     private final int posicaoX;
     private final int posicaoY;
 
@@ -10,21 +9,22 @@ public class TapeteReposicao implements Entidade{
         this.posicaoY = posicaoY;
     }
 
-    // Obtém a posição do tapete.
-    public int[] getPosicao(){
-        int[] vetor = new int[2];
-        vetor[0] = posicaoX;
-        vetor[1] = posicaoY;
+    // Obtém posições do tapete:
 
-        return  vetor;
-    }
+    @Override
+    public int getX(){return posicaoX;}
+    @Override
+    public int getY(){return posicaoY;}
+    @Override
+    public int getZ(){return 0;} // Todos os tapetes ficam no chão
 
-    
-    int getX();
-    int getY();
-    int getZ();
-    TipoEntidade getTipo();
-    String getDescricao();
-    char getRepresentacao();
+    // Obtém informações sobre o tapete:
+
+    @Override
+    public TipoEntidade getTipo(){return TipoEntidade.TAPETE;}
+    @Override
+    public String getDescricao(){return "Local do ambiente em que os robôs obstáculo terrestre podem repor os seus blocos";}
+    @Override
+    public char getRepresentacao(){return 'T';}
     
 }

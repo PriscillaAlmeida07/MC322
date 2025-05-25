@@ -1,4 +1,4 @@
-public class Obstaculo implements Entidade{
+public class Obstaculo implements Entidade {
     
     // Posições iniciais dos obstáculos (menores valores ocupados).
     private final int posicaoX;
@@ -30,22 +30,21 @@ public class Obstaculo implements Entidade{
         return tipo;
     }
 
-    public int getX(){
-        return posicaoX;
-    }
-    public int getY(){
-        return posicaoY;
-    }
-    public int getZ(){
-        return posicaoZ;
-    }
-    public TipoEntidade getTipo(){
-        return TipoEntidade.OBSTACULO;
-    }
-    public String getDescricao(){
-        return "bla";
-    }
-    public char getRepresentacao(){
-        return 'a';
-    }
+    // Obtém posições do obstáculo:
+
+    @Override
+    public int getX(){return posicaoX;}
+    @Override
+    public int getY(){return posicaoY;}
+    @Override
+    public int getZ(){return posicaoZ;}
+
+    // Obtém informações sobre o obstáculo:
+
+    @Override
+    public TipoEntidade getTipo(){return TipoEntidade.OBSTACULO;}
+    @Override
+    public String getDescricao(){return "Objeto que impede a permanência de um robô em determinada área do ambiente";}
+    @Override
+    public char getRepresentacao(){return 'O';}
 }
