@@ -1,5 +1,8 @@
 public enum TipoSensor {
-    ROBO,
+
+    // Indica o tipo de um sensor.
+    ROBOS,
     OBSTACULOS,
     REPORBLOCOS;
+    
 }

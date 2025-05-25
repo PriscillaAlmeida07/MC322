@@ -9,26 +9,33 @@ public class SensorReporBlocos extends Sensor {
         super(raio, tipo);
     }
 
-    // Encontra e imprime os tapetes de reposição próximos.
+    // Encontra os tapetes de reposição próximos e guarda-os em uma ArrayList.
     @Override
-    public void monitorar(Ambiente ambiente, int[] posicaoRobo){
+    public ArrayList<Entidade> monitorar(Ambiente ambiente, int[] posicaoRobo, int caso){
 
         // Obtendo as variáveis necessárias para o sensor
-        ArrayList<TapeteReposicao> tapetes = ambiente.getArrayTapetes();
-        int[] posicaoTapete;
+        ArrayList<Entidade> entidades = ambiente.getArrayEntidades();
         double raio = getRaio();
-        int capturado = 0;
+        ArrayList<Entidade> resultado = new ArrayList<>();
 
-        System.out.println("Resultado do sensor de tapetes de reposição para o robô na posição: (" + posicaoRobo[0] + "," + posicaoRobo[1] + ")");
-
-        for (int i = 0; i < tapetes.size(); i++){
-            posicaoTapete = tapetes.get(i).getPosicao();
-            if (Math.pow(raio, 2) >= (Math.pow((posicaoRobo[0] - posicaoTapete[0]), 2)) + (Math.pow((posicaoRobo[1] - posicaoTapete[1]), 2))) {
-                System.out.println("Foi capturado um tapete de reposição na posição (" + posicaoTapete[0] + "," + posicaoTapete[1] + ")");
-                capturado++;
+        for (int i = 0; i < entidades.size(); i++){
+            if (entidades.get(i) instanceof TapeteReposicao tapete){
+                if (Math.pow(raio, 2) >= (Math.pow((posicaoRobo[0] - tapete.getX()), 2)) + (Math.pow((posicaoRobo[1] - tapete.getY()), 2))) {
+                    resultado.add(tapete);
+                }
             }
         }
-        if (capturado == 0){
+        return resultado;
+    }
+
+    // Imprime os tapetes de reposição encontrados pelo sensor
+    @Override
+    public void imprimirResultado(ArrayList<Entidade> resultado, int[] posicaoRobo){
+        System.out.println("Resultado do sensor de reposição para o robô na posição: (" + posicaoRobo[0] + "," + posicaoRobo[1] + ")");
+        for (int i = 0; i < resultado.size(); i++){
+            System.out.println("Foi capturado um tapete de reposição na posição (" + resultado.get(i).getX() + "," + resultado.get(i).getY() + ")");
+        }
+        if (resultado.isEmpty()){
             System.out.println("Nenhum tapete de reposição capturado");
         }
         System.out.print("\n");

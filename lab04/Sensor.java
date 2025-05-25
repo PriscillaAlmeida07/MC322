@@ -16,10 +16,12 @@ public abstract class Sensor {
         return raio;
     }
 
+    // Obtém o tipo do sensor.
     public TipoSensor getTipo(){
         return tipo;
     }
 
-    // Declaração de que todas as classes que herdam de sensor devem ter uma função "monitorar".
+    // Declaração de que todas as classes que herdam de sensor devem ter:
     public abstract ArrayList<Entidade> monitorar(Ambiente ambiente, int[] vetorPosicao, int caso);
+    public abstract void imprimirResultado(ArrayList<Entidade> resultado, int[] vetorPosicao);
 }

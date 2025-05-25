@@ -17,7 +17,7 @@ abstract class Robo implements Sensoreavel, Comunicavel, Entidade{
     public Robo(String nome, String id){ 
         sensores = new ArrayList<>();
         sensores.add(new SensorObstaculos(40));
-        sensores.add(new SensorRobo(2, TipoSensor.ROBO));
+        sensores.add(new SensorRobos(2, TipoSensor.ROBO));
 
         tipo = TipoEntidade.ROBO;
         estado = EstadoRobo.DESLIGADO;

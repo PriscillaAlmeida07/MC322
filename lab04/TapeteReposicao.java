@@ -18,5 +18,13 @@ public class TapeteReposicao implements Entidade{
 
         return  vetor;
     }
+
+    
+    int getX();
+    int getY();
+    int getZ();
+    TipoEntidade getTipo();
+    String getDescricao();
+    char getRepresentacao();
     
 }

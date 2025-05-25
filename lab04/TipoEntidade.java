@@ -1,17 +1,21 @@
 public enum TipoEntidade {
-    VAZIO('V'),
+
+    // Cada tipo de entidade possui uma representação característica (em formato de 1 caractere).
+    VAZIO('_'),
     ROBO('R'),
     OBSTACULO('O'),
     TAPETE('T'),
-    DESCONHECIDO('D'); 
+    DESCONHECIDO('?'); 
 
     private final char caractere;
 
-    private TipoEntidade(char caractere) {
+    // Construtor.
+    private TipoEntidade(char caractere){
         this.caractere = caractere;
     }
 
-    public char getCaractere() {
+    // Obtém o caractere do tipo de entidade.
+    public char getCaractere(){
         return  caractere;
     }
 }

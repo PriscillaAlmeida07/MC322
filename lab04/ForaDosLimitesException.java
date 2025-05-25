@@ -1,5 +1,5 @@
 public class ForaDosLimitesException extends Exception {
     public ForaDosLimitesException(){
-        super("O robô tentou sair no ambiente");
+        super("O robô tentou sair do ambiente");
     }
 }
