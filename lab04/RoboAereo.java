@@ -7,8 +7,19 @@ abstract class RoboAereo extends Robo {
         super(nome, id, estado);
     }
 
-    /*
+    
     // Movimentação para cima no eixo z.
+    public void subir(Ambiente ambiente, int deltaX, int deltaY, int deltaZ) throws ForaDosLimitesException{
+        moverPara(deltaX, deltaY, deltaZ, ambiente);
+    }
+
+    public void descer(Ambiente ambiente, int deltaX, int deltaY, int deltaZ) throws ForaDosLimitesException{
+        moverPara(deltaX, deltaY, -deltaZ, ambiente);
+    }
+
+    
+}
+/* 
     public void subir(int deltaZ){
         if (deltaZ < 0) {
             System.out.println("Valor inválido de subida inserido");
@@ -31,5 +42,6 @@ abstract class RoboAereo extends Robo {
             System.out.println(deltaZ + " é um valor válido de descida, ele está na : " + );
         }
     }
-        */
+
 }
+*/

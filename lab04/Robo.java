@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
 
@@ -120,7 +121,7 @@ abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
     }*/
 
     // Todos os robôs devem implementar a função "executarTarefa"
-    public abstract void executarTarefa(int caso);
+    public abstract void executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY)throws ForaDosLimitesException;
 
     // Encontra o sensor de robôs no ArrayList de sensores
     public Sensor getSensorRobos() {

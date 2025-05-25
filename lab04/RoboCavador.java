@@ -1,10 +1,11 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class RoboCavador extends RoboTerrestre implements Atacante { 
 
     // Descrição do Robo Cavador:
     @Override
-    public String getDescricao(){return "Robo cavador: robô terrestre que consegue perfurar o solo";}
+    public String getDescricao(){return "Robô terrestre que consegue perfurar o solo";}
 
     // Atributos:
     private int profundidade;
@@ -38,10 +39,22 @@ public class RoboCavador extends RoboTerrestre implements Atacante {
 
     // Executa uma tarefa inerente ao Robô Cavador.
     @Override
-    public void executarTarefa(int caso){
+    public void executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY)throws ForaDosLimitesException {
 
     }
 
+    public void cavar(Scanner entrada,Ambiente ambiente) throws ForaDosLimitesException{
+        System.out.print("Quantos metros o robo cavará:");
+        int deltaZ = entrada.nextInt();
+        if(deltaZ < 0){
+            System.out.println("Valor invalido digitado");
+        } else {
+            moverPara(0,0, -deltaZ, ambiente);
+            System.out.println("O robo cavou "+ deltaZ + " metros\n");
+        }
+    }
+
+    /* 
     // Método que permite a movimentação abaixo do solo.
     public void cavar(int deltaZ){
         if (deltaZ < 0) {
@@ -55,6 +68,7 @@ public class RoboCavador extends RoboTerrestre implements Atacante {
             System.out.println(deltaZ + " é um valor válido de perfuração");
         }
     }
+        */
 
     // Cria um novo buraco na posição.
     public Obstaculo criarBuraco(int posicaoX, int posicaoY, int posicaoZ){

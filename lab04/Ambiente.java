@@ -12,7 +12,7 @@ public class Ambiente {
         comprimento = 50;
         altura = 100;
         entidades = new ArrayList<>();
-        mapa = new TipoEntidade[100][100][200];
+        mapa = new TipoEntidade[largura][comprimento][altura];
     }
 
     public void inicializarMapa(){
@@ -29,13 +29,13 @@ public class Ambiente {
         entidades.add(entidade);
         if(entidade instanceof Obstaculo obstaculo)
         {
-            int largura = obstaculo.getTipoObstaculo().getLargura();
-            int comprimento = obstaculo.getTipoObstaculo().getComprimento();
-            int altura = obstaculo.getTipoObstaculo().getAltura();
+            int larguraObst = obstaculo.getTipoObstaculo().getLargura();
+            int comprimentoObst = obstaculo.getTipoObstaculo().getComprimento();
+            int alturaObst = obstaculo.getTipoObstaculo().getAltura();
 
-            for(int x=0; x< largura; x++){
-                for(int y=0; y< comprimento; y++){
-                    for (int z=0; z< altura; z++){
+            for(int x=0; x< larguraObst; x++){
+                for(int y=0; y< comprimentoObst; y++){
+                    for (int z=0; z< alturaObst; z++){
                         mapa[entidade.getX() + x][entidade.getY() + y][entidade.getZ() + z]= TipoEntidade.OBSTACULO;
                     } 
                 }
@@ -51,13 +51,13 @@ public class Ambiente {
         entidades.remove(entidade);
         if(entidade instanceof Obstaculo obstaculo)
         {
-            int largura = obstaculo.getTipoObstaculo().getLargura();
-            int comprimento = obstaculo.getTipoObstaculo().getComprimento();
-            int altura = obstaculo.getTipoObstaculo().getAltura();
+            int larguraObst = obstaculo.getTipoObstaculo().getLargura();
+            int comprimentoObst = obstaculo.getTipoObstaculo().getComprimento();
+            int alturaObst = obstaculo.getTipoObstaculo().getAltura();
 
-            for(int x=0; x< largura; x++){
-                for(int y=0; y< comprimento; y++){
-                    for (int z=0; z< altura; z++){
+            for(int x=0; x< larguraObst; x++){
+                for(int y=0; y< comprimentoObst; y++){
+                    for (int z=0; z< alturaObst; z++){
                         mapa[entidade.getX() + x][entidade.getY() + y][entidade.getZ() + z]= TipoEntidade.VAZIO;
                     } 
                 }
@@ -104,9 +104,11 @@ public class Ambiente {
     }
 
     public void visualizarAmbiente(){
+        //altura/2
         for(int x=0; x< largura; x++){
-            for(int y=0; y< comprimento; y++){
-                System.out.print( '|' + mapa[x][y][altura/2].getCaractere() + '|');
+            for(int y=0; y < comprimento; y++){
+                TipoEntidade tipo = mapa[x][y][0];                //System.out.println("x=" + x + " y=" + y + " tipo=" + tipo);
+                System.out.print( "|" + tipo.getCaractere() + "|");
             }
             System.out.print("\n");
         }
@@ -134,9 +136,10 @@ public class Ambiente {
     public void listarTodosRobos(){
         for (int i = 0; i < entidades.size(); i++){
             if (entidades.get(i) instanceof Robo robo){
-                System.out.print(robo);
+                System.out.println(robo.getNome() + ": " + robo.getDescricao());
             }
         }
+        System.out.print("\n");
     }
 
     public void listarObjetos(){
@@ -148,6 +151,7 @@ public class Ambiente {
                 System.out.print("Tapete: " + "("+ tapete.getX() + "," + tapete.getY() + "," + tapete.getZ() + ")\n");
             }
         }
+        System.out.print("\n");
     }
 /* 
     // Lista todos os robôs que estão no ambiente e as suas informações.

@@ -5,13 +5,14 @@ public class Main {
     public static void main(String[] args){
 
         // Instânciamento do ambiente.
-        Ambiente ambiente1 = new Ambiente(); 
+        Ambiente ambiente1 = new Ambiente();
+        ambiente1.inicializarMapa(); 
 
         // Instânciamento de alguns obstáculos.
-        Obstaculo arvore1 = new Obstaculo(TipoObstaculo.ARVORE, 25, 25, 0);
-        Obstaculo arvore2 = new Obstaculo(TipoObstaculo.ARVORE, 25, 75, 0);
-        Obstaculo arvore3 = new Obstaculo(TipoObstaculo.ARVORE, 75, 25, 0);
-        Obstaculo arvore4 = new Obstaculo(TipoObstaculo.ARVORE, 75, 75, 0);
+        Obstaculo arvore1 = new Obstaculo(TipoObstaculo.ARVORE, 5, 5, 0);
+        Obstaculo arvore2 = new Obstaculo(TipoObstaculo.ARVORE, 5, 45, 0);
+        Obstaculo arvore3 = new Obstaculo(TipoObstaculo.ARVORE, 45, 5, 0);
+        Obstaculo arvore4 = new Obstaculo(TipoObstaculo.ARVORE, 45, 45, 0);
 
         // Adicionando obstáculos ao ambiente.
         ambiente1.adicionarEntidade(arvore1);
@@ -20,10 +21,10 @@ public class Main {
         ambiente1.adicionarEntidade(arvore4);
 
         // Instânciamento de pontos de reposição.
-        TapeteReposicao tapete1 = new TapeteReposicao(20, 20);
-        TapeteReposicao tapete2 = new TapeteReposicao(80,80);
-        TapeteReposicao tapete3 = new TapeteReposicao(80, 20);
-        TapeteReposicao tapete4 = new TapeteReposicao(20, 80);
+        TapeteReposicao tapete1 = new TapeteReposicao(10, 10);
+        TapeteReposicao tapete2 = new TapeteReposicao(30,30);
+        TapeteReposicao tapete3 = new TapeteReposicao(30, 10);
+        TapeteReposicao tapete4 = new TapeteReposicao(10, 30);
 
         // Adicionando pontos de reposição ao ambiente.
         ambiente1.adicionarEntidade(tapete1);
@@ -179,7 +180,7 @@ public class Main {
                     movimentarCavador(entrada, robo, ambiente);
                     break;
                 case 3:
-                    cavar(entrada, robo, ambiente);
+                   // cavar(entrada, robo, ambiente);
                     break; 
                 case 4:
                     // interagir(entrada, robo, ambiente);
@@ -223,10 +224,10 @@ public class Main {
                     ligarDesligar(robo);
                     break;
                 case 2:
-                    movimentarObstaculoTerrestre(entrada, robo, ambiente);
+                  //  movimentarObstaculoTerrestre(entrada, robo, ambiente);
                     break;
                 case 3:
-                    posicionarBloco(ambiente, robo);
+                  //  posicionarBloco(ambiente, robo);
                     break; 
                 case 4:
                     // interagir(entrada, robo, ambiente);
@@ -269,7 +270,7 @@ public class Main {
                     ligarDesligar(robo);
                     break;
                 case 2:
-                    movimentarFlutuador(entrada, robo, ambiente);
+                  //  movimentarFlutuador(entrada, robo, ambiente);
                     break;
                 case 3:
                     // interagir(entrada, robo, ambiente);
@@ -312,10 +313,10 @@ public class Main {
                     ligarDesligar(robo);
                     break;
                 case 2:
-                    movimentarObstaculoAereo(entrada, robo, ambiente);
+                  //  movimentarObstaculoAereo(entrada, robo, ambiente);
                     break;
                 case 3:
-                    posicionarNuvem(ambiente, robo);
+                   // posicionarNuvem(ambiente, robo);
                     break; 
                 case 4:
                     // interagir(entrada, robo, ambiente);
@@ -386,8 +387,9 @@ public class Main {
             System.out.println("O robô está desligado");
         }
 
-    }
+    }}
 
+    /* 
     // Verifica se o RoboCavador está dentro dos limites, se não estiver, move ele para a sua posição válida anterior.
     private static void validarMovimentoCavador(Ambiente ambiente1, RoboCavador robo, int deltaX, int deltaY, int deltaZ, int velocidade){
         String direcao;
@@ -413,18 +415,9 @@ public class Main {
         }
         
     }
+    */
 
-    public static void cavar( Scanner entrada, RoboCavador robo, Ambiente ambiente){
-        System.out.print("Quantos metros o robo cavará:");
-        int deltaZ = entrada.nextInt();
-        if(deltaZ < 0){
-            System.out.println("Valor invalido digitado");
-        } else {
-            robo.moverPara(0,0, -deltaZ);
-            System.out.println("O robo cavou "+ deltaZ + " metros\n");
-        }
-    }
-
+/* 
     // Movimento do robô obstáculo terrestre.
     private static void movimentarObstaculoTerrestre(Scanner entrada, RoboObstaculoTerrestre roboObstaculoTerrestre1, Ambiente ambiente1){
 
@@ -447,7 +440,8 @@ public class Main {
         }
         System.out.println("\n");
     }
-    
+*/
+/*     
     // Verifica se o roboObstaculoTerrestre está dentro dos limites, se não estiver, move ele para a sua posição válida anterior.
     private static void validarMovimentoObstaculoTerrestre(Ambiente ambiente1, RoboObstaculoTerrestre robo, int deltaX, int deltaY, int velocidade){
         String direcao;
@@ -474,7 +468,7 @@ public class Main {
             
         }    
     }
-
+*//*
     public static void posicionarBloco(Ambiente ambiente1, RoboObstaculoTerrestre robo){
 
         int[] posicao = robo.getPosicao();
@@ -486,7 +480,7 @@ public class Main {
         }
         System.out.print("\n");
     }
-
+*//* 
     // Movimento do robô flutuador.
     private static void movimentarFlutuador(Scanner entrada, RoboFlutuador roboFlutuador1, Ambiente ambiente1){
         
@@ -506,6 +500,7 @@ public class Main {
         }
 
         roboFlutuador1.moverPara(deltaX, deltaY, deltaZ);
+        roboFlutuador1.executarTarefa(ambiente1, deltaX, deltaY, deltaZ);
 
         if (voo == 1){
             roboFlutuador1.subir(deltaZ);
@@ -517,7 +512,7 @@ public class Main {
         }
         System.out.print("\n");
     }
-
+*//* 
     // Verifica se o roboFlutuador está dentro dos limites, se não estiver, move ele para a sua posição válida anterior.
     private static void validarMovimentoFlutuador(Ambiente ambiente1, RoboFlutuador robo, int deltaX, int deltaY, int deltaZ, int caso){
         String direcao;
@@ -542,7 +537,7 @@ public class Main {
             System.out.println("O robô tentou sair do ambiente ou colidiu com algum obstáculo, logo ele retornou para a posição: (" + posicao[0] + "," + posicao[1] + "," + posicao[2] + ") e voltado para o " + direcao);
         }
     }
-
+*//* 
     // Movimento do robô obstáculo aereo.
     private static void movimentarObstaculoAereo(Scanner entrada, RoboObstaculoAereo roboObstaculoAereo1, Ambiente ambiente1){
         
@@ -576,7 +571,7 @@ public class Main {
         }
         System.out.println("\n");
     }
-
+*//* 
     // Verifica se o roboObstaculoAereo está dentro dos limites, se não estiver, move ele para a sua posição válida anterior.
     private static int validarMovimentoObstaculoAereo(Ambiente ambiente1, RoboObstaculoAereo robo, int deltaX, int deltaY, int deltaZ, int caso){
         String direcao;
@@ -604,7 +599,7 @@ public class Main {
             return 0;
         }
     }
-
+*//* 
     public static void posicionarNuvem(Ambiente ambiente1, RoboObstaculoAereo robo){
         int[] posicao = robo.getPosicao();
         Obstaculo nuvem = robo.soltarNuvens(posicao[0], posicao[1], posicao[2]);
@@ -615,7 +610,7 @@ public class Main {
         }
         System.out.print("\n");
     }
-
+*//* 
     // Escolhe qual robô irá utilizar os seus sensores e imprime o resultado obtido.
     private static void sensores(Scanner entrada, Ambiente ambiente1, RoboCavador roboCavador1, RoboObstaculoTerrestre roboObstaculoTerrestre1, RoboObstaculoAereo roboObstaculoAereo1, RoboFlutuador roboFlutuador1){
         boolean continuar = true;
@@ -660,5 +655,5 @@ public class Main {
         }
     }   
 }
-
+*/
 // Adicionar sistema de reposição de blocos

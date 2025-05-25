@@ -18,7 +18,89 @@ public class RoboFlutuador extends RoboAereo implements Curador{
     }
 
     @Override
+    public void executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY) throws ForaDosLimitesException{
+        
+        int deltaZ = 0;
+        System.out.print("O robo subirá (digite 1) ou descerá (digite 2): ");
+        int voo = entrada.nextInt();
+        if ((voo == 1) || (voo == 2)) {
+            System.out.print("Quantos metros: ");
+            deltaZ = entrada.nextInt();
+        }
+
+        if (voo == 1){
+            this.subir(ambiente, deltaX, deltaY, deltaZ);
+        } else if (voo == 2){
+            this.descer(ambiente, deltaX, deltaY, deltaZ);
+        }
+    }
+    // Confere a velocidade de subida antes de realizar o movimento.
+    @Override
+    public void subir(Ambiente ambiente, int deltaX, int deltaY, int deltaZ) throws ForaDosLimitesException{
+        if (deltaZ <= subidaMaxima){
+            super.subir(ambiente, deltaX, deltaY, deltaZ);
+        } else { // Ele é incapaz de subir o tanto indicado
+            System.out.println("O robo tentou subir mais do que o permitido, ao invéz disso, subirá " + subidaMaxima);
+            super.subir(ambiente, deltaX, deltaY, subidaMaxima);
+        }
+    }
+
+    // Confere a velocidade de descida antes de realizar o movimento.
+    @Override
+    public void descer(Ambiente ambiente, int deltaX, int deltaY, int deltaZ) throws ForaDosLimitesException{
+        if (deltaZ <= descidaMaxima){
+            super.descer(ambiente, deltaX, deltaY, deltaZ);
+        } else { // Ele é incapaz de descer o tanto indicado
+            System.out.println("O robo tentou descer mais do que o permitido, ao invéz disso, descerá " + descidaMaxima);
+            super.descer(ambiente, deltaX, deltaY, descidaMaxima);
+        }
+    }
+/* 
+    // Conserta a altitude do robô caso ele tenha tentado ir para uma posição inadequada.
+    public void setAltitude(int deltaZ, int caso){
+        if (caso == 1){ // Ele tentou subir, mas descerá para retornar a posição anterior
+            if (deltaZ <= subidaMaxima){
+                super.setAltitude(deltaZ);
+            } else { // Ele é incapaz de subir o tanto indicado
+                super.setAltitude(subidaMaxima);
+            }
+            
+        } else { // (caso == 2) Ele tentou descer, mas subirá para retornar a posição anterior
+            if (deltaZ <= descidaMaxima){
+                super.setAltitude(-deltaZ);
+            } else { // Ele é incapaz de descer o tanto indicado
+                super.setAltitude(-descidaMaxima);
+            } 
+        }
+    }
+*/
+    public String getDescricao(){return "Robô aéreo incapaz de realizar subidas e descidas muito bruscas.";}
+
+    @Override
+    public int getReparo(){
+        return reparo;
+    }
+
+    @Override
+    public void curar(Ambiente ambiente){
+        Sensor sensor = getSensorRobos();
+        int[] vetorPosicao = getPosicao();
+        ArrayList<Entidade> robos = sensor.monitorar(ambiente, vetorPosicao, 1);
+
+        for (int i = 0; i < robos.size(); i++){
+            if (robos.get(i) instanceof Robo robo) {
+                robo.setVida(reparo);
+            }
+        }
+    }
+}
+
+
+/*
+ 
+    @Override
     public void executarTarefa(Scanner entrada){
+        
         int deltaZ = 0;
         System.out.print("O robo subirá (digite 1) ou descerá (digite 2): ");
         int voo = entrada.nextInt();
@@ -54,42 +136,4 @@ public class RoboFlutuador extends RoboAereo implements Curador{
             super.descer(descidaMaxima);
         }
     }
-/* 
-    // Conserta a altitude do robô caso ele tenha tentado ir para uma posição inadequada.
-    public void setAltitude(int deltaZ, int caso){
-        if (caso == 1){ // Ele tentou subir, mas descerá para retornar a posição anterior
-            if (deltaZ <= subidaMaxima){
-                super.setAltitude(deltaZ);
-            } else { // Ele é incapaz de subir o tanto indicado
-                super.setAltitude(subidaMaxima);
-            }
-            
-        } else { // (caso == 2) Ele tentou descer, mas subirá para retornar a posição anterior
-            if (deltaZ <= descidaMaxima){
-                super.setAltitude(-deltaZ);
-            } else { // Ele é incapaz de descer o tanto indicado
-                super.setAltitude(-descidaMaxima);
-            } 
-        }
-    }
-*/
-    public String getDescricao(){return "Robo flutuador: ele é incapaz de realizar subidas e descidas muito bruscas.";}
-
-    @Override
-    public int getReparo(){
-        return reparo;
-    }
-
-    @Override
-    public void curar(Ambiente ambiente){
-        Sensor sensor = getSensorRobo();
-        int[] vetorPosicao = getPosicao();
-        ArrayList<Entidade> robos = sensor.monitorar(ambiente, vetorPosicao, 1);
-
-        for (int i = 0; i < robos.size(); i++){
-            if (robos.get(i) instanceof Robo robo) {
-                robo.setVida(reparo);
-            }
-        }
-    }
-}
+ */

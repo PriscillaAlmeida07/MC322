@@ -1,10 +1,11 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class RoboObstaculoTerrestre extends RoboTerrestre implements Curador {
     
     // Descrição do Robo Obstaculo Terrestre:
     @Override
-    public String getDescricao(){return "Robô obstáculo terrestre: robô capaz de criar obstáculos posicionando blocos no solo";}
+    public String getDescricao(){return "Robô terrestre capaz de criar obstáculos posicionando blocos no solo";}
 
     // Atributos:
     private int numBlocos;
@@ -32,7 +33,7 @@ public class RoboObstaculoTerrestre extends RoboTerrestre implements Curador {
 
     // Executa uma tarefa inerente ao Robô Obstaculo Terrestre.
     @Override
-    public void executarTarefa(int caso){
+    public void  executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY)throws ForaDosLimitesException{
 
     }
 

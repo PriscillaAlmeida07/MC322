@@ -14,8 +14,11 @@ public class RoboObstaculoAereo extends RoboAereo implements  Atacante {
         numNuvens = 3;
         dano = 2;
     }
+    // Descrição do Robo Obstáculo Aéreo:
+    @Override
+    public String getDescricao(){return "Robo aéreo capaz de criar obstáculos posicionando nuvens no céu";}
 
-    public void executarTarefa(Scanner entrada){
+    public void  executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY)throws ForaDosLimitesException{
         int deltaZ = 0;
         System.out.print("O robo subirá (digite 1) ou descerá (digite 2): ");
         int voo = entrada.nextInt();
@@ -25,27 +28,11 @@ public class RoboObstaculoAereo extends RoboAereo implements  Atacante {
         }
         
         if (voo == 1){
-            super.subir(deltaZ);
+            super.subir(ambiente, deltaX, deltaY, deltaZ);
         } else if (voo == 2){
-            super.descer(deltaZ);
+            super.descer(ambiente, deltaX, deltaY, deltaZ);
         }
 
-        System.out.print("O robô soltará uma nuvem na posição?\n" + "Se sim, digite 1, se não digite 0: ");
-        int condicao = entrada.nextInt();
-
-        if (condicao == 1){
-            int[] posicao = this.getPosicao();
-            Obstaculo nuvem = this.soltarNuvens(posicao[0], posicao[1], posicao[2]);
-
-            if(nuvem != null){
-                ambiente1.adicionarObstaculo(nuvem);
-                System.out.print("O robô soltou uma nuvem");
-            }
-
-        } else if ((condicao != 1) && (condicao != 0)) {
-            System.out.print("Valor inválido inserido, o robô não soltará um bloco");
-        }
-        System.out.println("\n");
     }
 
     // Posiciona uma nuvem em sua posição, criando um obstáculo para outros robôs. Adicionaremos ao ambiente na main
@@ -65,7 +52,7 @@ public class RoboObstaculoAereo extends RoboAereo implements  Atacante {
         Obstaculo nuvem = new Obstaculo(TipoObstaculo.NUVEM, posicaoX, posicaoY, posicaoZ);
         return nuvem;
     }
-
+/* 
     // Conserta a altitude do robô caso ele tenha tentado ir para uma posição inadequada.
     public void setAltitude(int deltaZ, int caso){
         if (caso == 1){ // Ele tentou subir, mas descerá para retornar a posição anterior
@@ -75,7 +62,7 @@ public class RoboObstaculoAereo extends RoboAereo implements  Atacante {
             super.setAltitude(-deltaZ);
         }
     }
-
+*/
     @Override
     public int getDano(){
         return dano;
@@ -83,7 +70,7 @@ public class RoboObstaculoAereo extends RoboAereo implements  Atacante {
 
     @Override
     public void atacar(Ambiente ambiente){
-        Sensor sensor = getSensorRobo();
+        Sensor sensor = getSensorRobos();
         int[] vetorPosicao = getPosicao();
         ArrayList<Entidade> robos = sensor.monitorar(ambiente, vetorPosicao, 1);
 
@@ -95,3 +82,21 @@ public class RoboObstaculoAereo extends RoboAereo implements  Atacante {
     }
 }
 
+/*
+         System.out.print("O robô soltará uma nuvem na posição?\n" + "Se sim, digite 1, se não digite 0: ");
+        int condicao = entrada.nextInt();
+
+        if (condicao == 1){
+            int[] posicao = this.getPosicao();
+            Obstaculo nuvem = this.soltarNuvens(posicao[0], posicao[1], posicao[2]);
+
+            if(nuvem != null){
+                ambiente.adicionarObstaculo(nuvem);
+                System.out.print("O robô soltou uma nuvem");
+            }
+
+        } else if ((condicao != 1) && (condicao != 0)) {
+            System.out.print("Valor inválido inserido, o robô não soltará um bloco");
+        }
+        System.out.println("\n");
+ */

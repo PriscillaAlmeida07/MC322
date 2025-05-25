@@ -9,6 +9,7 @@ public abstract class RoboTerrestre extends Robo {
         velocidade = 0;
         velocidadeMaxima = 50;
     }
+    
 
     // Obtém a velocidade máxima do robô.
     public int getVelocidadeMaxima(){
