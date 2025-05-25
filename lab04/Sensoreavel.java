@@ -1,6 +1,7 @@
 
 public interface Sensoreavel{
     
-    void acionarSensores();
+    // Interface implementada pelos robôs.
+    void acionarSensores(Ambiente ambiente, int caso);
 
 }

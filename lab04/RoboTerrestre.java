@@ -1,11 +1,11 @@
-public class RoboTerrestre extends Robo {
+public abstract class RoboTerrestre extends Robo {
 
     private int velocidade;
     private final int velocidadeMaxima;
 
     // Construtor.
-    public RoboTerrestre(String nome, String id){
-        super(nome, id);
+    public RoboTerrestre(String nome, String id, EstadoRobo estado){
+        super(nome, id, estado);
         velocidade = 0;
         velocidadeMaxima = 50;
     }
@@ -20,6 +20,7 @@ public class RoboTerrestre extends Robo {
         this.velocidade = velocidade;
     }
 
+    /*
     // Movimentação com override para considerar a velocidade máxima que um robô terrestre pode atingir.
     @Override
     public void mover(int deltaX, int deltaY){
@@ -31,4 +32,5 @@ public class RoboTerrestre extends Robo {
             System.out.println("O robô atingiu a velocidade máxima " + velocidadeMaxima + " e não pode se mover");
         }
     }
+        */
 }

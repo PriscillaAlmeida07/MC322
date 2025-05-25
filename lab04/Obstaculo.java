@@ -15,7 +15,7 @@ public class Obstaculo implements Entidade {
         this.posicaoZ = posicaoZ;
     }
 
-    // Obtém a posição inicial do obstáculo.
+    // Obtém a posição inicial (x,y,z) do obstáculo.
     public int[] getPosicao(){
         int[] vetor = new int[3];
         vetor[0] = posicaoX;
@@ -44,7 +44,7 @@ public class Obstaculo implements Entidade {
     @Override
     public TipoEntidade getTipo(){return TipoEntidade.OBSTACULO;}
     @Override
-    public String getDescricao(){return "Objeto que impede a permanência de um robô em determinada área do ambiente";}
+    public String getDescricao(){return "Obstáculo: bjeto que impede a permanência de um robô em determinada área do ambiente";}
     @Override
     public char getRepresentacao(){return 'O';}
 }

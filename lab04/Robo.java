@@ -1,33 +1,31 @@
-
 import java.util.ArrayList;
-import java.util.Scanner;
 
-abstract class Robo implements Sensoreavel, Comunicavel, Entidade{
+abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
 
-    private final ArrayList<Sensor> sensores;
-    private final String nome;
-    private final String id;
+    // Identificação do robô.
+    private final String nome, id;
+
+    // Posicionamento do robô.
+    private final int posicaoX, posicaoY, posicaoZ;
     private String direcao;
+
+    // Outras características.
     private EstadoRobo estado;
-    private final TipoEntidade tipo;
-    private int posicaoX, posicaoY, posicaoZ;
     private int vida;
+    private final ArrayList<Sensor> sensores;
 
     // Construtor.
-    public Robo(String nome, String id){ 
-        sensores = new ArrayList<>();
-        sensores.add(new SensorObstaculos(40));
-        sensores.add(new SensorRobos(2, TipoSensor.ROBO));
+    public Robo(String nome, String id, EstadoRobo estado){ 
 
-        tipo = TipoEntidade.ROBO;
-        estado = EstadoRobo.DESLIGADO;
-        this.id = id;
-        this.nome = nome;
-        posicaoX = 25;
-        posicaoY = 25; 
-        posicaoZ = 50;
+        this.id = id; this.nome = nome; this.estado = estado;
+        posicaoX = 25; posicaoY = 25; posicaoZ = 0;
         direcao = "Norte";
         vida = 10;
+
+        // Cria o ArrayList de sensores do robô e adiciona os sensores comuns a todos os robôs: obstáculos e robôs
+        sensores = new ArrayList<>();
+        sensores.add(new SensorObstaculos(40, TipoSensor.OBSTACULOS));
+        sensores.add(new SensorRobos(2, TipoSensor.ROBOS));
     }
 
     // Adiciona um sensor de reposição de blocos, se o robô o possuir.
@@ -45,10 +43,32 @@ abstract class Robo implements Sensoreavel, Comunicavel, Entidade{
         return direcao;
     }
 
+    // Obtém o estado do robô (ligado/desligado).
     public EstadoRobo getEstadoRobo(){
         return estado;
     }
-    // Obtém a posição (x,y) do robô.
+
+    // Liga o robô.
+    public void ligar(){
+        estado = EstadoRobo.LIGADO;
+    }
+
+    // Desliga o robô.
+    public void desligar(){
+        estado = EstadoRobo.DESLIGADO;
+    }
+
+    // Obtém a vida atual do robô.
+    public int getVida(){
+        return vida;
+    }
+
+    // Define a vida do robô.
+    public void setVida(int dano){
+        vida += dano;
+    }
+
+    // Obtém a posição (x,y,z) do robô.
     public int[] getPosicao(){
         int[] vetor = new int[3];
         vetor[0] = posicaoX;
@@ -87,64 +107,78 @@ abstract class Robo implements Sensoreavel, Comunicavel, Entidade{
         }
     }
 
-    // Realiza um movimento no plano XY.
+    // Realiza um movimento no ambiente.
     public void moverPara(int deltaX, int deltaY, int deltaZ, Ambiente ambiente) throws ForaDosLimitesException{
         ambiente.foraDosLimites(deltaX, deltaY, deltaZ);
     }
+
     /* 
     public void moverPara(int deltaX, int deltaY, int deltaZ){ 
         posicaoX += deltaX;
         posicaoY += deltaY;
         posicaoZ += deltaZ;
     }*/
-    
-    public void ligar(){
-        estado = EstadoRobo.LIGADO;
-    }
 
-    public void desligar(){
-        estado = EstadoRobo.DESLIGADO;
-    }
+    // Todos os robôs devem implementar a função "executarTarefa"
+    public abstract void executarTarefa(int caso);
 
-    public abstract void executarTarefa(Scanner entrada);
-
-    public Sensor getSensorRobo() {
+    // Encontra o sensor de robôs no ArrayList de sensores
+    public Sensor getSensorRobos() {
         for (int i=0; i< sensores.size(); i++ ){
-            if (sensores.get(i).getTipo() == TipoSensor.ROBO)
+            if (sensores.get(i).getTipo() == TipoSensor.ROBOS)
                 return sensores.get(i);
         }
         return null;
     }
 
-    // Utiliza todos os sensores do robô.
+    // Encontra o sensor de obstáculos no ArrayList de sensores
+    public Sensor getSensorObstaculos() {
+        for (int i=0; i< sensores.size(); i++ ){
+            if (sensores.get(i).getTipo() == TipoSensor.OBSTACULOS)
+                return sensores.get(i);
+        }
+        return null;
+    }
+
+    // Utiliza e imprime o resultado de todos os sensores do robô.
+    @Override
     public void acionarSensores(Ambiente ambiente, int caso){
         int[] vetorPosicao = getPosicao();
+        ArrayList<Entidade> resultado;
+
         for (int i=0; i< sensores.size(); i++ ){
-            // acredito que precisaremos guardar o array de entidades
-            
-            sensores.get(i).monitorar(ambiente, vetorPosicao, caso);
+            resultado = sensores.get(i).monitorar(ambiente, vetorPosicao, caso);
+            sensores.get(i).imprimirResultado(resultado, vetorPosicao);
         }
     }
 
+    // Envia uma mensagem para outro robô.
+    @Override
     public void enviarMensagem(Comunicavel destinatario, String mensagem){
 
     }
+
+    // Recebe uma mensagem de outro robô (se não estiver desligado).
+    @Override
     public void receberMensagem(String mensagem){
 
     }
 
-    public void setVida(int dano){
-        vida += dano;
-    }
+    // Obtém posições do obstáculo:
 
-    public int getVida(){
-        return vida;
-    }
-
+    @Override
     public int getX(){return posicaoX;}
-    public int getY(){ return posicaoY;}
+    @Override
+    public int getY(){return posicaoY;}
+    @Override
     public int getZ(){return posicaoZ;}
-    public TipoEntidade getTipo(){return tipo;}
+
+    // Obtém informações sobre o obstáculo:
+
+    @Override
+    public TipoEntidade getTipo(){return TipoEntidade.ROBO;}
+    @Override
     public abstract String getDescricao();
+    @Override
     public char getRepresentacao(){return 'R';}
 }

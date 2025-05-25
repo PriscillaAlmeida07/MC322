@@ -1,5 +1,8 @@
 public interface Atacante {
-    void atacar(Ambiente ambiente); // Diminui a vida de um robo proximo detectado pelo sensor
+
+    // Interface implementada pelo Robô Obstáculo Aéreo e Robo Cavador.
     int getVida();
     int getDano();
+    void atacar(Ambiente ambiente);
+    
 }

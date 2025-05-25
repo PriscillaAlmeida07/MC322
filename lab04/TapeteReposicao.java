@@ -23,7 +23,7 @@ public class TapeteReposicao implements Entidade {
     @Override
     public TipoEntidade getTipo(){return TipoEntidade.TAPETE;}
     @Override
-    public String getDescricao(){return "Local do ambiente em que os robôs obstáculo terrestre podem repor os seus blocos";}
+    public String getDescricao(){return "Tapete de reposição: local do ambiente em que os robôs obstáculo terrestre podem repor os seus blocos";}
     @Override
     public char getRepresentacao(){return 'T';}
     

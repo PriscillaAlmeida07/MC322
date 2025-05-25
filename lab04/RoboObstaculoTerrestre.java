@@ -2,16 +2,38 @@ import java.util.ArrayList;
 
 public class RoboObstaculoTerrestre extends RoboTerrestre implements Curador {
     
-    // Robô capaz de criar obstáculos posicionando blocos no solo.
+    // Descrição do Robo Obstaculo Terrestre:
+    @Override
+    public String getDescricao(){return "Robô obstáculo terrestre: robô capaz de criar obstáculos posicionando blocos no solo";}
+
+    // Atributos:
     private int numBlocos;
     private final int reparo;
 
     // Construtor.
-    public RoboObstaculoTerrestre(String nome, String id){
-        super(nome, id);
+    public RoboObstaculoTerrestre(String nome, String id, EstadoRobo estado){
+        super(nome, id, estado);
         numBlocos = 1;
-        adicionaSensorReporBlocos(new SensorReporBlocos());
         reparo = 3;
+
+        adicionaSensorReporBlocos(new SensorReporBlocos(30, TipoSensor.REPORBLOCOS));
+    }
+
+    // Obtém o reparo que o robô é capaz de realizar
+    @Override
+    public int getReparo(){
+        return reparo;
+    }
+
+    // Aumenta a quantidade de blocos que o robô carrega.
+    public void reporBlocos(){
+        numBlocos += 3;
+    }
+
+    // Executa uma tarefa inerente ao Robô Obstaculo Terrestre.
+    @Override
+    public void executarTarefa(int caso){
+
     }
 
     // Posiciona um bloco em sua posição, criando um obstáculo para outros robôs. Adicionaremos ao ambiente na main
@@ -32,22 +54,11 @@ public class RoboObstaculoTerrestre extends RoboTerrestre implements Curador {
         return bloco;
     }
 
-    // Aumenta a quantidade de blocos que o robô carrega
-    public void reporBlocos(){
-        numBlocos += 3;
-    }
-
-    
-    @Override
-    public int getReparo(){
-        return reparo;
-    }
-
+    // Cura todos os robôs próximos.
     @Override
     public void curar(Ambiente ambiente){
-        Sensor sensor = getSensorRobo();
         int[] vetorPosicao = getPosicao();
-        ArrayList<Entidade> robos = sensor.monitorar(ambiente, vetorPosicao, 1);
+        ArrayList<Entidade> robos = getSensorRobos().monitorar(ambiente, vetorPosicao, 1);
 
         for (int i = 0; i < robos.size(); i++){
             if (robos.get(i) instanceof Robo robo) {

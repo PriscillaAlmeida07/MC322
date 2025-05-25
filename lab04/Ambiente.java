@@ -93,8 +93,12 @@ public class Ambiente {
     public void executarSensores(){
         for (int i = 0; i < entidades.size(); i++) {
             if (entidades.get(i) instanceof Robo robo) {
-                int[] vetorPosicao = robo.getPosicao();
-                robo.usarSensores(this, vetorPosicao);
+                if (robo instanceof RoboObstaculoTerrestre roboObsTer){
+                    roboObsTer.acionarSensores(this, 1);
+                } else {
+                    robo.acionarSensores(this, 2);
+                }
+                
             }
         }
     }

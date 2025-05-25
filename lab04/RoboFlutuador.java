@@ -73,7 +73,7 @@ public class RoboFlutuador extends RoboAereo implements Curador{
         }
     }
 */
-    public String getDescricao(){return  "Robo flutuador: ele é incapaz de realizar subidas e descidas muito bruscas.";}
+    public String getDescricao(){return "Robo flutuador: ele é incapaz de realizar subidas e descidas muito bruscas.";}
 
     @Override
     public int getReparo(){
