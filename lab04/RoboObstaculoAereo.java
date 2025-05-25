@@ -9,8 +9,8 @@ public class RoboObstaculoAereo extends RoboAereo implements  Atacante {
     private final int dano;
 
     // Construtor.
-    public RoboObstaculoAereo(String nome, String id){
-        super(nome, id);
+    public RoboObstaculoAereo(String nome, String id, EstadoRobo estado){
+        super(nome, id, estado);
         numNuvens = 3;
         dano = 2;
     }

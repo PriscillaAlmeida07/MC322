@@ -10,8 +10,8 @@ public class RoboFlutuador extends RoboAereo implements Curador{
     private final int reparo;
 
     // Construtor.
-    public RoboFlutuador(String nome, String id){
-        super(nome, id);
+    public RoboFlutuador(String nome, String id, EstadoRobo estado){
+        super(nome, id, estado);
         subidaMaxima = 10;
         descidaMaxima = 5;
         reparo = 2;
