@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
+public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
 
     // Identificação do robô.
     private final String nome, id;
@@ -74,7 +74,7 @@ abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
         int[] vetor = new int[3];
         vetor[0] = posicaoX;
         vetor[1] = posicaoY;
-        vetor[2] = posicaoY;
+        vetor[2] = posicaoZ;
 
         return vetor;
     }
@@ -108,16 +108,21 @@ abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
         }
     }
 
-    // Realiza um movimento no ambiente.
+    // Realiza um movimento do robô no ambiente.
     public void moverPara(int deltaX, int deltaY, int deltaZ, Ambiente ambiente) throws ForaDosLimitesException, ColisaoException {
-        ambiente.foraDosLimites(deltaX, deltaY, deltaZ);
-        ambiente.estaOcupado(deltaX, deltaY, deltaZ);
-        // Se foraDosLimites lançar uma excecao nao será executada as linhas abaixo
+
+        // Primeiro testamos para ver se é uma movimentação valida, ou seja, dentro dos limites e para um lugar não ocupado
+        ambiente.dentroDosLimites(deltaX + posicaoX, deltaY + posicaoY, deltaZ + posicaoZ);
+        ambiente.estaOcupado(deltaX + posicaoX, deltaY + posicaoY, deltaZ + posicaoZ);
+        // Se foraDosLimites ou estaOcupado lançar uma excecao nao será executada as linhas abaixo
         int[] posicaoAnterior = getPosicao();
+
         posicaoX += deltaX;
         posicaoY += deltaY;
         posicaoZ += deltaZ;
-        ambiente.setPosicaoEntidade(this, posicaoAnterior);
+
+        // Movendo a entidade no ambiente
+        ambiente.moverEntidade(this, posicaoAnterior);
     }
 
     /* 

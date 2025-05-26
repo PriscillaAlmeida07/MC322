@@ -19,7 +19,7 @@ public class RoboObstaculoAereo extends RoboAereo implements  Atacante {
     public String getDescricao(){return "Robo aéreo capaz de criar obstáculos posicionando nuvens no céu";}
 
     public void  executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY) throws ForaDosLimitesException, ColisaoException{
-        int deltaZ = 0;
+        /*int deltaZ = 0;
         System.out.print("O robo subirá (digite 1) ou descerá (digite 2): ");
         int voo = entrada.nextInt();
         if ((voo == 1) || (voo == 2)) {
@@ -32,7 +32,7 @@ public class RoboObstaculoAereo extends RoboAereo implements  Atacante {
         } else if (voo == 2){
             super.descer(ambiente, deltaX, deltaY, deltaZ);
         }
-
+*/
     }
 
     // Posiciona uma nuvem em sua posição, criando um obstáculo para outros robôs. Adicionaremos ao ambiente na main

@@ -19,7 +19,7 @@ public class RoboFlutuador extends RoboAereo implements Curador{
 
     @Override
     public void executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY) throws ForaDosLimitesException, ColisaoException{
-        
+        /* 
         int deltaZ = 0;
         System.out.print("O robo subirá (digite 1) ou descerá (digite 2): ");
         int voo = entrada.nextInt();
@@ -32,7 +32,7 @@ public class RoboFlutuador extends RoboAereo implements Curador{
             this.subir(ambiente, deltaX, deltaY, deltaZ);
         } else if (voo == 2){
             this.descer(ambiente, deltaX, deltaY, deltaZ);
-        }
+        }*/
     }
     // Confere a velocidade de subida antes de realizar o movimento.
     @Override
