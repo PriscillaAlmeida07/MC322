@@ -13,6 +13,7 @@ public class Ambiente {
         altura = 100;
         entidades = new ArrayList<>();
         mapa = new TipoEntidade[largura][comprimento][altura];
+        inicializarMapa();
     }
 
     public void inicializarMapa(){
@@ -68,6 +69,26 @@ public class Ambiente {
         }
        
     }
+    public void visualizarAmbiente(){
+        //altura/2
+        for(int x=0; x< largura; x++){
+            for(int y=0; y < comprimento ; y++){
+                TipoEntidade tipo = mapa[x][y][0];                
+                //System.out.println("x=" + x + " y=" + y + " tipo=" + tipo);
+                System.out.print( "|" + tipo.getCaractere() + "|");
+            }
+            System.out.print("\n");
+        }
+    }
+
+    public void setPosicaoEntidade(Entidade entidade, int[] posicaoAnterior){
+        mapa[posicaoAnterior[0]][posicaoAnterior[1]][posicaoAnterior[2]] = TipoEntidade.VAZIO;
+        mapa[entidade.getX()][entidade.getY()][entidade.getZ()]= entidade.getTipo();
+        
+    }
+    public void imprime(int x, int y, int z){
+        System.out.println(mapa[x][y][z]);
+    }
 
     // Confere se um robô está dentro dos limites do ambiente.
     public void foraDosLimites(int x, int y, int z) throws ForaDosLimitesException{
@@ -82,12 +103,10 @@ public class Ambiente {
             return 0;
     }
 
-    public int estaOcupado(int x, int y, int z){
+    public void estaOcupado(int x, int y, int z) throws ColisaoException {
         if(mapa[x][y][z] != TipoEntidade.VAZIO){
-            return  0;
-        } else {
-            return  1;
-       }
+            throw new ColisaoException();
+        } 
     }
 
     public void executarSensores(){
@@ -103,16 +122,7 @@ public class Ambiente {
         }
     }
 
-    public void visualizarAmbiente(){
-        //altura/2
-        for(int x=0; x< largura; x++){
-            for(int y=0; y < comprimento; y++){
-                TipoEntidade tipo = mapa[x][y][0];                //System.out.println("x=" + x + " y=" + y + " tipo=" + tipo);
-                System.out.print( "|" + tipo.getCaractere() + "|");
-            }
-            System.out.print("\n");
-        }
-    }
+
 
     public int existeEntidade(int posicaoX, int posicaoY, int posicaoZ){
         if((mapa[posicaoX][posicaoY][posicaoZ] == TipoEntidade.VAZIO) || (mapa[posicaoX][posicaoY][posicaoZ] == TipoEntidade.TAPETE))

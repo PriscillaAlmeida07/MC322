@@ -9,8 +9,8 @@ public class RoboObstaculoAereo extends RoboAereo implements  Atacante {
     private final int dano;
 
     // Construtor.
-    public RoboObstaculoAereo(String nome, String id, EstadoRobo estado){
-        super(nome, id, estado);
+    public RoboObstaculoAereo(String nome, String id, EstadoRobo estado, int posicaoX, int posicaoY, int posicaoZ){
+        super(nome, id, estado, posicaoX, posicaoY, posicaoZ);
         numNuvens = 3;
         dano = 2;
     }
@@ -18,7 +18,7 @@ public class RoboObstaculoAereo extends RoboAereo implements  Atacante {
     @Override
     public String getDescricao(){return "Robo aéreo capaz de criar obstáculos posicionando nuvens no céu";}
 
-    public void  executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY)throws ForaDosLimitesException{
+    public void  executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY) throws ForaDosLimitesException, ColisaoException{
         int deltaZ = 0;
         System.out.print("O robo subirá (digite 1) ou descerá (digite 2): ");
         int voo = entrada.nextInt();

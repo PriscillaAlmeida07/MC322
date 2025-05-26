@@ -6,7 +6,6 @@ public class Main {
 
         // Instânciamento do ambiente.
         Ambiente ambiente1 = new Ambiente();
-        ambiente1.inicializarMapa(); 
 
         // Instânciamento de alguns obstáculos.
         Obstaculo arvore1 = new Obstaculo(TipoObstaculo.ARVORE, 5, 5, 0);
@@ -33,17 +32,17 @@ public class Main {
         ambiente1.adicionarEntidade(tapete4);
 
         // Instânciamento de todos os robôs.
-        RoboCavador roboCavador1 = new RoboCavador("roboCavador1", "RC01", EstadoRobo.LIGADO);
-        RoboObstaculoTerrestre roboObstaculoTerrestre1 = new RoboObstaculoTerrestre("roboObstaculoTerrestre1", "ROT01", EstadoRobo.LIGADO);
-        RoboFlutuador roboFlutuador1 = new RoboFlutuador("roboFlutuador1", "RF01", EstadoRobo.LIGADO);
-        RoboObstaculoAereo roboObstaculoAereo1 = new RoboObstaculoAereo("roboObstaculoAereo1", "ROA01", EstadoRobo.LIGADO);
-        RoboCavador roboCavador2 = new RoboCavador("roboCavador2", "RC02", EstadoRobo.DESLIGADO);
-        RoboObstaculoTerrestre roboObstaculoTerrestre2 = new RoboObstaculoTerrestre("roboObstaculoTerrestre2", "ROT02", EstadoRobo.DESLIGADO);
-        RoboFlutuador roboFlutuador2 = new RoboFlutuador("roboFlutuador2", "RF02", EstadoRobo.DESLIGADO);
-        RoboObstaculoAereo roboObstaculoAereo2 = new RoboObstaculoAereo("roboObstaculoAereo2", "ROA02", EstadoRobo.DESLIGADO);
+        RoboCavador roboCavador1 = new RoboCavador("roboCavador1", "RC01", EstadoRobo.LIGADO, 22, 25, 0);
+        RoboObstaculoTerrestre roboObstaculoTerrestre1 = new RoboObstaculoTerrestre("roboObstaculoTerrestre1", "ROT01", EstadoRobo.LIGADO, 23, 25, 0);
+        RoboFlutuador roboFlutuador1 = new RoboFlutuador("roboFlutuador1", "RF01", EstadoRobo.LIGADO, 24, 25, 0);
+        RoboObstaculoAereo roboObstaculoAereo1 = new RoboObstaculoAereo("roboObstaculoAereo1", "ROA01", EstadoRobo.LIGADO, 25, 25, 0);
+        RoboCavador roboCavador2 = new RoboCavador("roboCavador2", "RC02", EstadoRobo.DESLIGADO, 26, 25, 0);
+        RoboObstaculoTerrestre roboObstaculoTerrestre2 = new RoboObstaculoTerrestre("roboObstaculoTerrestre2", "ROT02", EstadoRobo.DESLIGADO, 27, 25, 0);
+        RoboFlutuador roboFlutuador2 = new RoboFlutuador("roboFlutuador2", "RF02", EstadoRobo.DESLIGADO, 28, 25, 0);
+        RoboObstaculoAereo roboObstaculoAereo2 = new RoboObstaculoAereo("roboObstaculoAereo2", "ROA02", EstadoRobo.DESLIGADO, 29, 25, 0);
 
         // Criamos esse robô apenas para testar o metodo removerEntidade
-        RoboObstaculoAereo roboObstaculoAereo3 = new RoboObstaculoAereo("roboObstaculoAereo3", "ROA03", EstadoRobo.LIGADO);
+        RoboObstaculoAereo roboObstaculoAereo3 = new RoboObstaculoAereo("roboObstaculoAereo3", "ROA03", EstadoRobo.LIGADO, 30, 25, 0);
         System.out.print("\n");
 
         // Adicionando robôs ao ambiente.
@@ -51,6 +50,10 @@ public class Main {
         ambiente1.adicionarEntidade(roboObstaculoTerrestre1);
         ambiente1.adicionarEntidade(roboFlutuador1);
         ambiente1.adicionarEntidade(roboObstaculoAereo1);
+        ambiente1.adicionarEntidade(roboCavador2);
+        ambiente1.adicionarEntidade(roboObstaculoTerrestre2);
+        ambiente1.adicionarEntidade(roboFlutuador2);
+        ambiente1.adicionarEntidade(roboObstaculoAereo2);
         
         // Testando o metodo removerEntidade
         System.out.println("\nTeste de remoção de um robô:");
@@ -353,12 +356,10 @@ public class Main {
     // Movimento do robô cavador.
     private static void movimentarCavador(Scanner entrada, RoboCavador roboCavador1, Ambiente ambiente1){
 
-        if (roboCavador1.getEstadoRobo() == EstadoRobo.LIGADO){
-            // Poderia ser uma excecao tbm o robo estar desligado e pagariamos com o catch comentado
-            // estará faltando o caso da velocidade que podemos fazer uma exceção no setVelocidade e pega-la com o catch comentado
-            // assim nao precisaria do validar movimento
-            while (true) {
+        while (true) {
             try {
+                if(roboCavador1.getEstadoRobo() == EstadoRobo.DESLIGADO)
+                    throw new RoboDesligadoException();
                 System.out.print("Informe quantos metros o robô Cavador irá mover:\n" +"Na direção x: ");
                 int deltaX = entrada.nextInt();
 
@@ -372,19 +373,27 @@ public class Main {
                 roboCavador1.moverPara(deltaX, deltaY, 0, ambiente1);
                 break; // movimento válido, sai do loop
 
-            } catch (ForaDosLimitesException e) {
-                System.out.println("Erro: " + e.getMessage());
+            } 
+            catch (RoboDesligadoException e){
+                System.err.println("Erro: " + e.getMessage());
+                break;
+            }
+            catch (ForaDosLimitesException e){
+                System.err.println("Erro: " + e.getMessage());
                 System.out.println("Tente novamente.\n");
             }
-            //catch (RoboDesligadoException e){}
-            //catch (LimiteVelocidadeException e){}
+            catch(ColisaoException e){
+                System.err.println("Erro: " + e.getMessage());
+                System.out.println("Tente novamente.\n");  
+            }
+            catch (VelocidadeMaxException e){
+                System.err.println("Erro: " + e.getMessage());
+                System.out.println("Tente novamente.\n");
+            }
             catch (InputMismatchException e) {
-                System.out.println("Entrada inválida. Digite números inteiros.");
+                System.err.println("Entrada inválida. Digite números inteiros.");
                 entrada.nextLine(); // limpar buffer
             }
-        }
-        } else {
-            System.out.println("O robô está desligado");
         }
 
     }}

@@ -10,15 +10,15 @@ public class RoboFlutuador extends RoboAereo implements Curador{
     private final int reparo;
 
     // Construtor.
-    public RoboFlutuador(String nome, String id, EstadoRobo estado){
-        super(nome, id, estado);
+    public RoboFlutuador(String nome, String id, EstadoRobo estado, int posicaoX, int posicaoY, int posicaoZ){
+        super(nome, id, estado, posicaoX, posicaoY, posicaoZ);
         subidaMaxima = 10;
         descidaMaxima = 5;
         reparo = 2;
     }
 
     @Override
-    public void executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY) throws ForaDosLimitesException{
+    public void executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY) throws ForaDosLimitesException, ColisaoException{
         
         int deltaZ = 0;
         System.out.print("O robo subirá (digite 1) ou descerá (digite 2): ");
@@ -36,7 +36,7 @@ public class RoboFlutuador extends RoboAereo implements Curador{
     }
     // Confere a velocidade de subida antes de realizar o movimento.
     @Override
-    public void subir(Ambiente ambiente, int deltaX, int deltaY, int deltaZ) throws ForaDosLimitesException{
+    public void subir(Ambiente ambiente, int deltaX, int deltaY, int deltaZ) throws ForaDosLimitesException, ColisaoException{
         if (deltaZ <= subidaMaxima){
             super.subir(ambiente, deltaX, deltaY, deltaZ);
         } else { // Ele é incapaz de subir o tanto indicado
@@ -47,7 +47,7 @@ public class RoboFlutuador extends RoboAereo implements Curador{
 
     // Confere a velocidade de descida antes de realizar o movimento.
     @Override
-    public void descer(Ambiente ambiente, int deltaX, int deltaY, int deltaZ) throws ForaDosLimitesException{
+    public void descer(Ambiente ambiente, int deltaX, int deltaY, int deltaZ) throws ForaDosLimitesException, ColisaoException{
         if (deltaZ <= descidaMaxima){
             super.descer(ambiente, deltaX, deltaY, deltaZ);
         } else { // Ele é incapaz de descer o tanto indicado

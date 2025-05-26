@@ -12,8 +12,8 @@ public class RoboObstaculoTerrestre extends RoboTerrestre implements Curador {
     private final int reparo;
 
     // Construtor.
-    public RoboObstaculoTerrestre(String nome, String id, EstadoRobo estado){
-        super(nome, id, estado);
+    public RoboObstaculoTerrestre(String nome, String id, EstadoRobo estado, int posicaoX, int posicaoY, int posicaoZ){
+        super(nome, id, estado, posicaoX, posicaoY, posicaoZ);
         numBlocos = 1;
         reparo = 3;
 

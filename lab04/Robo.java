@@ -7,7 +7,7 @@ abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
     private final String nome, id;
 
     // Posicionamento do robô.
-    private final int posicaoX, posicaoY, posicaoZ;
+    private int posicaoX, posicaoY, posicaoZ;
     private String direcao;
 
     // Outras características.
@@ -16,10 +16,10 @@ abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
     private final ArrayList<Sensor> sensores;
 
     // Construtor.
-    public Robo(String nome, String id, EstadoRobo estado){ 
+    public Robo(String nome, String id, EstadoRobo estado, int posicaoX, int posicaoY, int posicaoZ){ 
 
         this.id = id; this.nome = nome; this.estado = estado;
-        posicaoX = 25; posicaoY = 25; posicaoZ = 0;
+        this.posicaoX = posicaoX; this.posicaoY = posicaoY; this.posicaoZ = posicaoZ;
         direcao = "Norte";
         vida = 10;
 
@@ -109,8 +109,15 @@ abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
     }
 
     // Realiza um movimento no ambiente.
-    public void moverPara(int deltaX, int deltaY, int deltaZ, Ambiente ambiente) throws ForaDosLimitesException{
+    public void moverPara(int deltaX, int deltaY, int deltaZ, Ambiente ambiente) throws ForaDosLimitesException, ColisaoException {
         ambiente.foraDosLimites(deltaX, deltaY, deltaZ);
+        ambiente.estaOcupado(deltaX, deltaY, deltaZ);
+        // Se foraDosLimites lançar uma excecao nao será executada as linhas abaixo
+        int[] posicaoAnterior = getPosicao();
+        posicaoX += deltaX;
+        posicaoY += deltaY;
+        posicaoZ += deltaZ;
+        ambiente.setPosicaoEntidade(this, posicaoAnterior);
     }
 
     /* 
@@ -121,7 +128,7 @@ abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
     }*/
 
     // Todos os robôs devem implementar a função "executarTarefa"
-    public abstract void executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY)throws ForaDosLimitesException;
+    public abstract void executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY) throws ForaDosLimitesException, ColisaoException;
 
     // Encontra o sensor de robôs no ArrayList de sensores
     public Sensor getSensorRobos() {

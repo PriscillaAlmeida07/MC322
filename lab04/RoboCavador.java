@@ -13,8 +13,8 @@ public class RoboCavador extends RoboTerrestre implements Atacante {
     private final int dano;
 
     // Construtor.
-    public RoboCavador(String nome, String id, EstadoRobo estado){ 
-        super(nome, id, estado);
+    public RoboCavador(String nome, String id, EstadoRobo estado, int posicaoX, int posicaoY, int posicaoZ){ 
+        super(nome, id, estado, posicaoX, posicaoY, posicaoZ);
 
         profundidade = 0;
         profundidadeMaxima = 50;
@@ -39,11 +39,11 @@ public class RoboCavador extends RoboTerrestre implements Atacante {
 
     // Executa uma tarefa inerente ao Robô Cavador.
     @Override
-    public void executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY)throws ForaDosLimitesException {
+    public void executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY) throws ForaDosLimitesException {
 
     }
 
-    public void cavar(Scanner entrada,Ambiente ambiente) throws ForaDosLimitesException{
+    public void cavar(Scanner entrada,Ambiente ambiente) throws ForaDosLimitesException, ColisaoException{
         System.out.print("Quantos metros o robo cavará:");
         int deltaZ = entrada.nextInt();
         if(deltaZ < 0){
