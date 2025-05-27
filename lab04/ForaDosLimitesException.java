@@ -1,5 +1,5 @@
 public class ForaDosLimitesException extends Exception {
-    public ForaDosLimitesException(){
-        super("O robô tentou sair do ambiente");
+    public ForaDosLimitesException(String mensagem){
+        super(mensagem);
     }
 }

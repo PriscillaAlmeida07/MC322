@@ -39,8 +39,8 @@ public class RoboCavador extends RoboTerrestre implements Atacante {
 
     // Executa uma tarefa inerente ao Robô Cavador.
     @Override
-    public void executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY) throws ForaDosLimitesException {
-
+    public void executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY, int deltaZ, int caso) throws ForaDosLimitesException, ColisaoException{
+        cavar(entrada, ambiente);
     }
 
     public void cavar(Scanner entrada,Ambiente ambiente) throws ForaDosLimitesException, ColisaoException{

@@ -111,9 +111,9 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
     // Realiza um movimento do robô no ambiente.
     public void moverPara(int deltaX, int deltaY, int deltaZ, Ambiente ambiente) throws ForaDosLimitesException, ColisaoException {
 
-        // Primeiro testamos para ver se é uma movimentação valida, ou seja, dentro dos limites e para um lugar não ocupado
-        ambiente.dentroDosLimites(deltaX + posicaoX, deltaY + posicaoY, deltaZ + posicaoZ);
-        ambiente.estaOcupado(deltaX + posicaoX, deltaY + posicaoY, deltaZ + posicaoZ);
+        // Primeiro testamos para ver se é uma movimentação valida, ou seja, dentro dos limites e para uma posição não ocupada
+        ambiente.dentroDosLimites(deltaX + posicaoX, deltaY + posicaoY, deltaZ + posicaoZ, "O robô tentou sair do ambiente");
+        ambiente.estaOcupado(deltaX + posicaoX, deltaY + posicaoY, deltaZ + posicaoZ, "Esta posição ja está ocupada");
         // Se foraDosLimites ou estaOcupado lançar uma excecao nao será executada as linhas abaixo
         int[] posicaoAnterior = getPosicao();
 
@@ -123,17 +123,11 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
 
         // Movendo a entidade no ambiente
         ambiente.moverEntidade(this, posicaoAnterior);
+        System.out.println("O "+ this.getNome() + "a está na posição: (" + this.getX() + "," + this.getY() + "," + this.getZ() + ")");
     }
 
-    /* 
-    public void moverPara(int deltaX, int deltaY, int deltaZ){ 
-        posicaoX += deltaX;
-        posicaoY += deltaY;
-        posicaoZ += deltaZ;
-    }*/
-
     // Todos os robôs devem implementar a função "executarTarefa"
-    public abstract void executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY) throws ForaDosLimitesException, ColisaoException;
+    public abstract void executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY, int deltaZ, int caso) throws ForaDosLimitesException, ColisaoException;
 
     // Encontra o sensor de robôs no ArrayList de sensores
     public Sensor getSensorRobos() {

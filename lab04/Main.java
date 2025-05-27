@@ -230,7 +230,14 @@ public class Main {
                     movimentarObstaculoTerrestre(entrada, robo, ambiente);
                     break;
                 case 3:
-                  //  posicionarBloco(ambiente, robo);
+                    try{
+                        robo.executarTarefa(entrada, ambiente, 0, 0, 0, 0);
+                    }catch (ForaDosLimitesException e){
+                        System.err.println("Erro: " + e.getMessage());
+                    }
+                    catch(ColisaoException e){
+                        System.err.println("Erro: " + e.getMessage());
+                    }
                     break; 
                 case 4:
                     // interagir(entrada, robo, ambiente);
@@ -319,7 +326,14 @@ public class Main {
                     movimentarObstaculoAereo(entrada, robo, ambiente);
                     break;
                 case 3:
-                   // posicionarNuvem(ambiente, robo);
+                    try{
+                        robo.executarTarefa(entrada, ambiente, 0, 0, 0, 0);
+                    }catch (ForaDosLimitesException e){
+                        System.err.println("Erro: " + e.getMessage());
+                    }
+                    catch(ColisaoException e){
+                        System.err.println("Erro: " + e.getMessage());
+                    }
                     break; 
                 case 4:
                     // interagir(entrada, robo, ambiente);
@@ -346,10 +360,10 @@ public class Main {
     public static void ligarDesligar(Robo robo){
         if(robo.getEstadoRobo() == EstadoRobo.LIGADO) {
             robo.desligar();
-            System.out.println("O robô foi desligado");
+            System.out.println("O robô foi desligado\n");
         } else {
             robo.ligar();
-            System.out.println("O robô foi ligado");
+            System.out.println("O robô foi ligado\n");
         }
     }
 

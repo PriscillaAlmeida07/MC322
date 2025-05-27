@@ -90,15 +90,15 @@ public class Ambiente {
     }
 
     // Confere se um robô está dentro dos limites do ambiente.
-    public void dentroDosLimites(int x, int y, int z) throws ForaDosLimitesException {
+    public void dentroDosLimites(int x, int y, int z, String mensagem) throws ForaDosLimitesException {
         if ((x < 0 || x >= largura || y < 0 || y >= comprimento || z < 0 || z >= altura))
-            throw new ForaDosLimitesException();
+            throw new ForaDosLimitesException(mensagem);
     }
 
     // Confere se não ha nenhuma entidade na posição
-    public void estaOcupado(int x, int y, int z) throws ColisaoException {
+    public void estaOcupado(int x, int y, int z, String mensagem) throws ColisaoException {
         if(mapa[x][y][z] != TipoEntidade.VAZIO){
-            throw new ColisaoException();
+            throw new ColisaoException(mensagem);
         } 
     }
 

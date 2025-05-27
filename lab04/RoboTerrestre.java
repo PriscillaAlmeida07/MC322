@@ -25,17 +25,4 @@ public abstract class RoboTerrestre extends Robo {
         
     }
 
-    /*
-    // Movimentação com override para considerar a velocidade máxima que um robô terrestre pode atingir.
-    @Override
-    public void mover(int deltaX, int deltaY){
-        if (velocidade < 0) {
-            System.out.println("O robô não pode se mover com velocidades negativas");
-        } else if (velocidade <= velocidadeMaxima){
-            super.mover(deltaX, deltaY);
-        } else { // Velocidade acima da permitida
-            System.out.println("O robô atingiu a velocidade máxima " + velocidadeMaxima + " e não pode se mover");
-        }
-    }
-        */
 }

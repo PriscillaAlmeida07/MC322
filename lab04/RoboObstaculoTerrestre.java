@@ -33,8 +33,62 @@ public class RoboObstaculoTerrestre extends RoboTerrestre implements Curador {
 
     // Executa uma tarefa inerente ao Robô Obstaculo Terrestre.
     @Override
-    public void  executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY)throws ForaDosLimitesException{
+    public void  executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY, int deltaZ, int caso) throws ForaDosLimitesException, ColisaoException{
+        // A tarefa especifica do RobôObstaculoAereo é soltar nuvens
+        soltarBlocos(ambiente);
+    }
+    // Posiciona uma bloco na proxima posição e mesma direção que a dele, criando um obstáculo para outros robôs. Adicionaremos ao ambiente na main
+    public void soltarBlocos(Ambiente ambiente) throws ForaDosLimitesException, ColisaoException{
+        if (numBlocos == 0)
+            System.out.print("Não há mais blocos disponíveis");
+        else {
+            int x = getX();
+            int y = getY();
+            int z = getZ();
 
+            switch (getDirecao()) {
+                case "Norte":     
+                    x += 1; 
+                    break;
+                case "Sul":       
+                    x -= 1;
+                    break;
+                case "Leste":    
+                    y += 1; 
+                    break;
+                case "Oeste":     
+                    y -= 1; 
+                    break;
+                case "Nordeste":  
+                    x += 1; y += 1; 
+                    break;
+                case "Noroeste":  
+                    x += 1; y -= 1; 
+                    break;
+                case "Sudeste":   
+                    x -= 1; y += 1; 
+                    break;
+                case "Sudoeste": 
+                    x -= 1; y -= 1; 
+                    break;
+            }
+
+            Posicionarbloco(ambiente, x, y, z);
+        }
+    }
+
+    private void Posicionarbloco(Ambiente ambiente, int x, int y, int z) throws ForaDosLimitesException, ColisaoException{
+        ambiente.dentroDosLimites(x, y, z, "Erro: Tentativa de colocar um bloco fora do ambiente");
+        ambiente.estaOcupado(x, y, z, "Erro: Tentativa de colocar um bloco em uma posição já ocupada");
+        Obstaculo bloco = criarbloco(x, y, z);
+        ambiente.adicionarEntidade(bloco);
+        numBlocos--;
+    }
+
+    // Cria uma nova bloco na posição.
+    private Obstaculo criarbloco(int posicaoX, int posicaoY, int posicaoZ){
+        Obstaculo bloco = new Obstaculo(TipoObstaculo.BLOCO, posicaoX, posicaoY, posicaoZ);
+        return bloco;
     }
 
     // Posiciona um bloco em sua posição, criando um obstáculo para outros robôs. Adicionaremos ao ambiente na main
