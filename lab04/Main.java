@@ -67,8 +67,8 @@ public class Main {
         // Loop de funcionamento do sistema:
         while(continuar){
             System.out.println("Selecione alguma das ações abaixo:\n" +
-            "[1] - Selecionar um Robo (funções/interações)\n" +
-            "[2] - Listar todos os Robos\n" +
+            "[1] - Selecionar um Robô (funções/interações)\n" +
+            "[2] - Listar todos os Robôs\n" +
             "[3] - Listar posição dos Objetos (não robôs)\n" +
             "[4] - Exibir plano xy atual do ambiente\n" +
             "[5] - Listar todas as mensagens trocadas\n" +

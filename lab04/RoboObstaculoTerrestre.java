@@ -72,7 +72,6 @@ public class RoboObstaculoTerrestre extends RoboTerrestre implements Curador {
                     x -= 1; y -= 1; 
                     break;
             }
-
             Posicionarbloco(ambiente, x, y, z);
         }
     }
@@ -81,33 +80,15 @@ public class RoboObstaculoTerrestre extends RoboTerrestre implements Curador {
     private void Posicionarbloco(Ambiente ambiente, int x, int y, int z) throws ForaDosLimitesException, ColisaoException{
         ambiente.dentroDosLimites(x, y, z, "Erro: Tentativa de colocar um bloco fora do ambiente");
         ambiente.estaOcupado(x, y, z, "Erro: Tentativa de colocar um bloco em uma posição já ocupada");
-        Obstaculo bloco = criarbloco(x, y, z);
+        Obstaculo bloco = criarBloco(x, y, z);
         ambiente.adicionarEntidade(bloco);
         System.out.println("O bloco está na posição: (" + bloco.getX() + "," + bloco.getY() +"," + bloco.getZ() + ")");
         numBlocos--;
     }
 
     // Cria uma nova bloco na posição.
-    private Obstaculo criarbloco(int posicaoX, int posicaoY, int posicaoZ){
+    private Obstaculo criarBloco(int posicaoX, int posicaoY, int posicaoZ){
         Obstaculo bloco = new Obstaculo(TipoObstaculo.BLOCO, posicaoX, posicaoY, posicaoZ);
-        return bloco;
-    }
-
-    // Posiciona um bloco em sua posição, criando um obstáculo para outros robôs. Adicionaremos ao ambiente na main
-    public Obstaculo soltarBlocos(int posicaoX, int posicaoY){
-        if ((numBlocos == 0) || ((posicaoX > 96) || (posicaoY > 96))){
-            System.out.print("Não há mais blocos disponíveis e/ou posição inválida para adicionar um bloco ao ambiente");
-            return null;
-        } else { // Ainda tem blocos e a posição é válida.
-            Obstaculo bloco = criarBloco(posicaoX, posicaoY);
-            numBlocos--;
-            return bloco;
-        }
-    }
-
-    // Cria um novo bloco na posição.
-    private Obstaculo criarBloco(int posicaoX, int posicaoY){
-        Obstaculo bloco = new Obstaculo(TipoObstaculo.BLOCO, posicaoX, posicaoY, 0);
         return bloco;
     }
 

@@ -7,7 +7,6 @@ abstract class RoboAereo extends Robo {
         super(nome, id, estado, posicaoX, posicaoY, posicaoZ);
     }
 
-    
     // Movimentação para cima no eixo z.
     public void subir(Ambiente ambiente, int deltaX, int deltaY, int deltaZ) throws ForaDosLimitesException, ColisaoException{
         moverPara(deltaX, deltaY, deltaZ, ambiente);

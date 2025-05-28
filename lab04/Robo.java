@@ -113,7 +113,7 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
         // Primeiro testamos para ver se é uma movimentação valida, ou seja, dentro dos limites e para uma posição não ocupada
         ambiente.dentroDosLimites(deltaX + posicaoX, deltaY + posicaoY, deltaZ + posicaoZ, "O robô tentou sair do ambiente");
         ambiente.estaOcupado(deltaX + posicaoX, deltaY + posicaoY, deltaZ + posicaoZ, "Esta posição ja está ocupada");
-        // Se foraDosLimites ou estaOcupado lançar uma excecao nao será executada as linhas abaixo
+        // Se foraDosLimites ou estaOcupado lançar uma exceção não serão executadas as linhas abaixo
         int[] posicaoAnterior = getPosicao();
 
         posicaoX += deltaX;
@@ -170,7 +170,7 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
 
     }
 
-    // Obtém posições do obstáculo:
+    // Obtém posições do robô:
 
     @Override
     public int getX(){return posicaoX;}
@@ -179,7 +179,7 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
     @Override
     public int getZ(){return posicaoZ;}
 
-    // Obtém informações sobre o obstáculo:
+    // Obtém informações sobre o robô:
 
     @Override
     public TipoEntidade getTipo(){return TipoEntidade.ROBO;}

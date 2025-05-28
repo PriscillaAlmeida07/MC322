@@ -8,16 +8,14 @@ public class RoboCavador extends RoboTerrestre implements Atacante {
     public String getDescricao(){return "Robô terrestre que consegue perfurar o solo";}
 
     // Atributos:
+    // retirei a profundidade maxima pois nao é mais necessaria pq ela é a profundidade max do ambiente
     private int profundidade;
-    private final int profundidadeMaxima;
     private final int dano;
 
     // Construtor.
     public RoboCavador(String nome, String id, EstadoRobo estado, int posicaoX, int posicaoY, int posicaoZ){ 
         super(nome, id, estado, posicaoX, posicaoY, posicaoZ);
-
         profundidade = 0;
-        profundidadeMaxima = 50;
         dano = 3;
     }
     
@@ -49,13 +47,13 @@ public class RoboCavador extends RoboTerrestre implements Atacante {
         if(deltaZ < 0){
             System.out.println("Valor invalido digitado");
         } else {
-            // Colocamos a profundidade igual a 0 (pegando ela com getZ()) apenas para testar se a posição x e y são validas
-            ambiente.dentroDosLimites(getX(), getY(), getZ(), "Erro: Tentativa de cavar em uma posição inválida");
+            // Testará se o robô cavará sem ultrapassar o limite do ambiente
+            ambiente.dentroDosLimites(getX(), getY(), getZ() - deltaZ, "Erro: Tentativa de cavar em uma posição inválida");
             // Se forem validas, veremos se já ha algum buraco na posição
             ambiente.estaOcupado(getX(), getY(), getZ() - deltaZ, "Erro: Tentativa de cavar o solo já perfurado anteriormente");
-        Obstaculo buraco = criarBuraco(getX(), getY(), getZ() - deltaZ);
-        ambiente.adicionarEntidade(buraco);
-        System.out.println("O buraco foi escavado: (" + buraco.getX() + "," + buraco.getY() +"," + buraco.getZ() + ")");
+            Obstaculo buraco = criarBuraco(getX(), getY(), getZ() - deltaZ);
+            ambiente.adicionarEntidade(buraco);
+            System.out.println("O buraco foi escavado: (" + buraco.getX() + "," + buraco.getY() +"," + buraco.getZ() + ")");
         }
     }
 

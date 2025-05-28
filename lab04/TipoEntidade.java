@@ -5,7 +5,7 @@ public enum TipoEntidade {
     ROBO('R'),
     OBSTACULO('O'),
     TAPETE('T'),
-    DESCONHECIDO('?'); 
+    DESCONHECIDO('?'); // acho q nao precisará disso
 
     private final char caractere;
 
