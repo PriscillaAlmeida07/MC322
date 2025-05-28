@@ -16,10 +16,12 @@ public class RoboFlutuador extends RoboAereo implements Curador{
         descidaMaxima = 5;
         reparo = 2;
     }
+    
+    public String getDescricao(){return "Robô aéreo incapaz de realizar subidas e descidas muito bruscas.";}
 
+    // A tarefa especifica do RoboFlutuador é subir ou descer dentro do limite estabelecido
     @Override
     public void executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY, int deltaZ, int caso) throws ForaDosLimitesException, ColisaoException{
-        // A tarefa especifica do RoboFlutuador é subir ou descer dentro do limite estabelecido
         if(caso == 1)
             subir(ambiente, deltaX, deltaY, deltaZ); 
         else
@@ -47,8 +49,6 @@ public class RoboFlutuador extends RoboAereo implements Curador{
             super.descer(ambiente, deltaX, deltaY, descidaMaxima);
         }
     }
-
-    public String getDescricao(){return "Robô aéreo incapaz de realizar subidas e descidas muito bruscas.";}
 
     @Override
     public int getReparo(){

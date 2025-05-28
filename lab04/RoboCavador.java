@@ -43,36 +43,27 @@ public class RoboCavador extends RoboTerrestre implements Atacante {
         cavar(entrada, ambiente);
     }
 
-    public void cavar(Scanner entrada,Ambiente ambiente) throws ForaDosLimitesException, ColisaoException{
+    public void cavar(Scanner entrada, Ambiente ambiente) throws ForaDosLimitesException, ColisaoException{
         System.out.print("Quantos metros o robo cavará:");
         int deltaZ = entrada.nextInt();
         if(deltaZ < 0){
             System.out.println("Valor invalido digitado");
         } else {
-            moverPara(0,0, -deltaZ, ambiente);
-            System.out.println("O robo cavou "+ deltaZ + " metros\n");
+            // Colocamos a profundidade igual a 0 (pegando ela com getZ()) apenas para testar se a posição x e y são validas
+            ambiente.dentroDosLimites(getX(), getY(), getZ(), "Erro: Tentativa de cavar em uma posição inválida");
+            // Se forem validas, veremos se já ha algum buraco na posição
+            ambiente.estaOcupado(getX(), getY(), getZ() - deltaZ, "Erro: Tentativa de cavar o solo já perfurado anteriormente");
+        Obstaculo buraco = criarBuraco(getX(), getY(), getZ() - deltaZ);
+        ambiente.adicionarEntidade(buraco);
+        System.out.println("O buraco foi escavado: (" + buraco.getX() + "," + buraco.getY() +"," + buraco.getZ() + ")");
         }
     }
-
-    /* 
-    // Método que permite a movimentação abaixo do solo.
-    public void cavar(int deltaZ){
-        if (deltaZ < 0) {
-            System.out.println("Valor inválido de perfuração inserido");
-        } else if ((deltaZ + profundidade) > profundidadeMaxima){
-            System.out.println(deltaZ + " é um valor inválido de perfuração, pois a profundidade máxima é: " + profundidadeMaxima);
-        } else if (deltaZ == 0){
-            System.out.println("O robô não cavou");
-        } else { // Valor válido de perfuração
-            profundidade += deltaZ;
-            System.out.println(deltaZ + " é um valor válido de perfuração");
-        }
-    }
-        */
 
     // Cria um novo buraco na posição.
     public Obstaculo criarBuraco(int posicaoX, int posicaoY, int posicaoZ){
         Obstaculo buraco = new Obstaculo(TipoObstaculo.BURACO, posicaoX, posicaoY, posicaoZ);
+        // Define a profundidade do buraco para poder imprimir corretamente no mapa 
+        buraco.getTipoObstaculo().setAltura(posicaoZ);
         return buraco;
     }
 

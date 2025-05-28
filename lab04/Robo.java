@@ -110,7 +110,6 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
 
     // Realiza um movimento do robô no ambiente.
     public void moverPara(int deltaX, int deltaY, int deltaZ, Ambiente ambiente) throws ForaDosLimitesException, ColisaoException {
-
         // Primeiro testamos para ver se é uma movimentação valida, ou seja, dentro dos limites e para uma posição não ocupada
         ambiente.dentroDosLimites(deltaX + posicaoX, deltaY + posicaoY, deltaZ + posicaoZ, "O robô tentou sair do ambiente");
         ambiente.estaOcupado(deltaX + posicaoX, deltaY + posicaoY, deltaZ + posicaoZ, "Esta posição ja está ocupada");
@@ -123,7 +122,7 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
 
         // Movendo a entidade no ambiente
         ambiente.moverEntidade(this, posicaoAnterior);
-        System.out.println("O "+ this.getNome() + "a está na posição: (" + this.getX() + "," + this.getY() + "," + this.getZ() + ")");
+        System.out.println("O "+ this.getNome() + " está na posição: (" + this.getX() + "," + this.getY() + "," + this.getZ() + ")");
     }
 
     // Todos os robôs devem implementar a função "executarTarefa"

@@ -75,7 +75,7 @@ public class Ambiente {
         // altura/2 (nao sei se dará para ver o ceu)
         for(int x=0; x< largura; x++){
             for(int y=0; y < comprimento ; y++){
-                TipoEntidade tipo = mapa[x][y][0];                
+                TipoEntidade tipo = mapa[x][y][24];                
                 System.out.print( "|" + tipo.getCaractere() + "|");
             }
             System.out.print("\n");

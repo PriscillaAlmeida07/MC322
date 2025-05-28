@@ -16,7 +16,7 @@ public class TapeteReposicao implements Entidade {
     @Override
     public int getY(){return posicaoY;}
     @Override
-    public int getZ(){return 0;} // Todos os tapetes ficam no chão
+    public int getZ(){return 25;} // Todos os tapetes ficam no chão
 
     // Obtém informações sobre o tapete:
 

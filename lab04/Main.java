@@ -8,10 +8,10 @@ public class Main {
         Ambiente ambiente1 = new Ambiente();
 
         // Instânciamento de alguns obstáculos.
-        Obstaculo arvore1 = new Obstaculo(TipoObstaculo.ARVORE, 5, 5, 0);
-        Obstaculo arvore2 = new Obstaculo(TipoObstaculo.ARVORE, 5, 45, 0);
-        Obstaculo arvore3 = new Obstaculo(TipoObstaculo.ARVORE, 45, 5, 0);
-        Obstaculo arvore4 = new Obstaculo(TipoObstaculo.ARVORE, 45, 45, 0);
+        Obstaculo arvore1 = new Obstaculo(TipoObstaculo.ARVORE, 5, 5, 25);
+        Obstaculo arvore2 = new Obstaculo(TipoObstaculo.ARVORE, 5, 45, 25);
+        Obstaculo arvore3 = new Obstaculo(TipoObstaculo.ARVORE, 45, 5, 25);
+        Obstaculo arvore4 = new Obstaculo(TipoObstaculo.ARVORE, 45, 45, 25);
 
         // Adicionando obstáculos ao ambiente.
         ambiente1.adicionarEntidade(arvore1);
@@ -32,17 +32,17 @@ public class Main {
         ambiente1.adicionarEntidade(tapete4);
 
         // Instânciamento de todos os robôs.
-        RoboCavador roboCavador1 = new RoboCavador("roboCavador1", "RC01", EstadoRobo.LIGADO, 22, 25, 0);
-        RoboObstaculoTerrestre roboObstaculoTerrestre1 = new RoboObstaculoTerrestre("roboObstaculoTerrestre1", "ROT01", EstadoRobo.LIGADO, 23, 25, 0);
-        RoboFlutuador roboFlutuador1 = new RoboFlutuador("roboFlutuador1", "RF01", EstadoRobo.LIGADO, 24, 25, 0);
-        RoboObstaculoAereo roboObstaculoAereo1 = new RoboObstaculoAereo("roboObstaculoAereo1", "ROA01", EstadoRobo.LIGADO, 25, 25, 0);
-        RoboCavador roboCavador2 = new RoboCavador("roboCavador2", "RC02", EstadoRobo.DESLIGADO, 26, 25, 0);
-        RoboObstaculoTerrestre roboObstaculoTerrestre2 = new RoboObstaculoTerrestre("roboObstaculoTerrestre2", "ROT02", EstadoRobo.DESLIGADO, 27, 25, 0);
-        RoboFlutuador roboFlutuador2 = new RoboFlutuador("roboFlutuador2", "RF02", EstadoRobo.DESLIGADO, 28, 25, 0);
-        RoboObstaculoAereo roboObstaculoAereo2 = new RoboObstaculoAereo("roboObstaculoAereo2", "ROA02", EstadoRobo.DESLIGADO, 29, 25, 0);
+        RoboCavador roboCavador1 = new RoboCavador("roboCavador1", "RC01", EstadoRobo.LIGADO, 22, 25, 25);
+        RoboObstaculoTerrestre roboObstaculoTerrestre1 = new RoboObstaculoTerrestre("roboObstaculoTerrestre1", "ROT01", EstadoRobo.LIGADO, 23, 25, 25);
+        RoboFlutuador roboFlutuador1 = new RoboFlutuador("roboFlutuador1", "RF01", EstadoRobo.LIGADO, 24, 25, 25);
+        RoboObstaculoAereo roboObstaculoAereo1 = new RoboObstaculoAereo("roboObstaculoAereo1", "ROA01", EstadoRobo.LIGADO, 25, 25, 25);
+        RoboCavador roboCavador2 = new RoboCavador("roboCavador2", "RC02", EstadoRobo.DESLIGADO, 26, 25, 25);
+        RoboObstaculoTerrestre roboObstaculoTerrestre2 = new RoboObstaculoTerrestre("roboObstaculoTerrestre2", "ROT02", EstadoRobo.DESLIGADO, 27, 25, 25);
+        RoboFlutuador roboFlutuador2 = new RoboFlutuador("roboFlutuador2", "RF02", EstadoRobo.DESLIGADO, 28, 25, 25);
+        RoboObstaculoAereo roboObstaculoAereo2 = new RoboObstaculoAereo("roboObstaculoAereo2", "ROA02", EstadoRobo.DESLIGADO, 29, 25, 25);
 
         // Criamos esse robô apenas para testar o metodo removerEntidade
-        RoboObstaculoAereo roboObstaculoAereo3 = new RoboObstaculoAereo("roboObstaculoAereo3", "ROA03", EstadoRobo.LIGADO, 30, 25, 0);
+        RoboObstaculoAereo roboObstaculoAereo3 = new RoboObstaculoAereo("roboObstaculoAereo3", "ROA03", EstadoRobo.LIGADO, 30, 25, 25);
         System.out.print("\n");
 
         // Adicionando robôs ao ambiente.
@@ -183,7 +183,14 @@ public class Main {
                     movimentarCavador(entrada, robo, ambiente);
                     break;
                 case 3:
-                   // cavar(entrada, robo, ambiente);
+                    try{
+                        robo.executarTarefa(entrada, ambiente, 0, 0, 0, 0);
+                    }catch (ForaDosLimitesException e){
+                        System.err.println("Erro: " + e.getMessage());
+                    }
+                    catch(ColisaoException e){
+                        System.err.println("Erro: " + e.getMessage());
+                    }
                     break; 
                 case 4:
                     // interagir(entrada, robo, ambiente);
@@ -411,7 +418,6 @@ public class Main {
         }
     }
     
-
     // Movimento do robô obstáculo terrestre.
     private static void movimentarObstaculoTerrestre(Scanner entrada, RoboObstaculoTerrestre robo, Ambiente ambiente1){
 
@@ -456,21 +462,7 @@ public class Main {
         }
 
     }
-/* 
 
-    public static void posicionarBloco(Ambiente ambiente1, RoboObstaculoTerrestre robo){
-
-        int[] posicao = robo.getPosicao();
-        Obstaculo bloco = robo.soltarBlocos(posicao[0], posicao[1]);
-
-        if (bloco != null){
-            ambiente1.adicionarEntidade(bloco);
-            System.out.print("O robô soltou um bloco\n");
-        }
-        System.out.print("\n");
-    }
-*/
-    // Movimento do robô flutuador.
     private static void movimentarFlutuador(Scanner entrada, RoboFlutuador robo, Ambiente ambiente1){
         while (true) {
             try {
@@ -492,10 +484,7 @@ public class Main {
                     throw new ValorInvalidoException();
                 }
 
-                if(voo == 1)
-                    robo.subir(ambiente1, deltaX, deltaY, deltaZ);
-                else
-                    robo.descer(ambiente1, deltaX, deltaY, deltaZ);
+                robo.executarTarefa(entrada, ambiente1, deltaX, deltaY, deltaZ, voo);
                 break; // movimento válido, sai do loop
 
             } 
@@ -578,17 +567,6 @@ public class Main {
     }
 }
 /* 
-    public static void posicionarNuvem(Ambiente ambiente1, RoboObstaculoAereo robo){
-        int[] posicao = robo.getPosicao();
-        Obstaculo nuvem = robo.soltarNuvens(posicao[0], posicao[1], posicao[2]);
-
-        if (nuvem != null){
-            ambiente1.adicionarEntidade(nuvem);
-            System.out.print("O robô soltou um nuvem\n");
-        }
-        System.out.print("\n");
-    }
-*//* 
     // Escolhe qual robô irá utilizar os seus sensores e imprime o resultado obtido.
     private static void sensores(Scanner entrada, Ambiente ambiente1, RoboCavador roboCavador1, RoboObstaculoTerrestre roboObstaculoTerrestre1, RoboObstaculoAereo roboObstaculoAereo1, RoboFlutuador roboFlutuador1){
         boolean continuar = true;

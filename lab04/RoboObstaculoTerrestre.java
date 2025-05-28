@@ -3,10 +3,6 @@ import java.util.Scanner;
 
 public class RoboObstaculoTerrestre extends RoboTerrestre implements Curador {
     
-    // Descrição do Robo Obstaculo Terrestre:
-    @Override
-    public String getDescricao(){return "Robô terrestre capaz de criar obstáculos posicionando blocos no solo";}
-
     // Atributos:
     private int numBlocos;
     private final int reparo;
@@ -19,6 +15,10 @@ public class RoboObstaculoTerrestre extends RoboTerrestre implements Curador {
 
         adicionaSensorReporBlocos(new SensorReporBlocos(30, TipoSensor.REPORBLOCOS));
     }
+
+    // Descrição do Robo Obstaculo Terrestre:
+    @Override
+    public String getDescricao(){return "Robô terrestre capaz de criar obstáculos posicionando blocos no solo";}
 
     // Obtém o reparo que o robô é capaz de realizar
     @Override
@@ -34,10 +34,10 @@ public class RoboObstaculoTerrestre extends RoboTerrestre implements Curador {
     // Executa uma tarefa inerente ao Robô Obstaculo Terrestre.
     @Override
     public void  executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY, int deltaZ, int caso) throws ForaDosLimitesException, ColisaoException{
-        // A tarefa especifica do RobôObstaculoAereo é soltar nuvens
         soltarBlocos(ambiente);
     }
-    // Posiciona uma bloco na proxima posição e mesma direção que a dele, criando um obstáculo para outros robôs. Adicionaremos ao ambiente na main
+
+    // Define a posição que o bloco será posicionado de acordo com a direção do robô
     public void soltarBlocos(Ambiente ambiente) throws ForaDosLimitesException, ColisaoException{
         if (numBlocos == 0)
             System.out.print("Não há mais blocos disponíveis");
@@ -77,11 +77,13 @@ public class RoboObstaculoTerrestre extends RoboTerrestre implements Curador {
         }
     }
 
+    // Metodo para posicionar o bloco de acordo com a direção do robô
     private void Posicionarbloco(Ambiente ambiente, int x, int y, int z) throws ForaDosLimitesException, ColisaoException{
         ambiente.dentroDosLimites(x, y, z, "Erro: Tentativa de colocar um bloco fora do ambiente");
         ambiente.estaOcupado(x, y, z, "Erro: Tentativa de colocar um bloco em uma posição já ocupada");
         Obstaculo bloco = criarbloco(x, y, z);
         ambiente.adicionarEntidade(bloco);
+        System.out.println("O bloco está na posição: (" + bloco.getX() + "," + bloco.getY() +"," + bloco.getZ() + ")");
         numBlocos--;
     }
 

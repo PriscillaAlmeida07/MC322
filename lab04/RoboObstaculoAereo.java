@@ -19,12 +19,12 @@ public class RoboObstaculoAereo extends RoboAereo implements  Atacante {
     @Override
     public String getDescricao(){return "Robo aéreo capaz de criar obstáculos posicionando nuvens no céu";}
 
+    // A tarefa especifica do RobôObstaculoAereo é soltar nuvens
     public void  executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY, int deltaZ, int caso) throws ForaDosLimitesException, ColisaoException{
-        // A tarefa especifica do RobôObstaculoAereo é soltar nuvens
         soltarNuvens(ambiente);
     }
 
-    // Posiciona uma nuvem na proxima posição e mesma direção que a dele, criando um obstáculo para outros robôs. Adicionaremos ao ambiente na main
+    // Define a posição que a nuvem será posicionada de acordo com a direção do robô
     public void soltarNuvens(Ambiente ambiente) throws ForaDosLimitesException, ColisaoException{
         if (numNuvens == 0)
             System.out.print("Não há mais nuvens disponíveis");
@@ -64,13 +64,14 @@ public class RoboObstaculoAereo extends RoboAereo implements  Atacante {
         }
     }
 
+    // Metodo para posicionar a nuvem de acordo com a direção do robô
     private void PosicionarNuvem(Ambiente ambiente, int x, int y, int z) throws ForaDosLimitesException, ColisaoException{
         ambiente.dentroDosLimites(x, y, z, "Erro: Tentativa de colocar a nuvem fora do ambiente");
         ambiente.estaOcupado(x, y, z, "Erro: Tentativa de colocar a nuvem em uma posição já ocupada");
         Obstaculo nuvem = criarNuvem(x, y, z);
         ambiente.adicionarEntidade(nuvem);
         numNuvens--;
-        System.out.println("O robo está na posição: (" + getX() + "," + getY() +"," + getZ() + ") e na direção:" + getDirecao() + " O obj esta na posição: (" + nuvem.getX() + "," + nuvem.getY() +"," + nuvem.getZ() + ")"  );
+        System.out.println("A nuvem está na posição: (" + nuvem.getX() + "," + nuvem.getY() +"," + nuvem.getZ() + ")");
     }
 
     // Cria uma nova nuvem na posição.
