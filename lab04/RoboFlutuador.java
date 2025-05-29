@@ -17,6 +17,7 @@ public class RoboFlutuador extends RoboAereo implements Curador{
         reparo = 2;
     }
     
+    @Override
     public String getDescricao(){return "Robô aéreo incapaz de realizar subidas e descidas muito bruscas.";}
 
     // A tarefa especifica do RoboFlutuador é subir ou descer dentro do limite estabelecido

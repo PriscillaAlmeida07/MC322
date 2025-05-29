@@ -74,7 +74,7 @@ public class Ambiente {
     public void visualizarAmbiente(){
         for(int x=0; x< largura; x++){
             for(int y=0; y < comprimento ; y++){
-                TipoEntidade tipo = mapa[x][y][27];                
+                TipoEntidade tipo = mapa[x][y][25];                
                 System.out.print( "|" + tipo.getCaractere() + "|");
             }
             System.out.print("\n");
@@ -119,6 +119,17 @@ public class Ambiente {
 
     public ArrayList<Entidade> getArrayEntidades(){
         return entidades;
+    }
+
+    public Robo getDestinatario(String id){
+        for (int i=0; i< entidades.size(); i++){
+            if (entidades.get(i) instanceof Robo robo){
+                if (robo.getID().equals(id)){
+                    return robo;
+                }
+            }
+        }
+        return null;
     }
 
     // nao sei se está sendo usado

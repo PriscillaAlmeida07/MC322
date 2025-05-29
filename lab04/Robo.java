@@ -14,6 +14,7 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
     private EstadoRobo estado;
     private int vida;
     private final ArrayList<Sensor> sensores;
+    private ArrayList<String> mensagens;
 
     // Construtor.
     public Robo(String nome, String id, EstadoRobo estado, int posicaoX, int posicaoY, int posicaoZ){ 
@@ -22,6 +23,8 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
         this.posicaoX = posicaoX; this.posicaoY = posicaoY; this.posicaoZ = posicaoZ;
         direcao = "Norte";
         vida = 10;
+
+        mensagens = new ArrayList<>();
 
         // Cria o ArrayList de sensores do robô e adiciona os sensores comuns a todos os robôs: obstáculos e robôs
         sensores = new ArrayList<>();
@@ -160,14 +163,26 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
 
     // Envia uma mensagem para outro robô.
     @Override
-    public void enviarMensagem(Comunicavel destinatario, String mensagem){
-
+    public void enviarMensagem(CentralComunicacao centralComunicacao, Comunicavel destinatario, String mensagem) throws ErroComunicacaoException{
+        if (destinatario == this)
+            throw new ErroComunicacaoException();
+        destinatario.receberMensagem(this.getNome() + ": " + mensagem);
+        centralComunicacao.registrarMensagens(this.getNome(), mensagem);
+        System.out.println("Mensagem enviada.");
     }
 
     // Recebe uma mensagem de outro robô (se não estiver desligado).
     @Override
     public void receberMensagem(String mensagem){
+        mensagens.add(mensagem);
+    }
 
+    @Override
+    public void visualizarMensagens(){
+        for (int i = 0; i < mensagens.size(); i++){
+            System.out.println(mensagens.get(i));
+        }
+        System.out.print("\n");
     }
 
     // Obtém posições do robô:
@@ -187,4 +202,8 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
     public abstract String getDescricao();
     @Override
     public char getRepresentacao(){return 'R';}
+
+    public String getID(){
+        return id;
+    }
 }
