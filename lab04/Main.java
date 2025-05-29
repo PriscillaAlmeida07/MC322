@@ -91,7 +91,7 @@ public class Main {
                     ambiente1.visualizarAmbiente();
                     break; 
                 case 5:
-                    // ainda temos que fazer
+                    centralComunicacao.exibirMensagens();
                     break; 
 
                 case 0:
@@ -133,22 +133,22 @@ public class Main {
                     funcoesCavador(entrada, roboCavador2, ambiente1, centralComunicacao);
                     break; 
                 case 3:
-                    funcoesObstaculoTerrestre(entrada, roboObstaculoTerrestre1, ambiente1);
+                    funcoesObstaculoTerrestre(entrada, roboObstaculoTerrestre1, ambiente1, centralComunicacao);
                     break; 
                 case 4:
-                    funcoesObstaculoTerrestre(entrada, roboObstaculoTerrestre2, ambiente1);
+                    funcoesObstaculoTerrestre(entrada, roboObstaculoTerrestre2, ambiente1, centralComunicacao);
                     break;  
                 case 5:
-                    funcoesFlutuador(entrada, roboFlutuador1, ambiente1);
+                    funcoesFlutuador(entrada, roboFlutuador1, ambiente1, centralComunicacao);
                     break; 
                 case 6:
-                    funcoesFlutuador(entrada, roboFlutuador2, ambiente1);
+                    funcoesFlutuador(entrada, roboFlutuador2, ambiente1, centralComunicacao);
                     break; 
                 case 7:
-                    funcoesObstaculoAereo(entrada, roboObstaculoAereo1, ambiente1);
+                    funcoesObstaculoAereo(entrada, roboObstaculoAereo1, ambiente1, centralComunicacao);
                     break; 
                 case 8:
-                    funcoesObstaculoAereo(entrada, roboObstaculoAereo2, ambiente1);
+                    funcoesObstaculoAereo(entrada, roboObstaculoAereo2, ambiente1, centralComunicacao);
                     break; 
 
                 case 0:
@@ -224,6 +224,9 @@ public class Main {
         
 
         while(true){
+            try {
+                if(remetente.getEstadoRobo() == EstadoRobo.DESLIGADO)
+                    throw new RoboDesligadoException();
             System.out.println("Com qual robô você quer interagir?\n" + 
             "[1] - Robo Cavador 1\n" +
             "[2] - Robo Cavador 2\n" +
@@ -269,19 +272,24 @@ public class Main {
             
         System.out.println("Digite a mensagem");
         String mensagem = entrada.nextLine();
-        try {
-            remetente.enviarMensagem(centralComunicacao, destinatario, mensagem);
-            break;
+        if(destinatario.getEstadoRobo() == EstadoRobo.DESLIGADO)
+            throw new RoboDesligadoException();
+        remetente.enviarMensagem(centralComunicacao, destinatario, mensagem);
+        break;
         } catch (ErroComunicacaoException e){
             System.err.println("Erro: " + e.getMessage());
             System.out.println("Tente novamente.\n");
+        } catch(RoboDesligadoException e){
+            System.err.println("Erro: " + e.getMessage());
+            System.out.println("Tente novamente.\n");
+            break;
         }
         }
 
         
 
     }
-    private static void funcoesObstaculoTerrestre(Scanner entrada, RoboObstaculoTerrestre robo, Ambiente ambiente){
+    private static void funcoesObstaculoTerrestre(Scanner entrada, RoboObstaculoTerrestre robo, Ambiente ambiente, CentralComunicacao centralComunicacao){
 
         boolean continuar = true;
 
@@ -290,9 +298,10 @@ public class Main {
             "[1] - Ligar/Desligar\n" +
             "[2] - Movimentar\n" +
             "[3] - Posicionar Bloco\n" +
-            "[4] - Interagir\n" +
-            "[5] - Curar\n" +
-            "[6] - Utilizar sensores\n" +
+            "[4] - Enviar mensagem para um Robô\n" +
+            "[5] - Visualizar mensagens recebidas\n" +
+            "[6] - Curar\n" +
+            "[7] - Utilizar sensores\n" +
             "[0] - Voltar\n");
     
             int opcao = entrada.nextInt();
@@ -314,12 +323,15 @@ public class Main {
                     }
                     break; 
                 case 4:
-                    // interagir(entrada, robo, ambiente);
-                    break;  
+                    trocarMensagens(entrada, centralComunicacao, robo, ambiente);
+                    break; 
                 case 5:
+                    robo.visualizarMensagens();
+                    break;
+                case 6:
                     robo.curar(ambiente);
                     break; 
-                case 6:
+                case 7:
                     robo.acionarSensores(ambiente, 1);
                     break; 
 
@@ -334,7 +346,7 @@ public class Main {
         }
     }
 
-    private static void funcoesFlutuador(Scanner entrada, RoboFlutuador robo, Ambiente ambiente){
+    private static void funcoesFlutuador(Scanner entrada, RoboFlutuador robo, Ambiente ambiente, CentralComunicacao centralComunicacao){
 
         boolean continuar = true;
 
@@ -342,9 +354,10 @@ public class Main {
             System.out.println("Selecione algumas das acoes abaixo:\n" +
             "[1] - Ligar/Desligar\n" +
             "[2] - Movimentar\n" +
-            "[3] - Interagir\n" +
-            "[4] - Curar\n" +
-            "[5] - Utilizar sensores\n" +
+            "[3] - Enviar mensagem para um Robô\n" +
+            "[4] - Visualizar mensagens recebidas\n" +
+            "[5] - Curar\n" +
+            "[6] - Utilizar sensores\n" +
             "[0] - Voltar\n");
     
             int opcao = entrada.nextInt();
@@ -357,12 +370,15 @@ public class Main {
                     movimentarFlutuador(entrada, robo, ambiente);
                     break;
                 case 3:
-                    // interagir(entrada, robo, ambiente);
+                    trocarMensagens(entrada, centralComunicacao, robo, ambiente);
                     break;  
                 case 4:
+                    robo.visualizarMensagens();
+                    break;
+                case 5:
                     robo.curar(ambiente);
                     break; 
-                case 5:
+                case 6:
                     robo.acionarSensores(ambiente, 2);
                     break; 
 
@@ -377,7 +393,7 @@ public class Main {
         }
     }
 
-    private static void funcoesObstaculoAereo(Scanner entrada, RoboObstaculoAereo robo, Ambiente ambiente){
+    private static void funcoesObstaculoAereo(Scanner entrada, RoboObstaculoAereo robo, Ambiente ambiente, CentralComunicacao centralComunicacao){
 
         boolean continuar = true;
 
@@ -386,9 +402,10 @@ public class Main {
             "[1] - Ligar/Desligar\n" +
             "[2] - Movimentar\n" +
             "[3] - Posicionar Nuvem\n" +
-            "[4] - Interagir\n" +
-            "[5] - Atacar\n" +
-            "[6] - Utilizar sensores\n" +
+            "[4] - Enviar mensagem para um Robô\n" +
+            "[5] - Visualizar mensagens recebidas\n" +
+            "[6] - Atacar\n" +
+            "[7] - Utilizar sensores\n" +
             "[0] - Voltar\n");
     
             int opcao = entrada.nextInt();
@@ -410,12 +427,15 @@ public class Main {
                     }
                     break; 
                 case 4:
-                    // interagir(entrada, robo, ambiente);
-                    break;  
+                    trocarMensagens(entrada, centralComunicacao, robo, ambiente);
+                    break; 
                 case 5:
+                    robo.visualizarMensagens();
+                    break;
+                case 6:
                     robo.atacar(ambiente);
                     break; 
-                case 6:
+                case 7:
                     robo.acionarSensores(ambiente, 2);
                     break; 
 
