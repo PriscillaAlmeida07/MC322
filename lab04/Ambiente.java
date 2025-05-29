@@ -75,8 +75,10 @@ public class Ambiente {
         for(int x=0; x< largura; x++){
             for(int y=0; y < comprimento ; y++){
                 TipoEntidade tipo = mapa[x][y][25];                
-                System.out.print( "|" + tipo.getCaractere() + "|");
+                System.out.print( "|" + tipo.getCaractere());
+        
             }
+            System.out.print( "|");
             System.out.print("\n");
         }
     }
