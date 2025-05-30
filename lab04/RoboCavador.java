@@ -67,14 +67,20 @@ public class RoboCavador extends RoboTerrestre implements Atacante {
 
     // Ataca todos os robôs próximos.
     @Override
-    public void atacar(Ambiente ambiente){
+    public void atacar(Ambiente ambiente) throws RoboDesligadoException{
+        if(this.getEstadoRobo() == EstadoRobo.DESLIGADO)
+            throw new RoboDesligadoException("O robô está desligado\n");
         int[] vetorPosicao = getPosicao();
         ArrayList<Entidade> robos = getSensorRobos().monitorar(ambiente, vetorPosicao, 2);
 
         for (int i = 0; i < robos.size(); i++){
             if (robos.get(i) instanceof Robo robo){
-                robo.setVida(-dano);
+                if(robo != this){
+                    robo.setVida(-dano);
+                    System.out.println("O " + this.getNome() + " atacou o " + robo.getNome() + " que possui agora " + robo.getVida() + " vidas apenas");
+                }
             }
         }
+        System.out.print("\n");
     }
 }

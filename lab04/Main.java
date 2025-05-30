@@ -162,6 +162,70 @@ public class Main {
         }
     }
 
+    private static void trocarMensagens(Scanner entrada, CentralComunicacao centralComunicacao, Robo remetente, Ambiente ambiente){
+        while(true){
+            try {
+                if(remetente.getEstadoRobo() == EstadoRobo.DESLIGADO)
+                    throw new RoboDesligadoException("O " + remetente.getNome() + " está desligado");
+                System.out.println("Com qual robô você quer interagir?\n" + 
+                "[1] - Robo Cavador 1\n" +
+                "[2] - Robo Cavador 2\n" +
+                "[3] - Robo Obstáculo Terrestre 1\n" +
+                "[4] - Robo Obstáculo Terrestre 2\n" +
+                "[5] - Robo Flutuador 1\n" +
+                "[6] - Robo Flutuador 2\n" +
+                "[7] - Robo Obstáculo Aéreo 1\n" +
+                "[8] - Robo Obstáculo Aéreo 2\n");
+                int opcao = entrada.nextInt();
+                entrada.nextLine();
+                Robo destinatario = null;
+                switch (opcao) {
+                    case 1:
+                        destinatario = ambiente.getDestinatario("RC01");
+                        break;
+                    case 2:
+                        destinatario = ambiente.getDestinatario("RC02");
+                        break; 
+                    case 3:
+                        destinatario = ambiente.getDestinatario("ROT01");
+                        break; 
+                    case 4:
+                        destinatario = ambiente.getDestinatario("ROT02");
+                        break;  
+                    case 5:
+                        destinatario = ambiente.getDestinatario("RF01");
+                        break; 
+                    case 6:
+                        destinatario = ambiente.getDestinatario("RF02");
+                        break; 
+                    case 7:
+                        destinatario = ambiente.getDestinatario("ROA01");
+                        break; 
+                    case 8:
+                        destinatario = ambiente.getDestinatario("ROA02");
+                        break;    
+
+                    default:
+                    System.out.println("Valor inválido, digite novamente\n");
+                        break;
+                }
+            
+                System.out.println("Digite a mensagem");
+                String mensagem = entrada.nextLine();
+                if(destinatario.getEstadoRobo() == EstadoRobo.DESLIGADO)
+                    throw new RoboDesligadoException("O " + destinatario.getNome() + " (destinatário) está desligado e não pode receber a mensagem");
+                remetente.enviarMensagem(centralComunicacao, destinatario, mensagem);
+                break;
+            } catch (ErroComunicacaoException e){
+                System.err.println("Erro: " + e.getMessage());
+                System.out.println("Tente novamente.\n");
+            } catch(RoboDesligadoException e){
+                System.err.println("Erro: " + e.getMessage()+ "\n");
+                break;
+            }
+        }
+    }
+
     private static void funcoesCavador(Scanner entrada, RoboCavador robo, Ambiente ambiente, CentralComunicacao centralComunicacao){
 
         boolean continuar = true;
@@ -202,7 +266,11 @@ public class Main {
                     robo.visualizarMensagens();
                     break;  
                 case 6:
-                    robo.atacar(ambiente);
+                    try{
+                        robo.atacar(ambiente);
+                    } catch (RoboDesligadoException e){
+                        System.err.println("Erro: " + e.getMessage());
+                    }
                     break; 
                 case 7:
                     robo.acionarSensores(ambiente, 1);
@@ -220,75 +288,6 @@ public class Main {
 
     }
 
-    private static void trocarMensagens(Scanner entrada, CentralComunicacao centralComunicacao, Robo remetente, Ambiente ambiente){
-        
-
-        while(true){
-            try {
-                if(remetente.getEstadoRobo() == EstadoRobo.DESLIGADO)
-                    throw new RoboDesligadoException();
-            System.out.println("Com qual robô você quer interagir?\n" + 
-            "[1] - Robo Cavador 1\n" +
-            "[2] - Robo Cavador 2\n" +
-            "[3] - Robo Obstáculo Terrestre 1\n" +
-            "[4] - Robo Obstáculo Terrestre 2\n" +
-            "[5] - Robo Flutuador 1\n" +
-            "[6] - Robo Flutuador 2\n" +
-            "[7] - Robo Obstáculo Aéreo 1\n" +
-            "[8] - Robo Obstáculo Aéreo 2\n");
-        int opcao = entrada.nextInt();
-        entrada.nextLine();
-        Robo destinatario = null;
-            switch (opcao) {
-                case 1:
-                    destinatario = ambiente.getDestinatario("RC01");
-                    break;
-                case 2:
-                    destinatario = ambiente.getDestinatario("RC02");
-                    break; 
-                case 3:
-                    destinatario = ambiente.getDestinatario("ROT01");
-                    break; 
-                case 4:
-                    destinatario = ambiente.getDestinatario("ROT02");
-                    break;  
-                case 5:
-                    destinatario = ambiente.getDestinatario("RF01");
-                    break; 
-                case 6:
-                    destinatario = ambiente.getDestinatario("RF02");
-                    break; 
-                case 7:
-                    destinatario = ambiente.getDestinatario("ROA01");
-                    break; 
-                case 8:
-                    destinatario = ambiente.getDestinatario("ROA02");
-                    break;    
-
-                default:
-                System.out.println("Valor inválido, digite novamente\n");
-                    break;
-            }
-            
-        System.out.println("Digite a mensagem");
-        String mensagem = entrada.nextLine();
-        if(destinatario.getEstadoRobo() == EstadoRobo.DESLIGADO)
-            throw new RoboDesligadoException();
-        remetente.enviarMensagem(centralComunicacao, destinatario, mensagem);
-        break;
-        } catch (ErroComunicacaoException e){
-            System.err.println("Erro: " + e.getMessage());
-            System.out.println("Tente novamente.\n");
-        } catch(RoboDesligadoException e){
-            System.err.println("Erro: " + e.getMessage());
-            System.out.println("Tente novamente.\n");
-            break;
-        }
-        }
-
-        
-
-    }
     private static void funcoesObstaculoTerrestre(Scanner entrada, RoboObstaculoTerrestre robo, Ambiente ambiente, CentralComunicacao centralComunicacao){
 
         boolean continuar = true;
@@ -329,7 +328,11 @@ public class Main {
                     robo.visualizarMensagens();
                     break;
                 case 6:
-                    robo.curar(ambiente);
+                    try{
+                        robo.curar(ambiente);
+                    } catch (RoboDesligadoException e){
+                        System.err.println("Erro: " + e.getMessage());
+                    }
                     break; 
                 case 7:
                     robo.acionarSensores(ambiente, 1);
@@ -376,7 +379,11 @@ public class Main {
                     robo.visualizarMensagens();
                     break;
                 case 5:
-                    robo.curar(ambiente);
+                    try{
+                        robo.curar(ambiente);
+                    } catch (RoboDesligadoException e){
+                        System.err.println("Erro: " + e.getMessage());
+                    }
                     break; 
                 case 6:
                     robo.acionarSensores(ambiente, 2);
@@ -433,7 +440,11 @@ public class Main {
                     robo.visualizarMensagens();
                     break;
                 case 6:
-                    robo.atacar(ambiente);
+                    try{
+                        robo.atacar(ambiente);
+                    } catch (RoboDesligadoException e){
+                        System.err.println("Erro: " + e.getMessage());
+                    }
                     break; 
                 case 7:
                     robo.acionarSensores(ambiente, 2);
@@ -467,7 +478,7 @@ public class Main {
         while (true) {
             try {
                 if(robo.getEstadoRobo() == EstadoRobo.DESLIGADO)
-                    throw new RoboDesligadoException();
+                    throw new RoboDesligadoException("O " + robo.getNome() + " está desligado");
                 System.out.print("Informe quantos metros o robô Cavador irá mover:\n" +"Na direção x: ");
                 int deltaX = entrada.nextInt();
 
@@ -511,7 +522,7 @@ public class Main {
         while (true) {
             try {
                 if(robo.getEstadoRobo() == EstadoRobo.DESLIGADO)
-                    throw new RoboDesligadoException();
+                    throw new RoboDesligadoException("O " + robo.getNome() + " está desligado");
                 System.out.print("Informe quantos metros o robô Obstáculo Terrestre irá mover:\n" +"Na direção x: ");
                 int deltaX = entrada.nextInt();
 
@@ -554,7 +565,7 @@ public class Main {
         while (true) {
             try {
                 if(robo.getEstadoRobo() == EstadoRobo.DESLIGADO)
-                    throw new RoboDesligadoException();
+                    throw new RoboDesligadoException("O " + robo.getNome() + " está desligado");
                 int deltaZ = 0;
                 System.out.print("Informe quantos metros o robô Flutuador irá mover:\n" +"Na direção x: ");
                 int deltaX = entrada.nextInt();
@@ -606,7 +617,7 @@ public class Main {
         while (true) {
             try {
                 if(robo.getEstadoRobo() == EstadoRobo.DESLIGADO)
-                    throw new RoboDesligadoException();
+                    throw new RoboDesligadoException("O " + robo.getNome() + " está desligado");
                 int deltaZ = 0;
                 System.out.print("Informe quantos metros o robô Obstaculo Aereo irá mover:\n" +"Na direção x: ");
                 int deltaX = entrada.nextInt();
@@ -653,50 +664,3 @@ public class Main {
         }
     }
 }
-/* 
-    // Escolhe qual robô irá utilizar os seus sensores e imprime o resultado obtido.
-    private static void sensores(Scanner entrada, Ambiente ambiente1, RoboCavador roboCavador1, RoboObstaculoTerrestre roboObstaculoTerrestre1, RoboObstaculoAereo roboObstaculoAereo1, RoboFlutuador roboFlutuador1){
-        boolean continuar = true;
-
-        while(continuar){
-            System.out.println("Selecione o robô que você deseja monitorar:\n" +
-            "[1] - Monitorar o Robo Cavador\n" +
-            "[2] - Monitorar o Robo Obstáculo Terrestre\n" +
-            "[3] - Monitorar o Robo Flutuador\n" +
-            "[4] - Monitorar o Robo Obstáculo Aéreo\n" +
-            "[0] - Voltar\n");
-    
-            int opcao = entrada.nextInt();
-            int[] vetorPosicao;
-
-            switch (opcao){
-                case 1:
-                    vetorPosicao = roboCavador1.getPosicao();
-                    roboCavador1.acionarSensores(ambiente1, 1);
-                    break;
-                case 2:
-                    vetorPosicao = roboObstaculoTerrestre1.getPosicao();
-                    roboObstaculoTerrestre1.acionarSensores(ambiente1, );
-                    break; 
-                case 3:
-                    vetorPosicao = roboFlutuador1.getPosicao();
-                    roboFlutuador1.acionarSensores(ambiente1, );
-                    break;  
-                case 4:
-                    vetorPosicao = roboObstaculoAereo1.getPosicao();
-                    roboObstaculoAereo1.acionarSensores(ambiente1, );               
-                    break; 
-
-                case 0:
-                continuar = false;
-                    break;   
-
-                default:
-                System.out.println("Valor inválido, digite novamente\n");
-                    break;
-            }
-        }
-    }   
-}
-*/
-// Adicionar sistema de reposição de blocos

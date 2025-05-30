@@ -165,10 +165,10 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
     @Override
     public void enviarMensagem(CentralComunicacao centralComunicacao, Comunicavel destinatario, String mensagem) throws ErroComunicacaoException{
         if (destinatario == this)
-            throw new ErroComunicacaoException();
+            throw new ErroComunicacaoException("Tentativa de se comunicar com o próprio robo");
         destinatario.receberMensagem(this.getNome() + ": " + mensagem);
         centralComunicacao.registrarMensagens(this.getNome(), mensagem);
-        System.out.println("Mensagem enviada.");
+        System.out.println("Mensagem enviada.\n");
     }
 
     // Recebe uma mensagem de outro robô (se não estiver desligado).
@@ -179,10 +179,16 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
 
     @Override
     public void visualizarMensagens(){
-        for (int i = 0; i < mensagens.size(); i++){
-            System.out.println(mensagens.get(i));
+        if (mensagens.size() == 0)
+            System.out.println("O robô ainda não recebeu nenhuma mensagem \n");
+        else{
+            System.out.println("Mensagens recebidas: \n");
+            for (int i = 0; i < mensagens.size(); i++){
+                System.out.println(mensagens.get(i));
         }
         System.out.print("\n");
+        }
+
     }
 
     // Obtém posições do robô:

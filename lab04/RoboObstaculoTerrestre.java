@@ -94,14 +94,20 @@ public class RoboObstaculoTerrestre extends RoboTerrestre implements Curador {
 
     // Cura todos os robôs próximos.
     @Override
-    public void curar(Ambiente ambiente){
+    public void curar(Ambiente ambiente) throws RoboDesligadoException{
+        if(this.getEstadoRobo() == EstadoRobo.DESLIGADO)
+            throw new RoboDesligadoException("O robô está desligado");
         int[] vetorPosicao = getPosicao();
         ArrayList<Entidade> robos = getSensorRobos().monitorar(ambiente, vetorPosicao, 1);
 
         for (int i = 0; i < robos.size(); i++){
-            if (robos.get(i) instanceof Robo robo) {
-                robo.setVida(reparo);
+            if (robos.get(i) instanceof Robo robo){
+                if(robo != this){
+                    robo.setVida(reparo);
+                    System.out.println("O " + this.getNome() + " curou o " + robo.getNome() + " que possui agora " + robo.getVida() + " vidas");
+                }
             }
         }
+        System.out.print("\n");
     }
 }

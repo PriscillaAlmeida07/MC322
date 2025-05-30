@@ -16,9 +16,15 @@ public class CentralComunicacao {
 
     // Lista todas as mensagens trocadas.
     public void exibirMensagens(){
-        for(int i=0; i< mensagens.size(); i++){
-            System.out.println(mensagens.get(i));
+        if(mensagens.size() == 0)
+            System.out.println("Ainda não há nenhuma mensagem registrada \n");
+        else{
+            System.out.println("Mensagens recebidas: \n");
+            for(int i=0; i< mensagens.size(); i++){
+                System.out.println(mensagens.get(i));
+            }
+            System.out.print("\n");
         }
-        System.out.print("\n");
+
     }
 }
