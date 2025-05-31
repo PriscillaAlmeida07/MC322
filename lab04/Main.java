@@ -280,7 +280,8 @@ public class Main {
             "[5] - Enviar mensagem para um Robô\n" +
             "[6] - Visualizar mensagens recebidas\n" +
             "[7] - Atacar\n" +
-            "[8] - Utilizar sensores\n" +
+            "[8] - Destruir o obstáculo mais próximo ao robô \n" +
+            "[9] - Utilizar sensores\n" +
             "[0] - Voltar\n");
     
             int opcao = entrada.nextInt();
@@ -299,8 +300,9 @@ public class Main {
                         robo.executarTarefa(entrada, ambiente, 0, 0, 0, 0);
                     }catch (ForaDosLimitesException e){
                         System.err.println("Erro: " + e.getMessage());
-                    }
-                    catch(ColisaoException e){
+                    }catch(ColisaoException e){
+                        System.err.println("Erro: " + e.getMessage());
+                    } catch(RoboDesligadoException e){
                         System.err.println("Erro: " + e.getMessage());
                     }
                     break; 
@@ -318,7 +320,18 @@ public class Main {
                     }
                     break; 
                 case 8:
-                    robo.acionarSensores(ambiente, 1);
+                    try{
+                        robo.getObstaculoMaisProx(ambiente);
+                    }catch (RoboDesligadoException e){
+                        System.err.println("Erro: " + e.getMessage());
+                    }
+                    break;
+                case 9:
+                    try{
+                        robo.acionarSensores(ambiente, 1);
+                    } catch (RoboDesligadoException e){
+                        System.err.println("Erro: " + e.getMessage());
+                    }
                     break; 
 
                 case 0:
@@ -368,6 +381,8 @@ public class Main {
                     }
                     catch(ColisaoException e){
                         System.err.println("Erro: " + e.getMessage());
+                    } catch(RoboDesligadoException e){
+                        System.err.println("Erro: " + e.getMessage());
                     }
                     break; 
                 case 5:
@@ -384,7 +399,11 @@ public class Main {
                     }
                     break; 
                 case 8:
-                    robo.acionarSensores(ambiente, 1);
+                    try{
+                        robo.acionarSensores(ambiente, 1);
+                    } catch (RoboDesligadoException e){
+                        System.err.println("Erro: " + e.getMessage());
+                    }
                     break; 
 
                 case 0:
@@ -438,7 +457,11 @@ public class Main {
                     }
                     break; 
                 case 7:
-                    robo.acionarSensores(ambiente, 2);
+                    try{
+                        robo.acionarSensores(ambiente, 2);
+                    } catch (RoboDesligadoException e){
+                        System.err.println("Erro: " + e.getMessage());
+                    }
                     break; 
 
                 case 0:
@@ -487,6 +510,8 @@ public class Main {
                     }
                     catch(ColisaoException e){
                         System.err.println("Erro: " + e.getMessage());
+                    } catch(RoboDesligadoException e){
+                        System.err.println("Erro: " + e.getMessage());
                     }
                     break; 
                 case 5:
@@ -503,7 +528,11 @@ public class Main {
                     }
                     break; 
                 case 8:
-                    robo.acionarSensores(ambiente, 2);
+                    try{
+                        robo.acionarSensores(ambiente, 2);
+                    } catch (RoboDesligadoException e){
+                        System.err.println("Erro: " + e.getMessage());
+                    }
                     break; 
 
                 case 0:

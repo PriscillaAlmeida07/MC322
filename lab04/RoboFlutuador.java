@@ -22,7 +22,9 @@ public class RoboFlutuador extends RoboAereo implements Curador{
 
     // A tarefa especifica do RoboFlutuador é subir ou descer dentro do limite estabelecido
     @Override
-    public void executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY, int deltaZ, int caso) throws ForaDosLimitesException, ColisaoException{
+    public void executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY, int deltaZ, int caso) throws ForaDosLimitesException, ColisaoException, RoboDesligadoException{
+        if(this.getEstadoRobo() == EstadoRobo.DESLIGADO)
+            throw new RoboDesligadoException("O " + this.getNome() + " está desligado");
         if(caso == 1)
             subir(ambiente, deltaX, deltaY, deltaZ); 
         else

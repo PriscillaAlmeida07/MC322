@@ -33,7 +33,9 @@ public class RoboObstaculoTerrestre extends RoboTerrestre implements Curador {
 
     // Executa uma tarefa inerente ao Robô Obstaculo Terrestre.
     @Override
-    public void  executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY, int deltaZ, int caso) throws ForaDosLimitesException, ColisaoException{
+    public void  executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY, int deltaZ, int caso) throws ForaDosLimitesException, ColisaoException, RoboDesligadoException{
+        if(this.getEstadoRobo() == EstadoRobo.DESLIGADO)
+            throw new RoboDesligadoException("O " + this.getNome() + " está desligado");
         soltarBlocos(ambiente);
     }
 

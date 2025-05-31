@@ -20,7 +20,9 @@ public class RoboObstaculoAereo extends RoboAereo implements  Atacante {
     public String getDescricao(){return "Robo aéreo capaz de criar obstáculos posicionando nuvens no céu";}
 
     // A tarefa especifica do RobôObstaculoAereo é soltar nuvens
-    public void  executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY, int deltaZ, int caso) throws ForaDosLimitesException, ColisaoException{
+    public void  executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY, int deltaZ, int caso) throws ForaDosLimitesException, ColisaoException, RoboDesligadoException{
+        if(this.getEstadoRobo() == EstadoRobo.DESLIGADO)
+            throw new RoboDesligadoException("O " + this.getNome() + " está desligado");
         soltarNuvens(ambiente);
     }
 

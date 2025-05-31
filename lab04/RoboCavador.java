@@ -26,7 +26,7 @@ public class RoboCavador extends RoboTerrestre implements Atacante, DestroiObsta
         int[] vetorPosicao = getPosicao();
         ArrayList<Entidade> obstaculos = getSensorObstaculos().monitorar(ambiente, vetorPosicao, 1);
         if(obstaculos.isEmpty())
-            System.out.println("Nenhum obstáculo encontrado próximo ao destruidor");
+            System.out.println("Nenhum obstáculo encontrado próximo ao destruidor\n");
         else{
             Obstaculo obstaculoMaisProx = null;
             double menorDist = 200;
@@ -43,8 +43,8 @@ public class RoboCavador extends RoboTerrestre implements Atacante, DestroiObsta
             }
 
             if (obstaculoMaisProx != null) {
+                System.out.println("O obstáculo mais próximo ("+ obstaculoMaisProx.getTipoObstaculo().getNome() + ") foi destruído\n");
                 ambiente.removerEntidade(obstaculoMaisProx);
-                System.out.println("O obstáculo mais próximo foi destruído");
             }
         }
     }
@@ -66,7 +66,9 @@ public class RoboCavador extends RoboTerrestre implements Atacante, DestroiObsta
 
     // Executa uma tarefa inerente ao Robô Cavador.
     @Override
-    public void executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY, int deltaZ, int caso) throws ForaDosLimitesException, ColisaoException{
+    public void executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY, int deltaZ, int caso) throws ForaDosLimitesException, ColisaoException, RoboDesligadoException{
+        if(this.getEstadoRobo() == EstadoRobo.DESLIGADO)
+            throw new RoboDesligadoException("O " + this.getNome() + " está desligado");
         cavar(entrada, ambiente);
     }
 

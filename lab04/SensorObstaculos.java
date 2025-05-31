@@ -43,7 +43,7 @@ public class SensorObstaculos extends Sensor {
     @Override
     public void imprimirResultado(ArrayList<Entidade> resultado, int[] posicaoRobo){
         
-        System.out.println("Resultado do sensor de obstáculos para o robô na posição: (" + posicaoRobo[0] + "," + posicaoRobo[1] + "," + posicaoRobo[2] + ")");
+        System.out.println("Resultado do sensor de obstáculos para o robô na posição: (" + posicaoRobo[0] + "," + posicaoRobo[1] + "," + (posicaoRobo[2] - 25) + ")");
         for (int i = 0; i < resultado.size(); i++){
             if (resultado.get(i) instanceof Obstaculo obstaculo){
                 System.out.println("Foi capturado um(a) " + obstaculo.getTipoObstaculo().getNome() + " na posição (" + obstaculo.getX() + "," + obstaculo.getY() + "," + obstaculo.getZObstaculo() + ")");

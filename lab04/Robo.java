@@ -131,7 +131,7 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
     }
 
     // Todos os robôs devem implementar a função "executarTarefa"
-    public abstract void executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY, int deltaZ, int caso) throws ForaDosLimitesException, ColisaoException;
+    public abstract void executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY, int deltaZ, int caso) throws ForaDosLimitesException, ColisaoException, RoboDesligadoException;
 
     // Encontra o sensor de robôs no ArrayList de sensores
     public Sensor getSensorRobos() {
@@ -153,7 +153,9 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
 
     // Utiliza e imprime o resultado de todos os sensores do robô.
     @Override
-    public void acionarSensores(Ambiente ambiente, int caso){
+    public void acionarSensores(Ambiente ambiente, int caso) throws RoboDesligadoException{
+        if(this.getEstadoRobo() == EstadoRobo.DESLIGADO)
+            throw new RoboDesligadoException("O " + this.getNome() + " está desligado");
         int[] vetorPosicao = getPosicao();
         ArrayList<Entidade> resultado;
 

@@ -43,7 +43,7 @@ public class SensorRobos extends Sensor {
     @Override
     public void imprimirResultado(ArrayList<Entidade> resultado, int[] posicaoRobo){
         
-        System.out.println("Resultado do sensor de robôs para o robô na posição: (" + posicaoRobo[0] + "," + posicaoRobo[1] + "," + posicaoRobo[2] + ")");
+        System.out.println("Resultado do sensor de robôs para o robô na posição: (" + posicaoRobo[0] + "," + posicaoRobo[1] + "," + (posicaoRobo[2] - 25) + ")");
         for (int i = 0; i < resultado.size(); i++){
             if(resultado.get(i) instanceof Robo robo)
                 System.out.println("Foi capturado um robô na posição: (" + robo.getX() + "," + robo.getY() + "," + robo.getZUsuario() + ")");

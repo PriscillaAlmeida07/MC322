@@ -106,7 +106,8 @@ public class Ambiente {
         } 
     }
 
-    public void executarSensores(){
+    //Nao estamos usando
+    public void executarSensores() throws RoboDesligadoException{
         for (int i = 0; i < entidades.size(); i++) {
             if (entidades.get(i) instanceof Robo robo) {
                 if (robo instanceof RoboObstaculoTerrestre roboObsTer){
