@@ -10,7 +10,7 @@ public class Ambiente {
     public Ambiente(){ 
         largura = 50;
         comprimento = 50;
-        altura = 100;
+        altura = 50;
         entidades = new ArrayList<>();
         mapa = new TipoEntidade[largura][comprimento][altura];
         inicializarMapa();
@@ -142,11 +142,48 @@ public class Ambiente {
             return 0;
     }
 
-    public void listarTodosRobos(){
+    public ArrayList<Robo> getArrayRobos(){
+        ArrayList<Robo> robos = new ArrayList<>(); 
         for (int i = 0; i < entidades.size(); i++){
             if (entidades.get(i) instanceof Robo robo){
-                System.out.println(robo.getNome() + ": " + robo.getDescricao());
+                robos.add(robo);
             }
+        }
+        return robos;
+    }
+
+    public void listarDescricoesRobos(){
+        ArrayList<Robo> robos = getArrayRobos();
+        System.out.println("Segue descrição de cada um dos robôs que estão no ambiente:");
+        for (int i = 0; i < robos.size(); i++){
+            System.out.println(robos.get(i).getNome() + ": " + robos.get(i).getDescricao());
+        }
+        System.out.print("\n");
+    }
+
+    public void listarEstadosRobos(){
+        ArrayList<Robo> robos = getArrayRobos();
+        System.out.println("O estado atual de cada um dos robôs é:");
+        for (int i = 0; i < robos.size(); i++){
+            System.out.println(robos.get(i).getNome() + ": " + robos.get(i).getEstadoRobo().getString());
+        }
+        System.out.print("\n");
+    }
+
+    public void listarVidaRobos(){
+        ArrayList<Robo> robos = getArrayRobos();
+        System.out.println("A vida atual de cada um dos robôs é:");
+        for (int i = 0; i < robos.size(); i++){
+            System.out.println(robos.get(i).getNome() + ": " + robos.get(i).getVida() + "/10");
+        }
+        System.out.print("\n");
+    }
+
+    public void listarPosicaoRobos(){
+        ArrayList<Robo> robos = getArrayRobos();
+        System.out.println("A posição atual de cada um dos robôs é:");
+        for (int i = 0; i < robos.size(); i++){
+            System.out.println(robos.get(i).getNome() + ": (" + robos.get(i).getX() + "," + robos.get(i).getY() + "," + robos.get(i).getZUsuario() + ")");
         }
         System.out.print("\n");
     }

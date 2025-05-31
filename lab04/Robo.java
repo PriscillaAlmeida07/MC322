@@ -11,6 +11,7 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
     private String direcao;
 
     // Outras características.
+    private final TipoEntidade tipoEntidade;
     private EstadoRobo estado;
     private int vida;
     private final ArrayList<Sensor> sensores;
@@ -23,6 +24,7 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
         this.posicaoX = posicaoX; this.posicaoY = posicaoY; this.posicaoZ = posicaoZ;
         direcao = "Norte";
         vida = 10;
+        tipoEntidade = TipoEntidade.ROBO;
 
         mensagens = new ArrayList<>();
 
@@ -203,7 +205,7 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
     // Obtém informações sobre o robô:
 
     @Override
-    public TipoEntidade getTipo(){return TipoEntidade.ROBO;}
+    public TipoEntidade getTipo(){return tipoEntidade;}
     @Override
     public abstract String getDescricao();
     @Override
@@ -211,5 +213,9 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
 
     public String getID(){
         return id;
+    }
+
+    public int getZUsuario(){
+        return (this.getZ() - 25);
     }
 }

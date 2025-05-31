@@ -7,6 +7,7 @@ public class Main {
         // Instânciamento do ambiente.
         Ambiente ambiente1 = new Ambiente();
 
+        // Instânciamento da central de comunicação.
         CentralComunicacao centralComunicacao = new CentralComunicacao();
 
         // Instânciamento de alguns obstáculos.
@@ -62,6 +63,9 @@ public class Main {
         ambiente1.adicionarEntidade(roboObstaculoAereo3);
         ambiente1.removerEntidade(roboObstaculoAereo3);
 
+        // Descrição inicial para o usuário
+        
+
         // Variáveis de funcionamento do sistema.
         Scanner entrada = new Scanner(System.in);
         boolean continuar = true;
@@ -82,7 +86,7 @@ public class Main {
                     selecionarRobo(entrada, ambiente1, roboCavador1, roboCavador2, roboObstaculoTerrestre1, roboObstaculoTerrestre2, roboObstaculoAereo1, roboObstaculoAereo2, roboFlutuador1, roboFlutuador2, centralComunicacao);
                     break;
                 case 2:
-                    ambiente1.listarTodosRobos();
+                    listarRobos(entrada, ambiente1);
                     break; 
                 case 3:
                     ambiente1.listarObjetos();
@@ -105,6 +109,41 @@ public class Main {
             }
         }
         entrada.close();
+    }
+
+    private static void listarRobos(Scanner entrada, Ambiente ambiente1){
+        boolean continuar = true;
+
+        while(continuar){
+            System.out.println("Selecione o que deseja visualizar sobre os robôs no ambiente:\n" +
+            "[1] - Descrição\n" +
+            "[2] - Estado (ligado/desligado)\n" +
+            "[3] - Posição\n" +
+            "[4] - Vida\n" +
+            "[0] - Voltar\n");
+
+            int opcao = entrada.nextInt();
+            switch (opcao) {
+                case 1:
+                    ambiente1.listarDescricoesRobos();
+                    break;
+                case 2:
+                    ambiente1.listarEstadosRobos();
+                    break;
+                case 3:
+                    ambiente1.listarPosicaoRobos();
+                    break;
+                case 4:
+                    ambiente1.listarVidaRobos();
+                    break;
+                case 0:
+                    continuar = false;
+                    break;  
+                default:
+                    System.out.println("Valor inválido, digite novamente\n");
+                    break;
+            }
+        }
     }
 
 
