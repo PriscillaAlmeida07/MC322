@@ -218,4 +218,11 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
     public int getZUsuario(){
         return (this.getZ() - 25);
     }
+
+    public void vizualizarStatus(){
+        System.out.println("Informações sobre o " + getNome() + ":\n" +
+                            "Estado: " + getEstadoRobo().getString() + "\n" +
+                            "Posição: (" + getX() + "," + getY() + "," + getZUsuario() + ")\n" +
+                            "Vida: " + getVida() + "/10\n");
+    }
 }

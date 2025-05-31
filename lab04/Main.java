@@ -271,24 +271,28 @@ public class Main {
 
         while(continuar){
             System.out.println("Selecione algumas das acoes abaixo:\n" +
-            "[1] - Ligar/Desligar\n" +
-            "[2] - Movimentar\n" +
-            "[3] - Cavar\n" +
-            "[4] - Enviar mensagem para um Robô\n" +
-            "[5] - Visualizar mensagens recebidas\n" +
-            "[6] - Atacar\n" +
-            "[7] - Utilizar sensores\n" +
+            "[1] - Visualizar status (estado, posição e vida)\n" +
+            "[2] - Ligar/Desligar\n" +
+            "[3] - Movimentar\n" +
+            "[4] - Cavar\n" +
+            "[5] - Enviar mensagem para um Robô\n" +
+            "[6] - Visualizar mensagens recebidas\n" +
+            "[7] - Atacar\n" +
+            "[8] - Utilizar sensores\n" +
             "[0] - Voltar\n");
     
             int opcao = entrada.nextInt();
             switch (opcao) {
                 case 1:
-                    ligarDesligar(robo);
+                    robo.vizualizarStatus();
                     break;
                 case 2:
-                    movimentarCavador(entrada, robo, ambiente);
+                    ligarDesligar(robo);
                     break;
                 case 3:
+                    movimentarCavador(entrada, robo, ambiente);
+                    break;
+                case 4:
                     try{
                         robo.executarTarefa(entrada, ambiente, 0, 0, 0, 0);
                     }catch (ForaDosLimitesException e){
@@ -298,20 +302,20 @@ public class Main {
                         System.err.println("Erro: " + e.getMessage());
                     }
                     break; 
-                case 4:
+                case 5:
                     trocarMensagens(entrada, centralComunicacao, robo, ambiente);
                     break; 
-                case 5:
+                case 6:
                     robo.visualizarMensagens();
                     break;  
-                case 6:
+                case 7:
                     try{
                         robo.atacar(ambiente);
                     } catch (RoboDesligadoException e){
                         System.err.println("Erro: " + e.getMessage());
                     }
                     break; 
-                case 7:
+                case 8:
                     robo.acionarSensores(ambiente, 1);
                     break; 
 
@@ -333,24 +337,28 @@ public class Main {
 
         while(continuar){
             System.out.println("Selecione algumas das acoes abaixo:\n" +
-            "[1] - Ligar/Desligar\n" +
-            "[2] - Movimentar\n" +
-            "[3] - Posicionar Bloco\n" +
-            "[4] - Enviar mensagem para um Robô\n" +
-            "[5] - Visualizar mensagens recebidas\n" +
-            "[6] - Curar\n" +
-            "[7] - Utilizar sensores\n" +
+            "[1] - Visualizar status (estado, posição e vida)\n" +
+            "[2] - Ligar/Desligar\n" +
+            "[3] - Movimentar\n" +
+            "[4] - Posicionar Bloco\n" +
+            "[5] - Enviar mensagem para um Robô\n" +
+            "[6] - Visualizar mensagens recebidas\n" +
+            "[7] - Curar\n" +
+            "[8] - Utilizar sensores\n" +
             "[0] - Voltar\n");
     
             int opcao = entrada.nextInt();
             switch (opcao) {
                 case 1:
-                    ligarDesligar(robo);
+                    robo.vizualizarStatus();
                     break;
                 case 2:
-                    movimentarObstaculoTerrestre(entrada, robo, ambiente);
+                    ligarDesligar(robo);
                     break;
                 case 3:
+                    movimentarObstaculoTerrestre(entrada, robo, ambiente);
+                    break;
+                case 4:
                     try{
                         robo.executarTarefa(entrada, ambiente, 0, 0, 0, 0);
                     }catch (ForaDosLimitesException e){
@@ -360,20 +368,20 @@ public class Main {
                         System.err.println("Erro: " + e.getMessage());
                     }
                     break; 
-                case 4:
+                case 5:
                     trocarMensagens(entrada, centralComunicacao, robo, ambiente);
                     break; 
-                case 5:
+                case 6:
                     robo.visualizarMensagens();
                     break;
-                case 6:
+                case 7:
                     try{
                         robo.curar(ambiente);
                     } catch (RoboDesligadoException e){
                         System.err.println("Erro: " + e.getMessage());
                     }
                     break; 
-                case 7:
+                case 8:
                     robo.acionarSensores(ambiente, 1);
                     break; 
 
@@ -394,37 +402,40 @@ public class Main {
 
         while(continuar){
             System.out.println("Selecione algumas das acoes abaixo:\n" +
-            "[1] - Ligar/Desligar\n" +
-            "[2] - Movimentar\n" +
-            "[3] - Enviar mensagem para um Robô\n" +
-            "[4] - Visualizar mensagens recebidas\n" +
-            "[5] - Curar\n" +
-            "[6] - Utilizar sensores\n" +
+            "[1] - Visualizar status (estado, posição e vida)\n" +
+            "[2] - Ligar/Desligar\n" +
+            "[3] - Movimentar\n" +
+            "[4] - Enviar mensagem para um Robô\n" +
+            "[5] - Visualizar mensagens recebidas\n" +
+            "[6] - Curar\n" +
+            "[7] - Utilizar sensores\n" +
             "[0] - Voltar\n");
     
             int opcao = entrada.nextInt();
             switch (opcao) {
-                            
                 case 1:
-                    ligarDesligar(robo);
+                    robo.vizualizarStatus();
                     break;
                 case 2:
-                    movimentarFlutuador(entrada, robo, ambiente);
+                    ligarDesligar(robo);
                     break;
                 case 3:
+                    movimentarFlutuador(entrada, robo, ambiente);
+                    break;
+                case 4:
                     trocarMensagens(entrada, centralComunicacao, robo, ambiente);
                     break;  
-                case 4:
+                case 5:
                     robo.visualizarMensagens();
                     break;
-                case 5:
+                case 6:
                     try{
                         robo.curar(ambiente);
                     } catch (RoboDesligadoException e){
                         System.err.println("Erro: " + e.getMessage());
                     }
                     break; 
-                case 6:
+                case 7:
                     robo.acionarSensores(ambiente, 2);
                     break; 
 
@@ -445,24 +456,28 @@ public class Main {
 
         while(continuar){
             System.out.println("Selecione algumas das acoes abaixo:\n" +
-            "[1] - Ligar/Desligar\n" +
-            "[2] - Movimentar\n" +
-            "[3] - Posicionar Nuvem\n" +
-            "[4] - Enviar mensagem para um Robô\n" +
-            "[5] - Visualizar mensagens recebidas\n" +
-            "[6] - Atacar\n" +
-            "[7] - Utilizar sensores\n" +
+            "[1] - Visualizar status (estado, posição e vida)\n" +
+            "[2] - Ligar/Desligar\n" +
+            "[3] - Movimentar\n" +
+            "[4] - Posicionar Nuvem\n" +
+            "[5] - Enviar mensagem para um Robô\n" +
+            "[6] - Visualizar mensagens recebidas\n" +
+            "[7] - Atacar\n" +
+            "[8] - Utilizar sensores\n" +
             "[0] - Voltar\n");
     
             int opcao = entrada.nextInt();
             switch (opcao) {
                 case 1:
-                    ligarDesligar(robo);
+                    robo.vizualizarStatus();
                     break;
                 case 2:
-                    movimentarObstaculoAereo(entrada, robo, ambiente);
+                    ligarDesligar(robo);
                     break;
                 case 3:
+                    movimentarObstaculoAereo(entrada, robo, ambiente);
+                    break;
+                case 4:
                     try{
                         robo.executarTarefa(entrada, ambiente, 0, 0, 0, 0);
                     }catch (ForaDosLimitesException e){
@@ -472,20 +487,20 @@ public class Main {
                         System.err.println("Erro: " + e.getMessage());
                     }
                     break; 
-                case 4:
+                case 5:
                     trocarMensagens(entrada, centralComunicacao, robo, ambiente);
                     break; 
-                case 5:
+                case 6:
                     robo.visualizarMensagens();
                     break;
-                case 6:
+                case 7:
                     try{
                         robo.atacar(ambiente);
                     } catch (RoboDesligadoException e){
                         System.err.println("Erro: " + e.getMessage());
                     }
                     break; 
-                case 7:
+                case 8:
                     robo.acionarSensores(ambiente, 2);
                     break; 
 
