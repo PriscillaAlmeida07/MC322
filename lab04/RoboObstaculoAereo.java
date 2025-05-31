@@ -67,7 +67,7 @@ public class RoboObstaculoAereo extends RoboAereo implements  Atacante {
     // Metodo para posicionar a nuvem de acordo com a direção do robô
     private void PosicionarNuvem(Ambiente ambiente, int x, int y, int z) throws ForaDosLimitesException, ColisaoException{
         ambiente.dentroDosLimites(x, y, z, "Erro: Tentativa de colocar a nuvem fora do ambiente");
-        ambiente.estaOcupado(x, y, z, "Erro: Tentativa de colocar a nuvem em uma posição já ocupada");
+        ambiente.verificarColisoes(x, y, z, "Erro: Tentativa de colocar a nuvem em uma posição já ocupada");
         Obstaculo nuvem = criarNuvem(x, y, z);
         ambiente.adicionarEntidade(nuvem);
         numNuvens--;
@@ -95,7 +95,7 @@ public class RoboObstaculoAereo extends RoboAereo implements  Atacante {
 
         for (int i = 0; i < robos.size(); i++){
             if (robos.get(i) instanceof Robo robo){
-                if(robo != this){
+                if(!robo.getID().equals(this.getID())){
                     robo.setVida(-dano);
                     System.out.println("O " + this.getNome() + " atacou o " + robo.getNome() + " que possui agora " + robo.getVida() + " vidas apenas");
                 }

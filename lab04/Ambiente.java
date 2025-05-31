@@ -99,7 +99,7 @@ public class Ambiente {
     }
 
     // Confere se não ha nenhuma entidade na posição
-    public void estaOcupado(int x, int y, int z, String mensagem) throws ColisaoException {
+    public void verificarColisoes(int x, int y, int z, String mensagem) throws ColisaoException {
         if(mapa[x][y][z] != TipoEntidade.VAZIO){
             // Se estiver ocupado, geramos uma exceção que será tratada posteriormente
             throw new ColisaoException(mensagem);

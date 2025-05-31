@@ -30,6 +30,9 @@ public class Obstaculo implements Entidade {
         return tipo;
     }
 
+    public int getZObstaculo(){
+        return (this.getZ() - 25);
+    }
     // Obtém posições do obstáculo:
     @Override
     public int getX(){return posicaoX;}

@@ -21,7 +21,7 @@ public class SensorRobos extends Sensor {
         if (caso == 1){ // Caso robô obstáculo terrestre
             for (int i = 0; i < entidades.size(); i++){
                 if (entidades.get(i) instanceof Robo robo){
-                    if ((robo.getZ() == 0) && Math.pow(raio, 2) >= (Math.pow((posicaoRobo[0] - robo.getX()), 2)) + (Math.pow((posicaoRobo[1] - robo.getY()), 2))){ // Obstáculo no chão e próximo
+                    if ((robo.getZ() == 25) && (Math.pow(raio, 2) >= (Math.pow((posicaoRobo[0] - robo.getX()), 2)) + (Math.pow((posicaoRobo[1] - robo.getY()), 2)))){ // Obstáculo no chão e próximo
                         resultado.add(robo);
                     }
                 }
@@ -45,7 +45,8 @@ public class SensorRobos extends Sensor {
         
         System.out.println("Resultado do sensor de robôs para o robô na posição: (" + posicaoRobo[0] + "," + posicaoRobo[1] + "," + posicaoRobo[2] + ")");
         for (int i = 0; i < resultado.size(); i++){
-            System.out.println("Foi capturado um robô na posição: (" + resultado.get(i).getX() + "," + resultado.get(i).getY() + "," + resultado.get(i).getZ() + ")");
+            if(resultado.get(i) instanceof Robo robo)
+                System.out.println("Foi capturado um robô na posição: (" + robo.getX() + "," + robo.getY() + "," + robo.getZUsuario() + ")");
         }
         if (resultado.isEmpty()){
             System.out.println("Nenhum robô capturado");

@@ -6,9 +6,11 @@ public class Main {
 
         // Instânciamento do ambiente.
         Ambiente ambiente1 = new Ambiente();
+        System.out.println("O ambiente foi inicializado...");
 
         // Instânciamento da central de comunicação.
         CentralComunicacao centralComunicacao = new CentralComunicacao();
+        System.out.println("A central de comunicação foi criada.");
 
         // Instânciamento de alguns obstáculos.
         Obstaculo arvore1 = new Obstaculo(TipoObstaculo.ARVORE, 5, 5, 25);
@@ -21,7 +23,6 @@ public class Main {
         ambiente1.adicionarEntidade(arvore2);
         ambiente1.adicionarEntidade(arvore3);
         ambiente1.adicionarEntidade(arvore4);
-
         // Instânciamento de pontos de reposição.
         TapeteReposicao tapete1 = new TapeteReposicao(10, 10);
         TapeteReposicao tapete2 = new TapeteReposicao(30,30);
@@ -46,7 +47,6 @@ public class Main {
 
         // Criamos esse robô apenas para testar o metodo removerEntidade
         RoboObstaculoAereo roboObstaculoAereo3 = new RoboObstaculoAereo("roboObstaculoAereo3", "ROA03", EstadoRobo.LIGADO, 30, 25, 25);
-        System.out.print("\n");
 
         // Adicionando robôs ao ambiente.
         ambiente1.adicionarEntidade(roboCavador1);
@@ -59,9 +59,11 @@ public class Main {
         ambiente1.adicionarEntidade(roboObstaculoAereo2);
         
         // Testando o metodo removerEntidade
-        System.out.println("\nTeste de remoção de um robô:");
+        System.out.println("Robôs, Tapetes e Obstáculos padrões foram adicionados ao ambiente.");
+        System.out.println("Teste de remoção de um Robô:");
         ambiente1.adicionarEntidade(roboObstaculoAereo3);
         ambiente1.removerEntidade(roboObstaculoAereo3);
+        System.out.println("O Robô Obstáculo Aéreo 3 foi removido do ambiente. \n");
 
         // Descrição inicial para o usuário
         

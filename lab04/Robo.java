@@ -117,8 +117,8 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
     public void moverPara(int deltaX, int deltaY, int deltaZ, Ambiente ambiente) throws ForaDosLimitesException, ColisaoException {
         // Primeiro testamos para ver se é uma movimentação valida, ou seja, dentro dos limites e para uma posição não ocupada
         ambiente.dentroDosLimites(deltaX + posicaoX, deltaY + posicaoY, deltaZ + posicaoZ, "O robô tentou sair do ambiente");
-        ambiente.estaOcupado(deltaX + posicaoX, deltaY + posicaoY, deltaZ + posicaoZ, "Esta posição ja está ocupada");
-        // Se foraDosLimites ou estaOcupado lançar uma exceção não serão executadas as linhas abaixo
+        ambiente.verificarColisoes(deltaX + posicaoX, deltaY + posicaoY, deltaZ + posicaoZ, "Esta posição ja está ocupada");
+        // Se foraDosLimites ou verificarColisoes lançar uma exceção não serão executadas as linhas abaixo
         int[] posicaoAnterior = getPosicao();
 
         posicaoX += deltaX;

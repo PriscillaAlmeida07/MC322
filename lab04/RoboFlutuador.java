@@ -66,7 +66,7 @@ public class RoboFlutuador extends RoboAereo implements Curador{
 
         for (int i = 0; i < robos.size(); i++){
             if (robos.get(i) instanceof Robo robo){
-                if(robo != this){
+                if(!robo.getID().equals(this.getID())){
                     robo.setVida(reparo);
                     System.out.println("O " + this.getNome() + " curou o " + robo.getNome() + " que possui agora " + robo.getVida() + " vidas");
                 }

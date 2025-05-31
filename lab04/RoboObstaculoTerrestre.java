@@ -79,7 +79,7 @@ public class RoboObstaculoTerrestre extends RoboTerrestre implements Curador {
     // Metodo para posicionar o bloco de acordo com a direção do robô
     private void Posicionarbloco(Ambiente ambiente, int x, int y, int z) throws ForaDosLimitesException, ColisaoException{
         ambiente.dentroDosLimites(x, y, z, "Erro: Tentativa de colocar um bloco fora do ambiente");
-        ambiente.estaOcupado(x, y, z, "Erro: Tentativa de colocar um bloco em uma posição já ocupada");
+        ambiente.verificarColisoes(x, y, z, "Erro: Tentativa de colocar um bloco em uma posição já ocupada");
         Obstaculo bloco = criarBloco(x, y, z);
         ambiente.adicionarEntidade(bloco);
         System.out.println("O bloco está na posição: (" + bloco.getX() + "," + bloco.getY() +"," + bloco.getZ() + ")");
@@ -99,10 +99,9 @@ public class RoboObstaculoTerrestre extends RoboTerrestre implements Curador {
             throw new RoboDesligadoException("O robô está desligado");
         int[] vetorPosicao = getPosicao();
         ArrayList<Entidade> robos = getSensorRobos().monitorar(ambiente, vetorPosicao, 1);
-
         for (int i = 0; i < robos.size(); i++){
             if (robos.get(i) instanceof Robo robo){
-                if(robo != this){
+                if(!robo.getID().equals(this.getID())){
                     robo.setVida(reparo);
                     System.out.println("O " + this.getNome() + " curou o " + robo.getNome() + " que possui agora " + robo.getVida() + " vidas");
                 }

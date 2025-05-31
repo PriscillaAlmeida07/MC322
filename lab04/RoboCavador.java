@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class RoboCavador extends RoboTerrestre implements Atacante { 
+public class RoboCavador extends RoboTerrestre implements Atacante, DestroiObstaculos { 
 
     // Descrição do Robo Cavador:
     @Override
@@ -19,6 +19,35 @@ public class RoboCavador extends RoboTerrestre implements Atacante {
         dano = 3;
     }
     
+    @Override
+    public void getObstaculoMaisProx(Ambiente ambiente) throws RoboDesligadoException{
+        if(this.getEstadoRobo() == EstadoRobo.DESLIGADO)
+            throw new RoboDesligadoException("O robô está desligado\n");
+        int[] vetorPosicao = getPosicao();
+        ArrayList<Entidade> obstaculos = getSensorObstaculos().monitorar(ambiente, vetorPosicao, 1);
+        if(obstaculos.isEmpty())
+            System.out.println("Nenhum obstáculo encontrado próximo ao destruidor");
+        else{
+            Obstaculo obstaculoMaisProx = null;
+            double menorDist = 200;
+            for (int i = 0; i < obstaculos.size(); i++){
+                if (obstaculos.get(i) instanceof Obstaculo obstaculo){
+                    int dx = obstaculo.getX() - this.getX();
+                    int dy = obstaculo.getY() - this.getY();
+                    double distancia = Math.sqrt(dx * dx + dy * dy);
+                    if (distancia < menorDist) {
+                        menorDist = distancia;
+                        obstaculoMaisProx = obstaculo;
+                    }
+                }
+            }
+
+            if (obstaculoMaisProx != null) {
+                ambiente.removerEntidade(obstaculoMaisProx);
+                System.out.println("O obstáculo mais próximo foi destruído");
+            }
+        }
+    }
     // Obtém a profundidade do robô.
     public int getProfundidade(){
         return profundidade;
@@ -48,12 +77,12 @@ public class RoboCavador extends RoboTerrestre implements Atacante {
             System.out.println("Valor invalido digitado");
         } else {
             // Testará se o robô cavará sem ultrapassar o limite do ambiente
-            ambiente.dentroDosLimites(getX(), getY(), getZ() - deltaZ, "Erro: Tentativa de cavar em uma posição inválida");
+            ambiente.dentroDosLimites(getX(), getY(), getZ() - deltaZ, "Tentativa de cavar além do que o solo permite");
             // Se forem validas, veremos se já ha algum buraco na posição
-            ambiente.estaOcupado(getX(), getY(), getZ() - deltaZ, "Erro: Tentativa de cavar o solo já perfurado anteriormente");
+            ambiente.verificarColisoes(getX(), getY(), getZ() - deltaZ, "Tentativa de cavar o solo já perfurado anteriormente");
             Obstaculo buraco = criarBuraco(getX(), getY(), getZ() - deltaZ);
             ambiente.adicionarEntidade(buraco);
-            System.out.println("O buraco foi escavado: (" + buraco.getX() + "," + buraco.getY() +"," + buraco.getZ() + ")");
+            System.out.println("O buraco foi escavado: (" + buraco.getX() + "," + buraco.getY() +"," + buraco.getZObstaculo() + ")");
         }
     }
 
@@ -75,7 +104,7 @@ public class RoboCavador extends RoboTerrestre implements Atacante {
 
         for (int i = 0; i < robos.size(); i++){
             if (robos.get(i) instanceof Robo robo){
-                if(robo != this){
+                if(!robo.getID().equals(this.getID())){
                     robo.setVida(-dano);
                     System.out.println("O " + this.getNome() + " atacou o " + robo.getNome() + " que possui agora " + robo.getVida() + " vidas apenas");
                 }

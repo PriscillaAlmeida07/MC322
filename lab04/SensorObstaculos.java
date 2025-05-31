@@ -21,7 +21,7 @@ public class SensorObstaculos extends Sensor {
         if (caso == 1){ // Caso robô obstáculo terrestre
             for (int i = 0; i < entidades.size(); i++){
                 if (entidades.get(i) instanceof Obstaculo obstaculo) {
-                    if ((obstaculo.getZ() == 0) && Math.pow(raio, 2) >= (Math.pow((posicaoRobo[0] - obstaculo.getX()), 2)) + (Math.pow((posicaoRobo[1] - obstaculo.getY()), 2))) { // Obstáculo no chão e próximo
+                    if ((obstaculo.getZ() == 25) && Math.pow(raio, 2) >= (Math.pow((posicaoRobo[0] - obstaculo.getX()), 2)) + (Math.pow((posicaoRobo[1] - obstaculo.getY()), 2))) { // Obstáculo no chão e próximo
                         resultado.add(obstaculo);
                     }
                 }
@@ -46,7 +46,7 @@ public class SensorObstaculos extends Sensor {
         System.out.println("Resultado do sensor de obstáculos para o robô na posição: (" + posicaoRobo[0] + "," + posicaoRobo[1] + "," + posicaoRobo[2] + ")");
         for (int i = 0; i < resultado.size(); i++){
             if (resultado.get(i) instanceof Obstaculo obstaculo){
-                System.out.println("Foi capturado um(a) " + obstaculo.getTipoObstaculo().getNome() + " na posição (" + obstaculo.getX() + "," + obstaculo.getY() + "," + obstaculo.getZ() + ")");
+                System.out.println("Foi capturado um(a) " + obstaculo.getTipoObstaculo().getNome() + " na posição (" + obstaculo.getX() + "," + obstaculo.getY() + "," + obstaculo.getZObstaculo() + ")");
             }
         }
         if (resultado.isEmpty()){
