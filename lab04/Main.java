@@ -6,11 +6,10 @@ public class Main {
 
         // Instânciamento do ambiente.
         Ambiente ambiente1 = new Ambiente();
-        System.out.println("O ambiente foi inicializado.");
+        System.out.println("O ambiente foi inicializado, as suas dimensões são: largura = 50, comprimento = 50, altura = 50 (25 de profundidade e 25 de céu)");
 
         // Instânciamento da central de comunicação.
         CentralComunicacao centralComunicacao = new CentralComunicacao();
-        System.out.println("A central de comunicação foi criada.");
 
         // Instânciamento de alguns obstáculos.
         Obstaculo arvore1 = new Obstaculo(TipoObstaculo.ARVORE, 5, 5, 25);
@@ -23,6 +22,7 @@ public class Main {
         ambiente1.adicionarEntidade(arvore2);
         ambiente1.adicionarEntidade(arvore3);
         ambiente1.adicionarEntidade(arvore4);
+
         // Instânciamento de pontos de reposição.
         TapeteReposicao tapete1 = new TapeteReposicao(10, 10);
         TapeteReposicao tapete2 = new TapeteReposicao(30,30);
@@ -45,7 +45,7 @@ public class Main {
         RoboFlutuador roboFlutuador2 = new RoboFlutuador("roboFlutuador2", "RF02", EstadoRobo.DESLIGADO, 28, 25, 25);
         RoboObstaculoAereo roboObstaculoAereo2 = new RoboObstaculoAereo("roboObstaculoAereo2", "ROA02", EstadoRobo.DESLIGADO, 29, 25, 25);
 
-        // Criamos esse robô apenas para testar o metodo removerEntidade
+        // Criamos esse robô apenas para testar o metodo removerEntidade.
         RoboObstaculoAereo roboObstaculoAereo3 = new RoboObstaculoAereo("roboObstaculoAereo3", "ROA03", EstadoRobo.LIGADO, 30, 25, 25);
 
         // Adicionando robôs ao ambiente.
@@ -57,16 +57,15 @@ public class Main {
         ambiente1.adicionarEntidade(roboObstaculoTerrestre2);
         ambiente1.adicionarEntidade(roboFlutuador2);
         ambiente1.adicionarEntidade(roboObstaculoAereo2);
+
+        System.out.println("O ambiente foi inicializado com 8 robôs, dois de cada tipo criado: Robo Cavador, Robo Obstáculo Terrestre, Robo Flutuador e Robô Obstáculo Terrestre\n" +
+                            "Inicialmente também existem quatro árvores e quatro tapetes de reposição por padrão\n");
         
-        // Testando o metodo removerEntidade
-        System.out.println("Robôs, Tapetes e Obstáculos padrões foram adicionados ao ambiente.");
+        // Testando o metodo removerEntidade.
         System.out.println("Teste de remoção de um Robô:");
         ambiente1.adicionarEntidade(roboObstaculoAereo3);
         ambiente1.removerEntidade(roboObstaculoAereo3);
-        System.out.println("O Robô Obstáculo Aéreo 3 foi removido do ambiente. \n");
-
-        // Descrição inicial para o usuário
-        
+        System.out.println("O Robô Obstáculo Aéreo 3 foi removido do ambiente \n");
 
         // Variáveis de funcionamento do sistema.
         Scanner entrada = new Scanner(System.in);
@@ -113,6 +112,7 @@ public class Main {
         entrada.close();
     }
 
+    // Função que lista determinada característica para todos os robôs que estão no ambiente.
     private static void listarRobos(Scanner entrada, Ambiente ambiente1){
         boolean continuar = true;
 
@@ -148,13 +148,12 @@ public class Main {
         }
     }
 
-
     // Escolhemos movimentar algum dos robôs, agora precisamos decidir qual deles:
     private static void selecionarRobo(Scanner entrada, Ambiente ambiente1, RoboCavador roboCavador1, RoboCavador roboCavador2, RoboObstaculoTerrestre roboObstaculoTerrestre1, RoboObstaculoTerrestre roboObstaculoTerrestre2, RoboObstaculoAereo roboObstaculoAereo1, RoboObstaculoAereo roboObstaculoAereo2, RoboFlutuador roboFlutuador1, RoboFlutuador roboFlutuador2, CentralComunicacao centralComunicacao){
         boolean continuar = true;
 
         while(continuar){
-            System.out.println("Selecione algum dos Robos abaixo:\n" +
+            System.out.println("Selecione algum dos robôs abaixo:\n" +
             "[1] - Robo Cavador 1\n" +
             "[2] - Robo Cavador 2\n" +
             "[3] - Robo Obstáculo Terrestre 1\n" +
@@ -203,6 +202,7 @@ public class Main {
         }
     }
 
+    // Função que realiza a comunicação entre robôs.
     private static void trocarMensagens(Scanner entrada, CentralComunicacao centralComunicacao, Robo remetente, Ambiente ambiente){
         while(true){
             try {
@@ -267,8 +267,8 @@ public class Main {
         }
     }
 
+    // Permite a escolha de qualquer ação do robô cavador
     private static void funcoesCavador(Scanner entrada, RoboCavador robo, Ambiente ambiente, CentralComunicacao centralComunicacao){
-
         boolean continuar = true;
 
         while(continuar){
@@ -344,11 +344,10 @@ public class Main {
                     break;
             }
         }
-
     }
 
+    // Permite a escolha de qualquer ação do robô obstáculo terrestre.
     private static void funcoesObstaculoTerrestre(Scanner entrada, RoboObstaculoTerrestre robo, Ambiente ambiente, CentralComunicacao centralComunicacao){
-
         boolean continuar = true;
 
         while(continuar){
@@ -417,8 +416,8 @@ public class Main {
         }
     }
 
+    // Permite a escolha de qualquer ação do robô flutuador.
     private static void funcoesFlutuador(Scanner entrada, RoboFlutuador robo, Ambiente ambiente, CentralComunicacao centralComunicacao){
-
         boolean continuar = true;
 
         while(continuar){
@@ -475,8 +474,8 @@ public class Main {
         }
     }
 
+    // Permite a escolha de qualquer ação do robô obstáculo aéreo.
     private static void funcoesObstaculoAereo(Scanner entrada, RoboObstaculoAereo robo, Ambiente ambiente, CentralComunicacao centralComunicacao){
-
         boolean continuar = true;
 
         while(continuar){
@@ -546,6 +545,7 @@ public class Main {
 
     }
 
+    // Liga ou desliga um robô.
     public static void ligarDesligar(Robo robo){
         if(robo.getEstadoRobo() == EstadoRobo.LIGADO) {
             robo.desligar();
@@ -645,6 +645,7 @@ public class Main {
 
     }
 
+    // Movimento do robô flutuador.
     private static void movimentarFlutuador(Scanner entrada, RoboFlutuador robo, Ambiente ambiente1){
         while (true) {
             try {
@@ -694,7 +695,6 @@ public class Main {
         
     }
 
- 
     // Movimento do robô obstáculo aereo.
     private static void movimentarObstaculoAereo(Scanner entrada, RoboObstaculoAereo robo, Ambiente ambiente1){
         
