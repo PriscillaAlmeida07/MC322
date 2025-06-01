@@ -16,7 +16,7 @@ Para executar o programa siga os seguintes passos:
 - Entre na pasta do projeto e depois na pasta do laboratório desejado.
   Exemplo:
   ``` bash
-  cd MC322/lab01
+  cd MC322/lab04
 - Para compilar o programa utilize o comando no terminal:
   ``` bash
   javac Main.java
@@ -26,4 +26,4 @@ Para executar o programa siga os seguintes passos:
   java Main.java
 
 ### Diagrama de classes:
-![Diagrama]()
+![Diagrama](images/DIAGRAMA.jpg)
