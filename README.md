@@ -8,7 +8,13 @@ O projeto está organizado em diferentes laboratórios (labs), cada um represent
 Há também uma pasta images que contém o Diagrama de Classes.
 
 ### Principais mudanças no Lab04
-Neste laboratório, foram implementadas interfaces, que adicionaram novos comportamentos aos robôs, e realizado o tratamento de exceções, que antes estava sendo feito manualmente. 
+Neste laboratório, foram implementadas interfaces, que adicionaram novos comportamentos aos robôs, e realizado o tratamento de exceções, que antes estava sendo feito manualmente. Os novos comportamentos dos robôs são:
+- Atacante: capaz de atacar robôs próximos
+- Curador: capaz de curar robôs próximos
+- Comunicável: capaz de trocar mensagens com outros robôs
+- Sensoreavel: capaz de utilizar sensores
+- DestroiObstáculo: capaz de localizar o obstáculo mais próximo e o destruir
+
 Além disso, o mapa foi atualizado, passando a ser uma matriz também capaz de registrar quais entidades ocupam cada espaço do ambiente. 
 O menu interativo também foi alterado, pois antes o usuário selecionava a ação e em seguida o robô que a faria, agora, o menu está mais focado nos robôs, o usuário seleciona um robô e em seguida visualiza tudo o que aquele robô é capaz de fazer.
 
