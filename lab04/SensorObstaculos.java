@@ -29,7 +29,7 @@ public class SensorObstaculos extends Sensor {
 
         } else { // caso == 2 *Outros robôs*
             for (int i = 0; i < entidades.size(); i++){
-                if (entidades.get(i) instanceof Obstaculo obstaculo) {
+                if (entidades.get(i) instanceof Obstaculo obstaculo){
                     if (Math.pow(raio, 2) >= (Math.pow((posicaoRobo[0] - obstaculo.getX()), 2)) + (Math.pow((posicaoRobo[1] - obstaculo.getY()), 2)) + (Math.pow((posicaoRobo[2] - obstaculo.getZ()), 2))) {
                         resultado.add(obstaculo);
                     }
@@ -46,7 +46,8 @@ public class SensorObstaculos extends Sensor {
         System.out.println("Resultado do sensor de obstáculos para o robô na posição: (" + posicaoRobo[0] + "," + posicaoRobo[1] + "," + (posicaoRobo[2] - 25) + ")");
         for (int i = 0; i < resultado.size(); i++){
             if (resultado.get(i) instanceof Obstaculo obstaculo){
-                System.out.println("Foi capturado um(a) " + obstaculo.getTipoObstaculo().getNome() + " na posição (" + obstaculo.getX() + "," + obstaculo.getY() + "," + obstaculo.getZObstaculo() + ")");
+                System.out.println("Foi capturado um(a) " + obstaculo.getTipoObstaculo().getNome() + " na posição mínima (" + obstaculo.getX() + "," + obstaculo.getY() + "," + obstaculo.getZObstaculo() + ") e máxima (" + 
+                                    (obstaculo.getX() + obstaculo.getTipoObstaculo().getLargura()) + "," + (obstaculo.getY() + obstaculo.getTipoObstaculo().getComprimento()) + "," + (obstaculo.getZObstaculo() + obstaculo.getTipoObstaculo().getAltura()) + ")");
             }
         }
         if (resultado.isEmpty()){

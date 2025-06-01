@@ -1,7 +1,7 @@
 
-public interface Sensoreavel{
+public interface Sensoreavel {
     
-    // Interface implementada pelos robôs.
-    void acionarSensores(Ambiente ambiente, int caso) throws RoboDesligadoException;
+    // Interface implementada por todos os robôs.
+    void acionarSensores(Ambiente ambiente, int caso) throws RoboDesligadoException, VidaNulaException;
 
 }

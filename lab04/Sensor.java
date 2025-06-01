@@ -24,4 +24,5 @@ public abstract class Sensor {
     // Declaração de que todas as classes que herdam de sensor devem ter:
     public abstract ArrayList<Entidade> monitorar(Ambiente ambiente, int[] vetorPosicao, int caso);
     public abstract void imprimirResultado(ArrayList<Entidade> resultado, int[] vetorPosicao);
+    
 }

@@ -20,7 +20,7 @@ public class SensorReporBlocos extends Sensor {
 
         for (int i = 0; i < entidades.size(); i++){
             if (entidades.get(i) instanceof TapeteReposicao tapete){
-                if (Math.pow(raio, 2) >= (Math.pow((posicaoRobo[0] - tapete.getX()), 2)) + (Math.pow((posicaoRobo[1] - tapete.getY()), 2))) {
+                if (Math.pow(raio, 2) >= (Math.pow((posicaoRobo[0] - tapete.getX()), 2)) + (Math.pow((posicaoRobo[1] - tapete.getY()), 2))){
                     resultado.add(tapete);
                 }
             }
@@ -31,9 +31,9 @@ public class SensorReporBlocos extends Sensor {
     // Imprime os tapetes de reposição encontrados pelo sensor
     @Override
     public void imprimirResultado(ArrayList<Entidade> resultado, int[] posicaoRobo){
-        System.out.println("Resultado do sensor de reposição para o robô na posição: (" + posicaoRobo[0] + "," + posicaoRobo[1] + ")");
+        System.out.println("Resultado do sensor de reposição para o robô na posição: (" + posicaoRobo[0] + "," + posicaoRobo[1] + ",0)");
         for (int i = 0; i < resultado.size(); i++){
-            System.out.println("Foi capturado um tapete de reposição na posição (" + resultado.get(i).getX() + "," + resultado.get(i).getY() + ")");
+            System.out.println("Foi capturado um tapete de reposição na posição (" + resultado.get(i).getX() + "," + resultado.get(i).getY() + ",0)");
         }
         if (resultado.isEmpty()){
             System.out.println("Nenhum tapete de reposição capturado");

@@ -45,8 +45,11 @@ public class SensorRobos extends Sensor {
         
         System.out.println("Resultado do sensor de robôs para o robô na posição: (" + posicaoRobo[0] + "," + posicaoRobo[1] + "," + (posicaoRobo[2] - 25) + ")");
         for (int i = 0; i < resultado.size(); i++){
-            if(resultado.get(i) instanceof Robo robo)
-                System.out.println("Foi capturado um robô na posição: (" + robo.getX() + "," + robo.getY() + "," + robo.getZUsuario() + ")");
+            if (resultado.get(i) instanceof Robo robo){
+                if ((posicaoRobo[0] != robo.getX()) || (posicaoRobo[1] != robo.getY()) || (posicaoRobo[2] != robo.getZ())){
+                    System.out.println("Foi capturado um robô na posição: (" + robo.getX() + "," + robo.getY() + "," + robo.getZUsuario() + ")");
+                }
+            }
         }
         if (resultado.isEmpty()){
             System.out.println("Nenhum robô capturado");
