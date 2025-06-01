@@ -16,8 +16,8 @@ public class CentralComunicacao {
 
     // Lista todas as mensagens trocadas.
     public void exibirMensagens(){
-        if(mensagens.size() == 0)
-            System.out.println("Ainda não há nenhuma mensagem registrada \n");
+        if(mensagens.isEmpty())
+            System.out.println("Ainda não há nenhuma mensagem registrada\n");
         else{
             System.out.println("Mensagens recebidas: \n");
             for(int i=0; i< mensagens.size(); i++){
