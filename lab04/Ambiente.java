@@ -70,7 +70,7 @@ public class Ambiente {
             mapa[entidade.getX()][entidade.getY()][entidade.getZ()]= TipoEntidade.VAZIO;
     }
     // Imprime o mapa e em cada posição exibe o caractere associado a cada entidade.
-    // Só conseguimos visualizar recortes, o chão no caso
+    // Só conseguimos visualizar recortes, o chão (que no casoem z=25)
     public void visualizarAmbiente(){
         for(int x=0; x< largura; x++){
             for(int y=0; y < comprimento ; y++){
@@ -110,6 +110,7 @@ public class Ambiente {
         return entidades;
     }
 
+    // Encontra e retorna o robo destinatario
     public Robo getDestinatario(String id){
         for (int i=0; i< entidades.size(); i++){
             if (entidades.get(i) instanceof Robo robo){
@@ -121,7 +122,7 @@ public class Ambiente {
         return null;
     }
 
-    // nao sei se está sendo usado
+    // Verifica se há um Tapete de reposição na posição
     public int existeTapete(int posicaoX, int posicaoY, int posicaoZ){
         if((mapa[posicaoX][posicaoY][posicaoZ] == TipoEntidade.TAPETE))
             return 1;

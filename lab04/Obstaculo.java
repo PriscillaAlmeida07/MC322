@@ -30,7 +30,7 @@ public class Obstaculo implements Entidade {
         return tipo;
     }
 
-    // Obtém a posição inicial Z do obstáculo mostrada para o usuário (para impressão).
+    // Obtém a posição inicial Z do obstáculo mostrada para o usuário (para impressão), ou seja se o obstaculo estiver no solo aparecerá para o usuario z = 0;
     public int getZObstaculo(){
         return (this.getZ() - 25);
     }

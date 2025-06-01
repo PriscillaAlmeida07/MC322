@@ -223,7 +223,7 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
     @Override
     public int getZ(){return posicaoZ;}
 
-    // Obtém a posição Z para impressão
+    // Obtém a posição Z para impressão. Ou seja, se o robô estiver no solo será imprimido z= 0
     public int getZUsuario(){
         return (this.getZ() - 25);
     }

@@ -1,11 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class RoboCavador extends RoboTerrestre implements Atacante, DestroiObstaculos { 
-
-    // Descrição do Robo Cavador:
-    @Override
-    public String getDescricao(){return "Robô terrestre que consegue perfurar o solo";}
+public class RoboCavador extends RoboTerrestre implements Atacante, DestroiObstaculo { 
 
     // Atributos:
     // retirei a profundidade maxima pois nao é mais necessaria pq ela é a profundidade max do ambiente
@@ -19,13 +15,14 @@ public class RoboCavador extends RoboTerrestre implements Atacante, DestroiObsta
         dano = 3;
     }
     
+    // Verificamos qual é o obstaculo mais proximo ao robo cavador que será destruido
     @Override
     public void getObstaculoMaisProx(Ambiente ambiente) throws RoboDesligadoException{
         if(this.getEstadoRobo() == EstadoRobo.DESLIGADO)
             throw new RoboDesligadoException("O robô está desligado\n");
         int[] vetorPosicao = getPosicao();
         ArrayList<Entidade> obstaculos = getSensorObstaculos().monitorar(ambiente, vetorPosicao, 1);
-        if(obstaculos.isEmpty())
+        if(obstaculos.isEmpty()) // Se nenhum obstaculo estiver prox (dentro do raio)
             System.out.println("Nenhum obstáculo encontrado próximo ao destruidor\n");
         else{
             Obstaculo obstaculoMaisProx = null;
@@ -64,7 +61,7 @@ public class RoboCavador extends RoboTerrestre implements Atacante, DestroiObsta
         return dano;
     }
 
-    // Executa uma tarefa inerente ao Robô Cavador.
+    // Executa uma tarefa inerente ao Robô Cavador, no caso cavar
     @Override
     public void executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY, int deltaZ, int caso) throws ForaDosLimitesException, ColisaoException, RoboDesligadoException{
         if(this.getEstadoRobo() == EstadoRobo.DESLIGADO)
@@ -127,4 +124,9 @@ public class RoboCavador extends RoboTerrestre implements Atacante, DestroiObsta
         }
         System.out.print("\n");
     }
+
+    // Descrição do Robo Cavador:
+    @Override
+    public String getDescricao(){return "Robô terrestre que consegue perfurar o solo";}
+
 }
