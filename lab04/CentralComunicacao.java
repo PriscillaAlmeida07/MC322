@@ -5,7 +5,7 @@ public class CentralComunicacao {
     private final ArrayList<String> mensagens;
 
     // Construtor.
-    public CentralComunicacao() {
+    public CentralComunicacao(){
         mensagens = new ArrayList<>();
     }
 
@@ -16,9 +16,9 @@ public class CentralComunicacao {
 
     // Lista todas as mensagens trocadas.
     public void exibirMensagens(){
-        if(mensagens.isEmpty())
+        if(mensagens.isEmpty()){
             System.out.println("Ainda não há nenhuma mensagem registrada\n");
-        else{
+        } else { // Existem mensagens
             System.out.println("Mensagens recebidas: \n");
             for(int i=0; i< mensagens.size(); i++){
                 System.out.println(mensagens.get(i));

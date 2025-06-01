@@ -3,7 +3,6 @@ import java.util.Scanner;
 
 public class RoboObstaculoTerrestre extends RoboTerrestre implements Curador {
     
-    // Atributos:
     private int numBlocos;
     private final int reparo;
 
@@ -16,11 +15,11 @@ public class RoboObstaculoTerrestre extends RoboTerrestre implements Curador {
         adicionaSensorReporBlocos(new SensorReporBlocos(30, TipoSensor.REPORBLOCOS));
     }
 
-    // Descrição do Robo Obstaculo Terrestre:
+    // Obtém a descrição desse robô.
     @Override
     public String getDescricao(){return "Robô terrestre capaz de criar obstáculos posicionando blocos no solo";}
 
-    // Obtém o reparo que o robô é capaz de realizar
+    // Obtém o tanto de vida que o robô é capaz de curar.
     @Override
     public int getReparo(){
         return reparo;
@@ -31,61 +30,64 @@ public class RoboObstaculoTerrestre extends RoboTerrestre implements Curador {
         numBlocos += 3;
     }
 
-    // Executa uma tarefa inerente ao Robô Obstaculo Terrestre.
+    // A tarefa especifica do RobôObstaculoTerrestre é soltar nuvens.
     @Override
-    public void  executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY, int deltaZ, int caso) throws ForaDosLimitesException, ColisaoException, RoboDesligadoException{
-        if(this.getEstadoRobo() == EstadoRobo.DESLIGADO)
+    public void  executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY, int deltaZ, int caso) throws ForaDosLimitesException, ColisaoException, RoboDesligadoException, VidaNulaException {
+        if (this.getEstadoRobo() == EstadoRobo.DESLIGADO)
             throw new RoboDesligadoException("O " + this.getNome() + " está desligado");
-        soltarBlocos(ambiente);
+        if (this.getVida() == 0)
+            throw new VidaNulaException("O " + this.getNome() + " está morto, portanto só poderá realizar ações quando for curado por outro robô");
+
+        // Realiza a tarefa
+        posicaoBloco(ambiente);
     }
 
     // Define a posição que o bloco será posicionado de acordo com a direção do robô
-    public void soltarBlocos(Ambiente ambiente) throws ForaDosLimitesException, ColisaoException{
+    public void posicaoBloco(Ambiente ambiente) throws ForaDosLimitesException, ColisaoException {
+
+        // Caso os blocos já tenham acabado
         if (numBlocos == 0)
             System.out.print("Não há mais blocos disponíveis");
-        else {
+
+        else { // Ainda tem blocos
             int x = getX();
             int y = getY();
             int z = getZ();
 
-            switch (getDirecao()) {
-                case "Norte":     
-                    x += 1; 
-                    break;
-                case "Sul":       
-                    x -= 1;
-                    break;
-                case "Leste":    
-                    y += 1; 
-                    break;
-                case "Oeste":     
-                    y -= 1; 
-                    break;
-                case "Nordeste":  
-                    x += 1; y += 1; 
-                    break;
-                case "Noroeste":  
-                    x += 1; y -= 1; 
-                    break;
-                case "Sudeste":   
-                    x -= 1; y += 1; 
-                    break;
-                case "Sudoeste": 
-                    x -= 1; y -= 1; 
-                    break;
+            switch (getDirecao()){
+                case "Norte" -> x += 1;
+                case "Sul" -> x -= 1;
+                case "Leste" -> y += 1;
+                case "Oeste" -> y -= 1;
+                case "Nordeste" -> {
+                    x += 1; y += 1;
+                }
+                case "Noroeste" -> {
+                    x += 1; y -= 1;
+                }
+                case "Sudeste" -> {
+                    x -= 1; y += 1;
+                }
+                case "Sudoeste" -> {
+                    x -= 1; y -= 1;
+                }
             }
-            Posicionarbloco(ambiente, x, y, z);
+
+            // Posiciona o bloco no local encontrado
+            soltarBloco(ambiente, x, y, z);
         }
     }
 
-    // Metodo para posicionar o bloco de acordo com a direção do robô
-    private void Posicionarbloco(Ambiente ambiente, int x, int y, int z) throws ForaDosLimitesException, ColisaoException{
+    // Posiciona um bloco no ambiente.
+    private void soltarBloco(Ambiente ambiente, int x, int y, int z) throws ForaDosLimitesException, ColisaoException{
         ambiente.dentroDosLimites(x, y, z, "Erro: Tentativa de colocar um bloco fora do ambiente");
         ambiente.verificarColisoes(x, y, z, "Erro: Tentativa de colocar um bloco em uma posição já ocupada");
+
         Obstaculo bloco = criarBloco(x, y, z);
         ambiente.adicionarEntidade(bloco);
-        System.out.println("O bloco está na posição: (" + bloco.getX() + "," + bloco.getY() +"," + bloco.getZ() + ")");
         numBlocos--;
+        System.out.println("O bloco está na posição mínima (" + bloco.getX() + "," + bloco.getY() +"," + (bloco.getZ() - 25) + ") e máxima (" +
+                            (bloco.getX() + bloco.getTipoObstaculo().getLargura()) + "," + (bloco.getY() + bloco.getTipoObstaculo().getComprimento()) + "," + (bloco.getZ() + bloco.getTipoObstaculo().getAltura() - 25) + ")");
     }
 
     // Cria uma nova bloco na posição.
@@ -94,16 +96,23 @@ public class RoboObstaculoTerrestre extends RoboTerrestre implements Curador {
         return bloco;
     }
 
-    // Cura todos os robôs próximos.
+    // Cura todos os robôs próximos (menos ele mesmo).
     @Override
-    public void curar(Ambiente ambiente) throws RoboDesligadoException{
-        if(this.getEstadoRobo() == EstadoRobo.DESLIGADO)
+    public void curar(Ambiente ambiente) throws RoboDesligadoException, VidaNulaException {
+        if (this.getEstadoRobo() == EstadoRobo.DESLIGADO)
             throw new RoboDesligadoException("O robô está desligado");
+        if (this.getVida() == 0)
+            throw new VidaNulaException("O " + this.getNome() + " está morto, portanto só poderá realizar ações quando for curado por outro robô");
+        
+        // Informações necessárias para o funcionamento da função:
+        Sensor sensor = getSensorRobos();
         int[] vetorPosicao = getPosicao();
-        ArrayList<Entidade> robos = getSensorRobos().monitorar(ambiente, vetorPosicao, 1);
+        ArrayList<Entidade> robos = sensor.monitorar(ambiente, vetorPosicao, 1);
+
         for (int i = 0; i < robos.size(); i++){
             if (robos.get(i) instanceof Robo robo){
                 if(!robo.getID().equals(this.getID())){
+                    
                     if (robo.getVida() == 10) {
                         System.out.println("O " + robo.getNome() + " não pode ser curado, pois já está com a vida máxima");
                     } else if ((robo.getVida() + reparo) >= 10){

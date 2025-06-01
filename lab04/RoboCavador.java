@@ -96,17 +96,23 @@ public class RoboCavador extends RoboTerrestre implements Atacante, DestroiObsta
         return buraco;
     }
 
-    // Ataca todos os robôs próximos.
+    // Ataca todos os robôs próximos (menos ele mesmo).
     @Override
-    public void atacar(Ambiente ambiente) throws RoboDesligadoException{
-        if(this.getEstadoRobo() == EstadoRobo.DESLIGADO)
-            throw new RoboDesligadoException("O robô está desligado\n");
+    public void atacar(Ambiente ambiente) throws RoboDesligadoException, VidaNulaException {
+        if (this.getEstadoRobo() == EstadoRobo.DESLIGADO)
+            throw new RoboDesligadoException("O robô está desligado");
+        if (this.getVida() == 0)
+            throw new VidaNulaException("O " + this.getNome() + " está morto, portanto só poderá realizar ações quando for curado por outro robô");
+
+        // Informações necessárias para o funcionamento da função:
+        Sensor sensor = getSensorRobos();
         int[] vetorPosicao = getPosicao();
-        ArrayList<Entidade> robos = getSensorRobos().monitorar(ambiente, vetorPosicao, 2);
+        ArrayList<Entidade> robos = sensor.monitorar(ambiente, vetorPosicao, 1);
 
         for (int i = 0; i < robos.size(); i++){
             if (robos.get(i) instanceof Robo robo){
-                if(!robo.getID().equals(this.getID())){
+                if (!robo.getID().equals(this.getID())){
+
                     if (robo.getVida() == 0) {
                         System.out.println("O " + robo.getNome() + " não pode ser atacado, pois já está morto");
                     } else if ((robo.getVida() - dano) <= 0){

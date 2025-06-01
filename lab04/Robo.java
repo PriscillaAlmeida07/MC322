@@ -15,7 +15,7 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
     private EstadoRobo estado;
     private int vida;
     private final ArrayList<Sensor> sensores;
-    private ArrayList<String> mensagens;
+    private final ArrayList<String> mensagens;
 
     // Construtor.
     public Robo(String nome, String id, EstadoRobo estado, int posicaoX, int posicaoY, int posicaoZ){ 
@@ -24,8 +24,8 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
         this.posicaoX = posicaoX; this.posicaoY = posicaoY; this.posicaoZ = posicaoZ;
         direcao = "Norte";
         vida = 10;
-        tipoEntidade = TipoEntidade.ROBO;
 
+        tipoEntidade = TipoEntidade.ROBO;
         mensagens = new ArrayList<>();
 
         // Cria o ArrayList de sensores do robô e adiciona os sensores comuns a todos os robôs: obstáculos e robôs
@@ -44,9 +44,9 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
         return nome;
     }
 
-    // Obtém a direção do robô.
-    public String getDirecao(){
-        return direcao;
+    // Obtém o ID do robô
+    public String getID(){
+        return id;
     }
 
     // Obtém o estado do robô (ligado/desligado).
@@ -72,6 +72,19 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
     // Define a vida do robô.
     public void setVida(int dano){
         vida += dano;
+    }
+
+    // Imprime os status atuais do robô.
+    public void vizualizarStatus(){
+        System.out.println("Informações sobre o " + getNome() + ":\n" +
+                            "Estado: " + getEstadoRobo().getString() + "\n" +
+                            "Posição: (" + getX() + "," + getY() + "," + getZUsuario() + ")" +
+                            "Vida: " + getVida() + "/10\n");
+    }
+
+    // Obtém a direção do robô.
+    public String getDirecao(){
+        return direcao;
     }
 
     // Obtém a posição (x,y,z) do robô.
@@ -115,9 +128,11 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
 
     // Realiza um movimento do robô no ambiente.
     public void moverPara(int deltaX, int deltaY, int deltaZ, Ambiente ambiente) throws ForaDosLimitesException, ColisaoException {
+
         // Primeiro testamos para ver se é uma movimentação valida, ou seja, dentro dos limites e para uma posição não ocupada
         ambiente.dentroDosLimites(deltaX + posicaoX, deltaY + posicaoY, deltaZ + posicaoZ, "O robô tentou sair do ambiente");
-        ambiente.verificarColisoes(deltaX + posicaoX, deltaY + posicaoY, deltaZ + posicaoZ, "Esta posição ja está ocupada");
+        ambiente.verificarColisoes(deltaX + posicaoX, deltaY + posicaoY, deltaZ + posicaoZ, "Esta posição já está ocupada");
+
         // Se foraDosLimites ou verificarColisoes lançar uma exceção não serão executadas as linhas abaixo
         int[] posicaoAnterior = getPosicao();
 
@@ -131,10 +146,10 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
     }
 
     // Todos os robôs devem implementar a função "executarTarefa"
-    public abstract void executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY, int deltaZ, int caso) throws ForaDosLimitesException, ColisaoException, RoboDesligadoException;
+    public abstract void executarTarefa(Scanner entrada, Ambiente ambiente, int deltaX, int deltaY, int deltaZ, int caso) throws ForaDosLimitesException, ColisaoException, RoboDesligadoException, VidaNulaException;
 
     // Encontra o sensor de robôs no ArrayList de sensores
-    public Sensor getSensorRobos() {
+    public Sensor getSensorRobos(){
         for (int i=0; i< sensores.size(); i++ ){
             if (sensores.get(i).getTipo() == TipoSensor.ROBOS)
                 return sensores.get(i);
@@ -143,7 +158,7 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
     }
 
     // Encontra o sensor de obstáculos no ArrayList de sensores
-    public Sensor getSensorObstaculos() {
+    public Sensor getSensorObstaculos(){
         for (int i=0; i< sensores.size(); i++ ){
             if (sensores.get(i).getTipo() == TipoSensor.OBSTACULOS)
                 return sensores.get(i);
@@ -153,9 +168,12 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
 
     // Utiliza e imprime o resultado de todos os sensores do robô.
     @Override
-    public void acionarSensores(Ambiente ambiente, int caso) throws RoboDesligadoException{
-        if(this.getEstadoRobo() == EstadoRobo.DESLIGADO)
+    public void acionarSensores(Ambiente ambiente, int caso) throws RoboDesligadoException, VidaNulaException {
+        if (this.getEstadoRobo() == EstadoRobo.DESLIGADO)
             throw new RoboDesligadoException("O " + this.getNome() + " está desligado");
+        if (this.getVida() == 0)
+            throw new VidaNulaException("O " + this.getNome() + " está morto, portanto só poderá realizar ações quando for curado por outro robô");
+
         int[] vetorPosicao = getPosicao();
         ArrayList<Entidade> resultado;
 
@@ -170,6 +188,7 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
     public void enviarMensagem(CentralComunicacao centralComunicacao, Comunicavel destinatario, String mensagem) throws ErroComunicacaoException{
         if (destinatario == this)
             throw new ErroComunicacaoException("Tentativa de se comunicar com o próprio robo");
+
         destinatario.receberMensagem(this.getNome() + ": " + mensagem);
         centralComunicacao.registrarMensagens(this.getNome(), mensagem);
         System.out.println("Mensagem enviada.\n");
@@ -181,18 +200,18 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
         mensagens.add(mensagem);
     }
 
+    // Visualiza as mensagens recebidas.
     @Override
     public void visualizarMensagens(){
-        if (mensagens.size() == 0)
-            System.out.println("O robô ainda não recebeu nenhuma mensagem \n");
-        else{
-            System.out.println("Mensagens recebidas: \n");
+        if (mensagens.isEmpty()){
+            System.out.println("O robô ainda não recebeu nenhuma mensagem");
+        } else { // O robô já recebeu mensagens
+            System.out.println("Mensagens recebidas:");
             for (int i = 0; i < mensagens.size(); i++){
                 System.out.println(mensagens.get(i));
+            }
         }
         System.out.print("\n");
-        }
-
     }
 
     // Obtém posições do robô:
@@ -204,6 +223,11 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
     @Override
     public int getZ(){return posicaoZ;}
 
+    // Obtém a posição Z para impressão
+    public int getZUsuario(){
+        return (this.getZ() - 25);
+    }
+
     // Obtém informações sobre o robô:
 
     @Override
@@ -212,19 +236,4 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
     public abstract String getDescricao();
     @Override
     public char getRepresentacao(){return 'R';}
-
-    public String getID(){
-        return id;
-    }
-
-    public int getZUsuario(){
-        return (this.getZ() - 25);
-    }
-
-    public void vizualizarStatus(){
-        System.out.println("Informações sobre o " + getNome() + ":\n" +
-                            "Estado: " + getEstadoRobo().getString() + "\n" +
-                            "Posição: (" + getX() + "," + getY() + "," + getZUsuario() + ")\n" +
-                            "Vida: " + getVida() + "/10\n");
-    }
 }

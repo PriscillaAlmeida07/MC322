@@ -30,9 +30,11 @@ public class Obstaculo implements Entidade {
         return tipo;
     }
 
+    // Obtém a posição inicial Z do obstáculo mostrada para o usuário (para impressão).
     public int getZObstaculo(){
         return (this.getZ() - 25);
     }
+
     // Obtém posições do obstáculo:
     @Override
     public int getX(){return posicaoX;}

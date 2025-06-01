@@ -8,13 +8,12 @@ abstract class RoboAereo extends Robo {
     }
 
     // Movimentação para cima no eixo z.
-    public void subir(Ambiente ambiente, int deltaX, int deltaY, int deltaZ) throws ForaDosLimitesException, ColisaoException{
+    public void subir(Ambiente ambiente, int deltaX, int deltaY, int deltaZ) throws ForaDosLimitesException, ColisaoException {
         moverPara(deltaX, deltaY, deltaZ, ambiente);
     }
 
-    public void descer(Ambiente ambiente, int deltaX, int deltaY, int deltaZ) throws ForaDosLimitesException, ColisaoException{
+    // Movimentação para baixo no eixo z (sem passar do chão).
+    public void descer(Ambiente ambiente, int deltaX, int deltaY, int deltaZ) throws ForaDosLimitesException, ColisaoException {
         moverPara(deltaX, deltaY, -deltaZ, ambiente);
     }
-
-    
 }
