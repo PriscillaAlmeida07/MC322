@@ -8,14 +8,16 @@ O projeto está organizado em diferentes laboratórios (labs), cada um represent
 Há também uma pasta images que contém o Diagrama de Classes.
 
 ### Principais mudanças no Lab04
-Neste laboratório, foram implementadas interfaces e realizado o tratamento de exceções. Além disso, o mapa foi atualizado, passando a registrar também as informações de largura, comprimento e altura.
+Neste laboratório, foram implementadas interfaces, que adicionaram novos comportamentos aos robôs, e realizado o tratamento de exceções, que antes estava sendo feito manualmente. 
+Além disso, o mapa foi atualizado, passando a ser uma matriz também capaz de registrar quais entidades ocupam cada espaço do ambiente. 
+O menu interativo também foi alterado, pois antes o usuário selecionava a ação e em seguida o robô que a faria, agora, o menu está mais focado nos robôs, o usuário seleciona um robô e em seguida visualiza tudo o que aquele robô é capaz de fazer.
 
 ### Lista de interfaces:
 - Atacante (implementada pelas classes Robô Obstáculo Aéreo e Robô Cavador);
 - Comunicavel (implementada pela classe Robo);
 - Curador (implementada pelas classes Robô Flutuador e Robô Obstáculo Terrestre);
 - DestroiObstaculo (implementada pela classe Robô Cavador);
-- Entidade (implementada pela classe Robô);
+- Entidade (implementada pelas classes Robô, Obstáculo e Tapete Reposição);
 - Sensoreavel (implementada pela classe Robô);
   
 ### Lista de exceções:
@@ -25,7 +27,7 @@ Neste laboratório, foram implementadas interfaces e realizado o tratamento de e
 - RoboDesligadoException (exceção lançada na classe Robô);
 - ValorInvalidoException (exceção lançada na Main);
 - VelocidadeMaxException (exceção lançada na classe Robo Terrestre);
-- VidaNulaException (exceção lançada nas classes Robô, Sensor)
+- VidaNulaException (exceção lançada nas classes Robô)
 
 ### Informações sobre IDE e Java:
 IDE utilizada: VScode
