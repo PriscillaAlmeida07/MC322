@@ -98,8 +98,15 @@ public class RoboObstaculoAereo extends RoboAereo implements  Atacante {
         for (int i = 0; i < robos.size(); i++){
             if (robos.get(i) instanceof Robo robo){
                 if(!robo.getID().equals(this.getID())){
-                    robo.setVida(-dano);
-                    System.out.println("O " + this.getNome() + " atacou o " + robo.getNome() + " que possui agora " + robo.getVida() + " vidas apenas");
+                    if (robo.getVida() == 0) {
+                        System.out.println("O " + robo.getNome() + " não pode ser atacado, pois já está morto");
+                    } else if ((robo.getVida() - dano) <= 0){
+                        robo.setVida(-robo.getVida());
+                        System.out.println("O " + this.getNome() + " matou o " + robo.getNome());
+                    } else {
+                        robo.setVida(-dano);
+                        System.out.println("O " + this.getNome() + " atacou o " + robo.getNome() + " que possui agora " + robo.getVida() + "/10 de vida");
+                    }
                 }
             }
         }

@@ -6,7 +6,7 @@ public class Main {
 
         // Instânciamento do ambiente.
         Ambiente ambiente1 = new Ambiente();
-        System.out.println("O ambiente foi inicializado...");
+        System.out.println("O ambiente foi inicializado.");
 
         // Instânciamento da central de comunicação.
         CentralComunicacao centralComunicacao = new CentralComunicacao();
