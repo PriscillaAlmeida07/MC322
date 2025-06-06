@@ -47,11 +47,11 @@ Para executar o programa siga os seguintes passos:
   cd MC322/lab04
 - Para compilar o programa utilize o comando no terminal:
   ``` bash
-  javac Main.java
+  javac -d bin src/*/*.java
 
 - Para rodar utilize o comando no terminal:
   ``` bash
-  java Main.java
+  java -cp bin main.Main
 
 ### Diagrama de classes:
 ![Diagrama](images/DIAGRAMA.jpg)
