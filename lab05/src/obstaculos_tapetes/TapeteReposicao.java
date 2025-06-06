@@ -1,3 +1,8 @@
+package obstaculos_tapetes;
+
+import enums.TipoEntidade;
+import interfaces.Entidade;
+
 public class TapeteReposicao implements Entidade {
 
     private final int posicaoX;

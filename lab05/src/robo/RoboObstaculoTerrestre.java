@@ -3,6 +3,20 @@ package robo;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import ambiente.Ambiente;
+import enums.EstadoRobo;
+import enums.TipoObstaculo;
+import enums.TipoSensor;
+import exceptions.ColisaoException;
+import exceptions.ForaDosLimitesException;
+import exceptions.RoboDesligadoException;
+import exceptions.VidaNulaException;
+import interfaces.Curador;
+import interfaces.Entidade;
+import obstaculos_tapetes.Obstaculo;
+import sensores.Sensor;
+import sensores.SensorReporBlocos;
+
 public class RoboObstaculoTerrestre extends RoboTerrestre implements Curador {
     
     private int numBlocos;

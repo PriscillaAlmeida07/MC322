@@ -2,6 +2,24 @@ package robo;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import ambiente.Ambiente;
+import comunicacao.CentralComunicacao;
+import enums.EstadoRobo;
+import enums.TipoEntidade;
+import enums.TipoSensor;
+import exceptions.ColisaoException;
+import exceptions.ErroComunicacaoException;
+import exceptions.ForaDosLimitesException;
+import exceptions.RoboDesligadoException;
+import exceptions.VidaNulaException;
+import interfaces.Comunicavel;
+import interfaces.Entidade;
+import interfaces.Sensoreavel;
+import sensores.Sensor;
+import sensores.SensorObstaculos;
+import sensores.SensorReporBlocos;
+import sensores.SensorRobos;
+
 
 public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
 

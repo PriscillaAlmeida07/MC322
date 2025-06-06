@@ -1,6 +1,10 @@
-package sensor;
+package sensores;
 
 import java.util.ArrayList;
+
+import ambiente.Ambiente;
+import enums.TipoSensor;
+import interfaces.Entidade;
 
 public abstract class Sensor {
 

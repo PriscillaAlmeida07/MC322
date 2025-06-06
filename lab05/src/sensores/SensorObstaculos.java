@@ -1,6 +1,11 @@
-package sensor;
+package sensores;
 
 import java.util.ArrayList;
+
+import ambiente.Ambiente;
+import enums.TipoSensor;
+import interfaces.Entidade;
+import obstaculos_tapetes.Obstaculo;
 
 public class SensorObstaculos extends Sensor {
 

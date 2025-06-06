@@ -1,3 +1,8 @@
+package interfaces;
+
+import ambiente.Ambiente;
+import exceptions.RoboDesligadoException;
+import exceptions.VidaNulaException;
 
 public interface Sensoreavel {
     

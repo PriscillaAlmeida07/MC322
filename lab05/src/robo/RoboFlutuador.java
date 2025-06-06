@@ -3,6 +3,16 @@ package robo;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import ambiente.Ambiente;
+import enums.EstadoRobo;
+import exceptions.ColisaoException;
+import exceptions.ForaDosLimitesException;
+import exceptions.RoboDesligadoException;
+import exceptions.VidaNulaException;
+import interfaces.Curador;
+import interfaces.Entidade;
+import sensores.Sensor;
+
 public class RoboFlutuador extends RoboAereo implements Curador {
     
     // Robo flutuador: incapaz de realizar subidas e descidas muito bruscas.

@@ -3,6 +3,19 @@ package robo;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import ambiente.Ambiente;
+import enums.EstadoRobo;
+import enums.TipoObstaculo;
+import exceptions.ColisaoException;
+import exceptions.ForaDosLimitesException;
+import exceptions.RoboDesligadoException;
+import exceptions.VidaNulaException;
+import interfaces.Atacante;
+import interfaces.DestroiObstaculo;
+import interfaces.Entidade;
+import obstaculos_tapetes.Obstaculo;
+import sensores.Sensor;
+
 public class RoboCavador extends RoboTerrestre implements Atacante, DestroiObstaculo { 
 
     // Atributos:

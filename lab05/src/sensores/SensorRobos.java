@@ -2,6 +2,11 @@ package sensores;
 
 import java.util.ArrayList;
 
+import ambiente.Ambiente;
+import enums.TipoSensor;
+import interfaces.Entidade;
+import robo.Robo;
+
 public class SensorRobos extends Sensor {
 
     // Sensor capaz de detectar robôs próximos (em distância para ataque/cura).

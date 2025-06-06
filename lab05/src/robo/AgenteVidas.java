@@ -1,1 +1,0 @@
-// passar por mensagem o robo necessitado de vidas p curadr

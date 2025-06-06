@@ -1,9 +1,14 @@
 package main;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import ambiente.*;
+import comunicacao.CentralComunicacao;
 import robo.*;
 import enums.*;
+import exceptions.*;
+import obstaculos_tapetes.Obstaculo;
+import obstaculos_tapetes.TapeteReposicao;
 
 public class Main {
     public static void main(String[] args){

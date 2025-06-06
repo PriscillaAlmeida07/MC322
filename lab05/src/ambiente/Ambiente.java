@@ -2,6 +2,14 @@ package ambiente;
 
 import java.util.ArrayList;
 
+import enums.TipoEntidade;
+import exceptions.ColisaoException;
+import exceptions.ForaDosLimitesException;
+import interfaces.Entidade;
+import obstaculos_tapetes.Obstaculo;
+import obstaculos_tapetes.TapeteReposicao;
+import robo.Robo;
+
 public class Ambiente { 
 
     private final int largura, comprimento, altura;

@@ -1,5 +1,8 @@
 package robo;
 
+import enums.EstadoRobo;
+import exceptions.VelocidadeMaxException;
+
 public abstract class RoboTerrestre extends Robo {
 
     private final int velocidadeMaxima;

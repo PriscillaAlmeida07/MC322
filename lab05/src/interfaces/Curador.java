@@ -1,3 +1,9 @@
+package interfaces;
+
+import ambiente.Ambiente;
+import exceptions.RoboDesligadoException;
+import exceptions.VidaNulaException;
+
 public interface Curador {
 
     // Interface implementada pelo Robô Flutuador e Robô Obstáculo Terrestre.

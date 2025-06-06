@@ -3,6 +3,18 @@ package robo;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import ambiente.Ambiente;
+import enums.EstadoRobo;
+import enums.TipoObstaculo;
+import exceptions.ColisaoException;
+import exceptions.ForaDosLimitesException;
+import exceptions.RoboDesligadoException;
+import exceptions.VidaNulaException;
+import interfaces.Atacante;
+import interfaces.Entidade;
+import obstaculos_tapetes.Obstaculo;
+import sensores.Sensor;
+
 public class RoboObstaculoAereo extends RoboAereo implements  Atacante {
         
     // Robô capaz de criar obstáculos posicionando nuvens no céu.

@@ -1,3 +1,9 @@
+package obstaculos_tapetes;
+
+import enums.TipoEntidade;
+import enums.TipoObstaculo;
+import interfaces.Entidade;
+
 public class Obstaculo implements Entidade {
     
     // Posições iniciais dos obstáculos (menores valores ocupados).
