@@ -27,8 +27,7 @@ public class Main {
         // Criando o arquivo
         Arquivo arquivo = new Arquivo(caminhoRelativo);
 
-
-
+        // Adicionando data o hora de escrita no arquivo
         LocalDateTime agora = LocalDateTime.now();
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         String dataHoraFormatada = agora.format(formato);
@@ -36,6 +35,7 @@ public class Main {
 
         String conteudo = dataHoraFormatada + "\n" + "-------------------------------------" + "\n\n" + "Missões realizadas:\n";
 
+        // metodo que escreve no arquivo (só precisa do conteudo a ser inserido)
         arquivo.escreverNoArquivo(conteudo);
 
         // Instânciamento do ambiente.
