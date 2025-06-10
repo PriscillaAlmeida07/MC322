@@ -1,5 +1,12 @@
 package main;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import ambiente.*;
@@ -9,9 +16,27 @@ import enums.*;
 import exceptions.*;
 import obstaculos_tapetes.Obstaculo;
 import obstaculos_tapetes.TapeteReposicao;
+import arquivos.Arquivo;
 
 public class Main {
     public static void main(String[] args){
+
+        // Caminho relativo - caminho referente ao diretorio que estamos, ou seja, como estamos rodando o programa a partir da pasta lab05, esse é o caminho relativo
+        String caminhoRelativo = "src/arquivos/arquivo.txt";
+
+        // Criando o arquivo
+        Arquivo arquivo = new Arquivo(caminhoRelativo);
+
+
+
+        LocalDateTime agora = LocalDateTime.now();
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        String dataHoraFormatada = agora.format(formato);
+
+
+        String conteudo = dataHoraFormatada + "\n" + "-------------------------------------" + "\n\n" + "Missões realizadas:\n";
+
+        arquivo.escreverNoArquivo(conteudo);
 
         // Instânciamento do ambiente.
         Ambiente ambiente1 = new Ambiente();
