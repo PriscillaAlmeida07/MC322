@@ -1,11 +1,9 @@
 package robo;
 
-import java.util.ArrayList;
-import java.util.Scanner;
-
 import ambiente.Ambiente;
 import enums.EstadoRobo;
 import enums.TipoObstaculo;
+import exceptions.AreaProtegidaException;
 import exceptions.ColisaoException;
 import exceptions.ForaDosLimitesException;
 import exceptions.RoboDesligadoException;
@@ -13,6 +11,8 @@ import exceptions.VidaNulaException;
 import interfaces.Atacante;
 import interfaces.DestroiObstaculo;
 import interfaces.Entidade;
+import java.util.ArrayList;
+import java.util.Scanner;
 import obstaculos_tapetes.Obstaculo;
 import sensores.Sensor;
 
@@ -110,11 +110,19 @@ public class RoboCavador extends RoboTerrestre implements Atacante, DestroiObsta
 
     // Ataca todos os robôs próximos (menos ele mesmo).
     @Override
-    public void atacar(Ambiente ambiente) throws RoboDesligadoException, VidaNulaException {
+    public void atacar(Ambiente ambiente) throws RoboDesligadoException, VidaNulaException, AreaProtegidaException{
         if (this.getEstadoRobo() == EstadoRobo.DESLIGADO)
             throw new RoboDesligadoException("O robô está desligado");
         if (this.getVida() == 0)
             throw new VidaNulaException("O " + this.getNome() + " está morto, portanto só poderá realizar ações quando for curado por outro robô");
+
+        ArrayList<AgenteInteligente> segurancas = ambiente.getArraySeguranca();
+        for (int i = 0; i < segurancas.size(); i++){
+            if (Math.sqrt(Math.pow((segurancas.get(i).getX() - this.getX()), 2)) + (Math.pow((segurancas.get(i).getY() - this.getY()), 2)) + (Math.pow((segurancas.get(i).getZ() - this.getZ()), 2)) < segurancas.get(i).getMissao().getRaio()){
+                throw new AreaProtegidaException("O " + this.getNome() + " está em uma area protegida pelo " + segurancas.get(i).getNome() + " e nao pode atacar");
+            }
+        }
+        
 
         // Informações necessárias para o funcionamento da função:
         Sensor sensor = getSensorRobos();

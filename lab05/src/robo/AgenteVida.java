@@ -46,6 +46,7 @@ public class AgenteVida extends AgenteInteligente {
             for (int j= 0; j < curadores.size(); j++){
                 
             }
+            
         }
 
     }

@@ -21,5 +21,9 @@ public abstract class AgenteInteligente extends Robo implements Missao {
         return missao != null;
     }
 
+    public Missao getMissao(){
+        return missao;
+    }
+
     public abstract void executarMissao(Ambiente ambiente);
 }

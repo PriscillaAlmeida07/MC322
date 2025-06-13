@@ -1,13 +1,13 @@
 package ambiente;
 
-import java.util.ArrayList;
-
 import enums.TipoEntidade;
 import exceptions.ColisaoException;
 import exceptions.ForaDosLimitesException;
 import interfaces.Entidade;
+import java.util.ArrayList;
 import obstaculos_tapetes.Obstaculo;
 import obstaculos_tapetes.TapeteReposicao;
+import robo.AgenteInteligente;
 import robo.Robo;
 
 public class Ambiente { 
@@ -15,14 +15,24 @@ public class Ambiente {
     private final int largura, comprimento, altura;
     private final TipoEntidade mapa[][][];
     private final ArrayList<Entidade> entidades;
+    private final ArrayList<AgenteInteligente> segurancasAtivos;
 
     // Construtor.
     public Ambiente(){ 
         largura = 50; comprimento = 50; altura = 50;
 
         entidades = new ArrayList<>();
+        segurancasAtivos = new ArrayList<>();
         mapa = new TipoEntidade[largura][comprimento][altura];
         inicializarMapa();
+    }
+
+    public void adicionarSeguranca(AgenteInteligente seguranca){
+        segurancasAtivos.add(seguranca);
+    }
+
+    public ArrayList<AgenteInteligente> getArraySeguranca(){
+        return segurancasAtivos;
     }
 
     // Inicializa todos os espaços do mapa como vazios.

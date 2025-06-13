@@ -1,22 +1,17 @@
 package main;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.InputMismatchException;
-import java.util.Scanner;
 import ambiente.*;
+import arquivos.Arquivo;
 import comunicacao.CentralComunicacao;
-import robo.*;
 import enums.*;
 import exceptions.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 import obstaculos_tapetes.Obstaculo;
 import obstaculos_tapetes.TapeteReposicao;
-import arquivos.Arquivo;
+import robo.*;
 
 public class Main {
     public static void main(String[] args){
