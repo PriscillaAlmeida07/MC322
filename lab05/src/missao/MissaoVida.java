@@ -10,6 +10,7 @@ import robo.Robo;
 
 public class MissaoVida implements Missao {
     
+    @Override
     public void executar(Robo robo, Ambiente ambiente, CentralComunicacao centralComunicacao){
         ArrayList<Robo> robos = ambiente.getArrayRobos();
         ArrayList<Robo> robosMortos = new ArrayList<>();

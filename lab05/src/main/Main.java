@@ -344,7 +344,7 @@ public class Main {
                 case 7:
                     try{
                         robo.atacar(ambiente);
-                    } catch (RoboDesligadoException | VidaNulaException e){
+                    } catch (RoboDesligadoException | VidaNulaException | AreaProtegidaException e){
                         System.err.println("Erro: " + e.getMessage());
                     }
                     break; 
@@ -550,7 +550,7 @@ public class Main {
                 case 7:
                     try{
                         robo.atacar(ambiente);
-                    } catch (RoboDesligadoException | VidaNulaException e){
+                    } catch (RoboDesligadoException | VidaNulaException | AreaProtegidaException e){
                         System.err.println("Erro: " + e.getMessage());
                     }
                     break; 
