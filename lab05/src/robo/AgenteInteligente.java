@@ -1,10 +1,11 @@
 package robo;
 
 import ambiente.Ambiente;
+import comunicacao.CentralComunicacao;
 import enums.EstadoRobo;
 import missao.Missao;
 
-public abstract class AgenteInteligente extends Robo implements Missao {
+public abstract class AgenteInteligente extends Robo {
     
     protected Missao missao;
 
@@ -21,9 +22,13 @@ public abstract class AgenteInteligente extends Robo implements Missao {
         return missao != null;
     }
 
+    public void excluirMissao(){
+        missao = null;
+    }
+
     public Missao getMissao(){
         return missao;
     }
 
-    public abstract void executarMissao(Ambiente ambiente);
+    public abstract void executarMissao(Ambiente ambiente, CentralComunicacao centralComunicacao);
 }

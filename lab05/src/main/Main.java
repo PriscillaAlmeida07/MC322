@@ -5,6 +5,9 @@ import arquivos.Arquivo;
 import comunicacao.CentralComunicacao;
 import enums.*;
 import exceptions.*;
+import missao.MissaoSeguranca;
+import missao.MissaoVida;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
@@ -74,6 +77,10 @@ public class Main {
         RoboFlutuador roboFlutuador2 = new RoboFlutuador("roboFlutuador2", "RF02", EstadoRobo.DESLIGADO, 28, 25, 25);
         RoboObstaculoAereo roboObstaculoAereo2 = new RoboObstaculoAereo("roboObstaculoAereo2", "ROA02", EstadoRobo.DESLIGADO, 29, 25, 25);
 
+        //Criação dos Agentes
+        AgenteSeguranca agenteSeguranca1 = new AgenteSeguranca("agenteSeguranca1", "AI01", EstadoRobo.LIGADO, 30, 25, 25);
+        AgenteVida agenteVida1 = new AgenteVida("agenteVida1", "AV01", EstadoRobo.LIGADO, 31, 25, 25);
+
         // Criamos esse robô apenas para testar o metodo removerEntidade.
         RoboObstaculoAereo roboObstaculoAereo3 = new RoboObstaculoAereo("roboObstaculoAereo3", "ROA03", EstadoRobo.LIGADO, 30, 25, 25);
 
@@ -104,10 +111,11 @@ public class Main {
         while(continuar){
             System.out.println("Selecione alguma das ações abaixo:\n" +
             "[1] - Selecionar um Robô (funções/interações)\n" +
-            "[2] - Listar todos os Robôs\n" +
-            "[3] - Listar posição dos Objetos (não robôs)\n" +
-            "[4] - Exibir plano xy atual do ambiente\n" +
-            "[5] - Listar todas as mensagens trocadas\n" +
+            "[2] - Selecionar Agente \n" +
+            "[3] - Listar todos os Robôs\n" +
+            "[4] - Listar posição dos Objetos (não robôs)\n" +
+            "[5] - Exibir plano xy atual do ambiente\n" +
+            "[6] - Listar todas as mensagens trocadas\n" +
             "[0] - Sair do programa\n");
     
             int opcao = entrada.nextInt();
@@ -116,15 +124,18 @@ public class Main {
                     selecionarRobo(entrada, ambiente1, roboCavador1, roboCavador2, roboObstaculoTerrestre1, roboObstaculoTerrestre2, roboObstaculoAereo1, roboObstaculoAereo2, roboFlutuador1, roboFlutuador2, centralComunicacao);
                     break;
                 case 2:
+                    selecionarAgente(entrada, ambiente1, agenteSeguranca1, agenteVida1, centralComunicacao);
+                    break;
+                case 3:
                     listarRobos(entrada, ambiente1);
                     break; 
-                case 3:
+                case 4:
                     ambiente1.listarObjetos();
                     break;  
-                case 4:
+                case 5:
                     ambiente1.visualizarAmbiente();
                     break; 
-                case 5:
+                case 6:
                     centralComunicacao.exibirMensagens();
                     break; 
 
@@ -139,6 +150,123 @@ public class Main {
             }
         }
         entrada.close();
+    }
+
+    private static void selecionarAgente(Scanner entrada, Ambiente ambiente1, AgenteSeguranca agenteSeguranca1, AgenteVida agenteVida1, CentralComunicacao centralComunicacao){
+        boolean continuar = true;
+
+        while(continuar){
+            System.out.println("Selecione algum dos Agentes Inteligentes abaixo:\n" +
+            "[1] - Agente Segurança1\n" +
+            "[2] - Agente Vida1\n" + 
+            "[0] - Voltar\n");
+
+            int opcao = entrada.nextInt();
+            switch (opcao) {
+                case 1:
+                    selecionarMissaoSeguranca(entrada, ambiente1, agenteSeguranca1, centralComunicacao);
+                    break;
+                case 2:
+                    selecionarMissaoVida(entrada, ambiente1, agenteVida1, centralComunicacao);
+                    break;
+                case 0:
+                    continuar = false;
+                    break;  
+                default:
+                    System.out.println("Valor inválido, digite novamente\n");
+                    break;
+            }
+        }
+    }
+
+    private static void selecionarMissaoSeguranca(Scanner entrada, Ambiente ambiente1, AgenteSeguranca agenteSeguranca1, CentralComunicacao centralComunicacao){
+        boolean continuar = true;
+
+        while(continuar){
+            System.out.println("Selecione algumas das opcoes para missoes:\n" +
+            "[1] - Executar missão Segurança\n" +
+            "[2] - Executar missão Buscar ponto\n" + //uma missao mais basica so para ter 2 missoes pelo menos para cada
+            "[3] - Encerrada missão que esta em execução\n" +
+            "[0] - Voltar\n");
+
+            int opcao = entrada.nextInt();
+            switch (opcao) {
+                case 1:
+                // So podera ser feita uma missao por vez (pois no pdf do lab a missao é uma variavel nao array na classe agente inteligente)
+                    if(agenteSeguranca1.temMissao() == false){
+                        MissaoSeguranca missaoSeguranca = new MissaoSeguranca();
+                        agenteSeguranca1.definirMissao(missaoSeguranca);
+                        agenteSeguranca1.executarMissao(ambiente1, centralComunicacao);
+                    } else {
+                        System.out.println("O robo ja esta realizando uma missao"); // podemos trocar por exception se for necessario
+                    }
+                    break;
+                case 2:
+                    // vamos criar uma missao mais basica so para ter duas, mas sera a mesma logica
+                    // if(agenteSeguranca1.temMissao() == false){
+                    //     MissaoSeguranca missaoSeguranca = new MissaoSeguranca();
+                    //     agenteSeguranca1.definirMissao(missaoSeguranca);
+                    //     agenteSeguranca1.executarMissao(ambiente1);
+                    // } else {
+                    //     System.out.println("O robo ja esta realizando uma missao"); // podemos trocar por exception se for necessario
+                    // }
+                    break;
+                case 3:
+                    agenteSeguranca1.excluirMissao();
+                    // nao dara erro pois se nao tiver missao ainda vai mudar para null (mesmo sendo null, mas nao dara problema)
+                    System.out.println("A missão atual foi encerrada");
+                    break;
+                case 0:
+                    continuar = false;
+                    break;  
+                default:
+                    System.out.println("Valor inválido, digite novamente\n");
+                    break;
+            }
+        }
+    }
+
+    private static void selecionarMissaoVida(Scanner entrada, Ambiente ambiente1, AgenteVida agenteVida1, CentralComunicacao centralComunicacao){
+        boolean continuar = true;
+
+        while(continuar){
+            System.out.println("Selecione algumas das opcoes para missoes:\n" +
+            "[1] - Executar missão Vida\n" +
+            "[2] - Executar missão Buscar ponto\n" + //uma missao mais basica so para ter 2 missoes pelo menos para cada
+            "[3] - Encerrar missão que esta em execução\n" +
+            "[0] - Voltar\n");
+
+            int opcao = entrada.nextInt();
+            switch (opcao) {
+                case 1:
+                // So podera ser feita uma missao por vez (pois no pdf do lab a missao é uma variavel nao array na classe agente inteligente)
+                    if(agenteVida1.temMissao() == false){
+                        MissaoVida missaoVida = new MissaoVida();
+                        agenteVida1.definirMissao(missaoVida);
+                        agenteVida1.executarMissao(ambiente1, centralComunicacao);
+                    } else {
+                        System.out.println("O robo ja esta realizando uma missao"); // podemos trocar por exception se for necessario
+                    }
+                    break;
+                case 2:
+                    // vamos criar uma missao mais basica so para ter duas
+                    // MissaoBasica missaoBasica = new MissaoBasica();
+                    // agenteSeguranca1.definirMissao(missaoBasica);
+                    // agenteSeguranca1.executarMissao(ambiente1);
+                    break;
+                case 3:
+                    agenteVida1.excluirMissao();
+                    // nao dara erro pois se nao tiver missao ainda vai mudar para null (mesmo sendo null, mas nao dara problema)
+                    System.out.println("A missão atual foi encerrada");
+                    break;    
+                case 0:
+                    continuar = false;
+                    break;  
+                default:
+                    System.out.println("Valor inválido, digite novamente\n");
+                    break;
+            }
+        }
     }
 
     // Função que lista determinada característica para todos os robôs que estão no ambiente.

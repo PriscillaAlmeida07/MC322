@@ -23,6 +23,9 @@ import sensores.SensorRobos;
 
 public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
 
+    // para definir se o robo esta sendo protegido
+    private boolean protegido;
+
     // Identificação do robô.
     private final String nome, id;
 
@@ -44,6 +47,7 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
         this.posicaoX = posicaoX; this.posicaoY = posicaoY; this.posicaoZ = posicaoZ;
         direcao = "Norte";
         vida = 10;
+        protegido = false;
 
         tipoEntidade = TipoEntidade.ROBO;
         mensagens = new ArrayList<>();
@@ -54,6 +58,13 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
         sensores.add(new SensorRobos(2, TipoSensor.ROBOS));
     }
 
+    public void setProtegido(){
+        if(protegido == false){
+            protegido = true;
+        } else {
+            protegido = false;
+        }
+    }
     // Adiciona um sensor de reposição de blocos, se o robô o possuir.
     public void adicionaSensorReporBlocos(SensorReporBlocos sensorReporBlocos){
         sensores.add(sensorReporBlocos);

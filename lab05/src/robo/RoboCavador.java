@@ -118,7 +118,7 @@ public class RoboCavador extends RoboTerrestre implements Atacante, DestroiObsta
 
         ArrayList<AgenteInteligente> segurancas = ambiente.getArraySeguranca();
         for (int i = 0; i < segurancas.size(); i++){
-            if (Math.sqrt(Math.pow((segurancas.get(i).getX() - this.getX()), 2)) + (Math.pow((segurancas.get(i).getY() - this.getY()), 2)) + (Math.pow((segurancas.get(i).getZ() - this.getZ()), 2)) < segurancas.get(i).getMissao().getRaio()){
+            if (Math.sqrt(Math.pow((segurancas.get(i).getX() - this.getX()), 2)) + (Math.pow((segurancas.get(i).getY() - this.getY()), 2)) + (Math.pow((segurancas.get(i).getZ() - this.getZ()), 2)) < segurancas.get(i).getMissao().getRaio()){ //nao sei pq nao esta funcionando acho q vms ter q usar o instanceof
                 throw new AreaProtegidaException("O " + this.getNome() + " está em uma area protegida pelo " + segurancas.get(i).getNome() + " e nao pode atacar");
             }
         }

@@ -4,6 +4,8 @@ import enums.TipoEntidade;
 import exceptions.ColisaoException;
 import exceptions.ForaDosLimitesException;
 import interfaces.Entidade;
+import missao.Missao;
+
 import java.util.ArrayList;
 import obstaculos_tapetes.Obstaculo;
 import obstaculos_tapetes.TapeteReposicao;
@@ -16,19 +18,24 @@ public class Ambiente {
     private final TipoEntidade mapa[][][];
     private final ArrayList<Entidade> entidades;
     private final ArrayList<AgenteInteligente> segurancasAtivos;
-
+    private final ArrayList<Missao> missoes;
     // Construtor.
     public Ambiente(){ 
         largura = 50; comprimento = 50; altura = 50;
 
         entidades = new ArrayList<>();
         segurancasAtivos = new ArrayList<>();
+        missoes = new ArrayList<>();
         mapa = new TipoEntidade[largura][comprimento][altura];
         inicializarMapa();
     }
 
     public void adicionarSeguranca(AgenteInteligente seguranca){
         segurancasAtivos.add(seguranca);
+    }
+
+    public void adicionarMissao(Missao missao){
+        missoes.add(missao);
     }
 
     public ArrayList<AgenteInteligente> getArraySeguranca(){
