@@ -8,7 +8,7 @@ import interfaces.Entidade;
 
 public abstract class Sensor {
 
-    private final double raio;
+    private double raio;
     private final TipoSensor tipo;
 
     // Construtor.
@@ -20,6 +20,11 @@ public abstract class Sensor {
     // Obtém o raio do sensor.
     public double getRaio(){
         return raio;
+    }
+
+    // Mudaremos o raio quando o agente Seguranca estiver usando o sensorRobos
+    public void setRaio(double raio){
+        this.raio = raio;
     }
 
     // Obtém o tipo do sensor.

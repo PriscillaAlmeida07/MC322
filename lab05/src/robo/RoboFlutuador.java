@@ -95,7 +95,9 @@ public class RoboFlutuador extends RoboAereo implements Curador {
                     
                     if (robo.getVida() == 10) {
                         System.out.println("O " + robo.getNome() + " não pode ser curado, pois já está com a vida máxima");
-                    } else if ((robo.getVida() + reparo) >= 10){
+                    } else if (robo.getVida() == 0){
+                        System.out.println("O " + robo.getNome() + " não pode ser curado, pois está morto e apenas o Agente Vida pode revive-lo");
+                    }else if ((robo.getVida() + reparo) >= 10){
                         robo.setVida(10 - robo.getVida());
                         System.out.println("O " + this.getNome() + " curou completamente o " + robo.getNome() + " que possui agora 10/10 de vida");
                     } else {

@@ -3,33 +3,46 @@ package missao;
 import java.util.ArrayList;
 
 import ambiente.Ambiente;
-import comunicacao.CentralComunicacao;
+import arquivos.Arquivo;
 import interfaces.Entidade;
+import robo.AgenteInteligente;
 import robo.Robo;
 
 public class MissaoSeguranca implements Missao {
     
+    // Armazenamos os robosProtegidos para ser possivel mudar o estado da variavel protegido quando executarmos a missao
+    ArrayList<Robo> robosProtegidos;
     private final double raio;
 
     public MissaoSeguranca(){
         raio = 10;
+        robosProtegidos = new ArrayList<>();
     }
 
     @Override
     // acho q as missoes sempre vao precisar de sensores entao faz sentido retornar arrays
-    public ArrayList<Robo> executar(Robo robo, Ambiente ambiente, CentralComunicacao centralComunicacao, ArrayList<Entidade> robosProtegidos){
-        ArrayList<Robo> robos = new ArrayList<>(); // so criei por ser abstract e precisar retornar nao era necessario
+    public ArrayList<Robo> executar(Robo robo, Ambiente ambiente, ArrayList<Entidade> robosProx, Arquivo arquivo){
+        // Vamos escrever no arquivo sobre a missao realizada
+        String conteudo;
 
-        for (int i = 0; i < robosProtegidos.size(); i++){
-            if(robosProtegidos.get(i) instanceof Robo roboProtegido){
-                roboProtegido.setProtegido(); // vai mudar para true
-                robos.add(roboProtegido);
-    
+        for (int i = 0; i < robosProx.size(); i++){
+            if(robosProx.get(i) instanceof Robo roboP && !(roboP instanceof AgenteInteligente)){
+                roboP.setProtegido(); // vai mudar para true
+                robosProtegidos.add(roboP);
+                conteudo = "O Agente Segurança está protegendo o "  + roboP.getNome() + "\n";
+                arquivo.escreverNoArquivo(conteudo);
             }
         }
-        return robos;
+        return robosProtegidos;
     }
 
+    public void encerrarMissao(){
+        for (int i = 0; i < robosProtegidos.size(); i++){
+            if(robosProtegidos.get(i) instanceof Robo roboProtegido){
+                roboProtegido.setProtegido(); // vai mudar para false
+            }
+        }
+    }
     public double getRaio(){
         return raio;
     }

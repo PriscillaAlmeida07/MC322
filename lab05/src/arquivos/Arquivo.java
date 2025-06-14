@@ -33,7 +33,6 @@ public class Arquivo{
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(arquivo, true))) {
             writer.write(conteudo);
             writer.newLine();
-            System.out.print("Conteúdo armazenado no arquivo.txt\n");
         } catch (IOException e) {
             System.out.print("Erro ao escrever no arquivo: " + e.getMessage());
             System.out.print("\n");

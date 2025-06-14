@@ -6,7 +6,8 @@ public enum TipoEntidade {
     VAZIO('_'),
     ROBO('R'),
     OBSTACULO('O'),
-    TAPETE('T');
+    TAPETE('T'),
+    AGENTE('A');
 
     private final char caractere;
 

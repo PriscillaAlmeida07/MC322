@@ -49,7 +49,11 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
         vida = 10;
         protegido = false;
 
-        tipoEntidade = TipoEntidade.ROBO;
+        if(this instanceof AgenteInteligente)
+            tipoEntidade = TipoEntidade.AGENTE;
+        else
+            tipoEntidade = TipoEntidade.ROBO;
+            
         mensagens = new ArrayList<>();
 
         // Cria o ArrayList de sensores do robô e adiciona os sensores comuns a todos os robôs: obstáculos e robôs
@@ -64,6 +68,13 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
         } else {
             protegido = false;
         }
+    }
+
+    public boolean getProtegido(){
+        if(protegido == true)
+            return true;
+        else
+            return false;
     }
     // Adiciona um sensor de reposição de blocos, se o robô o possuir.
     public void adicionaSensorReporBlocos(SensorReporBlocos sensorReporBlocos){

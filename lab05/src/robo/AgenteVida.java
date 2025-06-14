@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import ambiente.Ambiente;
+import arquivos.Arquivo;
 import comunicacao.CentralComunicacao;
 import enums.EstadoRobo;
 import exceptions.ColisaoException;
@@ -13,7 +14,6 @@ import exceptions.ForaDosLimitesException;
 import exceptions.RoboDesligadoException;
 import exceptions.VidaNulaException;
 import interfaces.Entidade;
-import missao.Missao;
 import missao.MissaoVida;
 import sensores.Sensor;
 
@@ -24,28 +24,30 @@ public class AgenteVida extends AgenteInteligente {
     }
 
     @Override
-    public void executarMissao(Ambiente ambiente, CentralComunicacao centralComunicacao){
+    public void executarMissao(Ambiente ambiente, CentralComunicacao centralComunicacao, Arquivo arquivo){
 
         if(missao instanceof MissaoVida){ // pois é protected
             System.out.println("O robo esta procurando robos mortos para revive-los\n");
             Sensor sensor = getSensorRobos();
+            // Mudaremos o raio do sensor para conseguir cobrir uma area maior
+            sensor.setRaio(10);
             int[] vetorPosicao = getPosicao();
             // Vamos utilizar o sensor para achar os robos mais proximos do agente
             ArrayList<Entidade> robosProx = sensor.monitorar(ambiente, vetorPosicao, 1);
             ArrayList<Robo> robosMortos = new ArrayList<>();
-
+            // O retorno de executar conterá um ArrayList de robosMortos
+            robosMortos = missao.executar(this, ambiente, robosProx, arquivo);
             if(robosMortos.size() != 0){
-                // O retorno de executar conterá um ArrayList de robosMortos
-                robosMortos = missao.executar(this, ambiente, centralComunicacao, robosProx);
                 for (int i=0; i< robosMortos.size(); i++){
                     // moverPara(robosMortos.get(i).getX() - 1, robosMortos.get(i).getY(),robosMortos.get(i).getZ()); mover sera complicado pois e se ele colidir com algo?
-                    // Reviveremos robos mortos (Só agentesVidas conseguirao fazer robos reviverem criarei uma exception (nao fiz ainda kkk))
+                    // Reviveremos robos mortos (Só agentesVidas conseguirao fazer robos reviverem )
                     
                     robosMortos.get(i).setVida(1);
-                    System.out.println("O " + robosMortos.get(i).getNome() + "reviveu: vida = 1");
+                    System.out.println("O " + robosMortos.get(i).getNome() + " reviveu: vida = 1");
                     
                     try{
-                        enviarMensagem(centralComunicacao, robosMortos.get(i), "O robo reviveu"); //sempre sera valido mas temos q tratar com try msm assim
+                        System.out.println("O " + robosMortos.get(i).getNome() + " está sendo protegido.");
+                        enviarMensagem(centralComunicacao, robosMortos.get(i), "Você " + robosMortos.get(i).getNome() + " reviveu por causa do Agente Vida"); //sempre sera valido mas temos q tratar com try msm assim
                     }  catch (ErroComunicacaoException e){
                         System.err.println("Erro: " + e.getMessage());
                     }
@@ -53,7 +55,8 @@ public class AgenteVida extends AgenteInteligente {
                     // nao sei se ja implementamos isso mas acho q precisamos desligar o robo morto e liga-lo aqui quando ele reviver (achoq so estamos diminuindo e aumentando a vida apenas)
                 }
             } else {
-                System.out.println("Nao há robos mortos no raio ");
+                arquivo.escreverNoArquivo("Nao há robos mortos no raio\n");
+                System.out.println("Nao há robos mortos no raio\n");
                 
             }
         } else {

@@ -3,25 +3,26 @@ package missao;
 import java.util.ArrayList;
 
 import ambiente.Ambiente;
-import comunicacao.CentralComunicacao;
-import exceptions.ErroComunicacaoException;
-import interfaces.Curador;
+import arquivos.Arquivo;
 import interfaces.Entidade;
+import robo.AgenteInteligente;
 import robo.Robo;
-import sensores.Sensor;
 
 public class MissaoVida implements Missao {
 
 
     @Override
-    public ArrayList<Robo> executar(Robo robo, Ambiente ambiente, CentralComunicacao centralComunicacao, ArrayList<Entidade> robosProx){
+    public ArrayList<Robo> executar(Robo robo, Ambiente ambiente, ArrayList<Entidade> robosProx, Arquivo arquivo){
 
+        String conteudo;
         ArrayList<Robo> robosMortos = new ArrayList<>();
 
         for (int i = 0; i < robosProx.size(); i++){
-            if(robosProx.get(i) instanceof Robo roboProx){
+            if(robosProx.get(i) instanceof Robo roboProx && !(roboProx instanceof AgenteInteligente)){
                 if (roboProx.getVida() == 0){
                     robosMortos.add(roboProx);
+                    conteudo = "O Agente Vida reviveu o "  + roboProx.getNome() + "\n";
+                    arquivo.escreverNoArquivo(conteudo);
                 }
             }
         }

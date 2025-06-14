@@ -1,25 +1,34 @@
-09/06/2025 21:05:36
 -------------------------------------
 
-Missões realizadas:
+O Agente Segurança está executando a Missão Segurança. Ela foi iniciada às: 14/06/2025 20:38:58
 
-12/06/2025 13:05:41
+O Agente Segurança está protegendo o roboCavador1
+
+O Agente Segurança está protegendo o roboObstaculoTerrestre1
+
+O Agente Segurança está protegendo o roboFlutuador1
+
+O Agente Segurança está protegendo o roboObstaculoAereo1
+
+O Agente Segurança está protegendo o roboCavador2
+
+O Agente Segurança está protegendo o roboObstaculoTerrestre2
+
+O Agente Segurança está protegendo o roboFlutuador2
+
+O Agente Segurança está protegendo o roboObstaculoAereo2
+
 -------------------------------------
 
-Missões realizadas:
+O Agente Vida está executando a Missão Vida. Ela foi iniciada às: 14/06/2025 20:39:05
 
-12/06/2025 14:11:55
+Nao há robos mortos no raio
+
 -------------------------------------
 
-Missões realizadas:
+A Missão Vida foi encerrada às: 14/06/2025 20:39:10
 
-13/06/2025 20:45:47
 -------------------------------------
 
-Missões realizadas:
-
-13/06/2025 20:48:49
--------------------------------------
-
-Missões realizadas:
+A Missão Segurança foi encerrada às: 14/06/2025 20:39:18
 

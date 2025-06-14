@@ -11,6 +11,8 @@ import exceptions.VidaNulaException;
 import interfaces.Atacante;
 import interfaces.DestroiObstaculo;
 import interfaces.Entidade;
+import missao.MissaoSeguranca;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import obstaculos_tapetes.Obstaculo;
@@ -118,8 +120,10 @@ public class RoboCavador extends RoboTerrestre implements Atacante, DestroiObsta
 
         ArrayList<AgenteInteligente> segurancas = ambiente.getArraySeguranca();
         for (int i = 0; i < segurancas.size(); i++){
-            if (Math.sqrt(Math.pow((segurancas.get(i).getX() - this.getX()), 2)) + (Math.pow((segurancas.get(i).getY() - this.getY()), 2)) + (Math.pow((segurancas.get(i).getZ() - this.getZ()), 2)) < segurancas.get(i).getMissao().getRaio()){ //nao sei pq nao esta funcionando acho q vms ter q usar o instanceof
-                throw new AreaProtegidaException("O " + this.getNome() + " está em uma area protegida pelo " + segurancas.get(i).getNome() + " e nao pode atacar");
+            if(segurancas.get(i).getMissao() instanceof MissaoSeguranca missaoSeguranca){
+                if (Math.sqrt(Math.pow((segurancas.get(i).getX() - this.getX()), 2)) + (Math.pow((segurancas.get(i).getY() - this.getY()), 2)) + (Math.pow((segurancas.get(i).getZ() - this.getZ()), 2)) < missaoSeguranca.getRaio()){ //nao sei pq nao esta funcionando acho q vms ter q usar o instanceof
+                    throw new AreaProtegidaException("O " + this.getNome() + " está em uma area protegida pelo " + segurancas.get(i).getNome() + " e nao pode atacar");
+                }
             }
         }
         
@@ -130,13 +134,16 @@ public class RoboCavador extends RoboTerrestre implements Atacante, DestroiObsta
         ArrayList<Entidade> robos = sensor.monitorar(ambiente, vetorPosicao, 1);
 
         for (int i = 0; i < robos.size(); i++){
-            if (robos.get(i) instanceof Robo robo){
+            if (robos.get(i) instanceof Robo robo){ // Aqui ja garante que agentes inteligentes nao serao mortos
                 if (!robo.getID().equals(this.getID())){
 
                     if (robo.getVida() == 0) {
                         System.out.println("O " + robo.getNome() + " não pode ser atacado, pois já está morto");
+                    } else if(robo.getProtegido() == true) {
+                        System.out.println("O " + robo.getNome() + " não pode ser atacado, pois está em uma area protegida pelo Agente Segurança");
                     } else if ((robo.getVida() - dano) <= 0){
                         robo.setVida(-robo.getVida());
+                        robo.desligar(); // desligamos o robo quando ele morre
                         System.out.println("O " + this.getNome() + " matou o " + robo.getNome());
                     } else {
                         robo.setVida(-dano);

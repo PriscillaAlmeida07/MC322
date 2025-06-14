@@ -10,6 +10,8 @@ import exceptions.RoboDesligadoException;
 import exceptions.VidaNulaException;
 import interfaces.Atacante;
 import interfaces.Entidade;
+import missao.MissaoSeguranca;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import obstaculos_tapetes.Obstaculo;
@@ -114,8 +116,10 @@ public class RoboObstaculoAereo extends RoboAereo implements  Atacante {
 
         ArrayList<AgenteInteligente> segurancas = ambiente.getArraySeguranca();
         for (int i = 0; i < segurancas.size(); i++){
-            if (Math.sqrt(Math.pow((segurancas.get(i).getX() - this.getX()), 2)) + (Math.pow((segurancas.get(i).getY() - this.getY()), 2)) + (Math.pow((segurancas.get(i).getZ() - this.getZ()), 2)) < segurancas.get(i).getMissao().getRaio()){
-                throw new AreaProtegidaException("O " + this.getNome() + " está em uma area protegida pelo " + segurancas.get(i).getNome() + " e nao pode atacar");
+            if(segurancas.get(i).getMissao() instanceof MissaoSeguranca missaoSeguranca){
+                if (Math.sqrt(Math.pow((segurancas.get(i).getX() - this.getX()), 2)) + (Math.pow((segurancas.get(i).getY() - this.getY()), 2)) + (Math.pow((segurancas.get(i).getZ() - this.getZ()), 2)) < missaoSeguranca.getRaio()){
+                    throw new AreaProtegidaException("O " + this.getNome() + " está em uma area protegida pelo " + segurancas.get(i).getNome() + " e nao pode atacar");
+                }
             }
         }
             
@@ -132,6 +136,7 @@ public class RoboObstaculoAereo extends RoboAereo implements  Atacante {
                         System.out.println("O " + robo.getNome() + " não pode ser atacado, pois já está morto");
                     } else if ((robo.getVida() - dano) <= 0){
                         robo.setVida(-robo.getVida());
+                        robo.desligar(); // desligamos o robo quando ele morre
                         System.out.println("O " + this.getNome() + " matou o " + robo.getNome());
                     } else {
                         robo.setVida(-dano);
