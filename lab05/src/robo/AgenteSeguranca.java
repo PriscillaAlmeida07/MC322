@@ -63,7 +63,8 @@ public class AgenteSeguranca extends AgenteInteligente {
             }
 
         } else { 
-            // Aqui tera um analogo ao missacontactar?
+            missao.executar(this, ambiente, arquivo);
+
         }
     }
 }
