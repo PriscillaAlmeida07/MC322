@@ -24,12 +24,12 @@ public class Main {
         // Criando o arquivo
         Arquivo arquivo = new Arquivo(caminhoRelativo);
 
-        // Instânciamento do ambiente.
-        Ambiente ambiente1 = new Ambiente();
-        System.out.println("O ambiente foi inicializado, as suas dimensões são: largura = 50, comprimento = 50, altura = 50 (25 de profundidade e 25 de céu)");
-
         // Instânciamento da central de comunicação.
         CentralComunicacao centralComunicacao = new CentralComunicacao();
+
+        // Instânciamento do ambiente.
+        Ambiente ambiente1 = new Ambiente(centralComunicacao);
+        System.out.println("O ambiente foi inicializado, as suas dimensões são: largura = 50, comprimento = 50, altura = 50 (25 de profundidade e 25 de céu)");
 
         // Instânciamento de alguns obstáculos.
         Obstaculo arvore1 = new Obstaculo(TipoObstaculo.ARVORE, 5, 5, 25);

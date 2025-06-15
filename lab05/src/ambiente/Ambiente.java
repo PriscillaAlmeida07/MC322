@@ -1,5 +1,6 @@
 package ambiente;
 
+import comunicacao.CentralComunicacao;
 import enums.TipoEntidade;
 import exceptions.ColisaoException;
 import exceptions.ForaDosLimitesException;
@@ -18,17 +19,23 @@ public class Ambiente {
     private final ArrayList<Entidade> entidades;
     private final ArrayList<AgenteInteligente> segurancasAtivos;
     private final ArrayList<Missao> missoes;
+    private final CentralComunicacao centralComunicacao;
 
     
     // Construtor.
-    public Ambiente(){ 
+    public Ambiente(CentralComunicacao centralComunicacao){ 
         largura = 50; comprimento = 50; altura = 50;
 
+        this.centralComunicacao = centralComunicacao;
         entidades = new ArrayList<>();
         segurancasAtivos = new ArrayList<>();
         missoes = new ArrayList<>();
         mapa = new TipoEntidade[largura][comprimento][altura];
         inicializarMapa();
+    }
+
+    public CentralComunicacao getCentralComunicacao(){
+        return centralComunicacao;
     }
 
     public void adicionarSeguranca(AgenteInteligente seguranca){

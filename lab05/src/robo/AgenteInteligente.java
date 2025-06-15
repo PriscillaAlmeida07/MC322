@@ -5,14 +5,31 @@ import arquivos.Arquivo;
 import comunicacao.CentralComunicacao;
 import enums.EstadoRobo;
 import missao.*;
+import subsistemas.ControleMovimento;
+import subsistemas.GerenciadorSensores;
+import subsistemas.ModuloComunicacao;
 
 public abstract class AgenteInteligente extends Robo {
     
     protected Missao missao;
+    protected ControleMovimento controleMovimento;
+    protected GerenciadorSensores gerenciadorSensores;
+    protected ModuloComunicacao moduloComunicacao;
 
     // Construtor.
-    public AgenteInteligente(String nome, String id, EstadoRobo estado, int posicaoX, int posicaoY, int posicaoZ){ 
+    public AgenteInteligente(String nome, String id, EstadoRobo estado, int posicaoX, int posicaoY, int posicaoZ, ControleMovimento controleMovimento, GerenciadorSensores gerenciadorSensores, ModuloComunicacao moduloComunicacao){ 
         super(nome, id, estado, posicaoX, posicaoY, posicaoZ);
+        this.controleMovimento = controleMovimento;
+        this.gerenciadorSensores = gerenciadorSensores;
+        this.moduloComunicacao = moduloComunicacao;
+    }
+
+    public GerenciadorSensores getGerenciadorSensores(){
+        return gerenciadorSensores;
+    }
+
+    public ModuloComunicacao getModuloComunicacao(){
+        return moduloComunicacao;
     }
 
     // Verifica se o agente possui uma missão.
