@@ -4,9 +4,8 @@ import enums.TipoEntidade;
 import exceptions.ColisaoException;
 import exceptions.ForaDosLimitesException;
 import interfaces.Entidade;
-import missao.Missao;
-
 import java.util.ArrayList;
+import missao.Missao;
 import obstaculos_tapetes.Obstaculo;
 import obstaculos_tapetes.TapeteReposicao;
 import robo.AgenteInteligente;
@@ -19,6 +18,8 @@ public class Ambiente {
     private final ArrayList<Entidade> entidades;
     private final ArrayList<AgenteInteligente> segurancasAtivos;
     private final ArrayList<Missao> missoes;
+
+    
     // Construtor.
     public Ambiente(){ 
         largura = 50; comprimento = 50; altura = 50;

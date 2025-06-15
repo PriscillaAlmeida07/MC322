@@ -1,7 +1,4 @@
 package robo;
-import java.util.ArrayList;
-import java.util.Scanner;
-
 import ambiente.Ambiente;
 import comunicacao.CentralComunicacao;
 import enums.EstadoRobo;
@@ -15,6 +12,8 @@ import exceptions.VidaNulaException;
 import interfaces.Comunicavel;
 import interfaces.Entidade;
 import interfaces.Sensoreavel;
+import java.util.ArrayList;
+import java.util.Scanner;
 import sensores.Sensor;
 import sensores.SensorObstaculos;
 import sensores.SensorReporBlocos;
@@ -59,7 +58,7 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
         // Cria o ArrayList de sensores do robô e adiciona os sensores comuns a todos os robôs: obstáculos e robôs
         sensores = new ArrayList<>();
         sensores.add(new SensorObstaculos(40, TipoSensor.OBSTACULOS));
-        sensores.add(new SensorRobos(2, TipoSensor.ROBOS));
+        sensores.add(new SensorRobos(4, TipoSensor.ROBOS));
     }
 
     public void setProtegido(){
@@ -112,8 +111,8 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
     }
 
     // Define a vida do robô.
-    public void setVida(int dano){
-        vida += dano;
+    public void setVida(int deltaVida){
+        vida += deltaVida;
     }
 
     // Imprime os status atuais do robô.

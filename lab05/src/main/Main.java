@@ -5,13 +5,12 @@ import arquivos.Arquivo;
 import comunicacao.CentralComunicacao;
 import enums.*;
 import exceptions.*;
-import missao.MissaoSeguranca;
-import missao.MissaoVida;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import missao.MissaoReviver;
+import missao.MissaoSeguranca;
 import obstaculos_tapetes.Obstaculo;
 import obstaculos_tapetes.TapeteReposicao;
 import robo.*;
@@ -268,7 +267,7 @@ public class Main {
                         // metodo que escreve no arquivo (só precisa do conteudo a ser inserido)
                         arquivo.escreverNoArquivo(conteudo);
 
-                        MissaoVida missaoVida = new MissaoVida();
+                        MissaoReviver missaoVida = new MissaoReviver();
                         agenteVida1.definirMissao(missaoVida);
                         agenteVida1.executarMissao(ambiente1, centralComunicacao, arquivo);
                     } else {
