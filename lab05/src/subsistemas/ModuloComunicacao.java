@@ -1,13 +1,13 @@
 package subsistemas;
 
-import java.util.ArrayList;
-
 import comunicacao.CentralComunicacao;
 import exceptions.ErroComunicacaoException;
+import java.util.ArrayList;
 import robo.Robo;
 
 public class ModuloComunicacao {
     
+    // Comunica todos os robôs que foram revividos por uma missão reviver.
     public void comunicarRevividos(CentralComunicacao centralComunicacao, ArrayList<Robo> robosRevividos, Robo robo){
         String mensagem;
 
@@ -21,7 +21,8 @@ public class ModuloComunicacao {
         }
     }
 
-    public void comunicarCuradores(CentralComunicacao centralComunicacao, ArrayList<Curador> robosCuradores, Robo robo, String mensagem){
+    // Comunica todos os curadores sobre um robô fraco próximo.
+    public void comunicarCuradores(CentralComunicacao centralComunicacao, ArrayList<Robo> robosCuradores, Robo robo, String mensagem){
         for (int i = 0; i < robosCuradores.size(); i++){
             try {
                 robo.enviarMensagem(centralComunicacao, robosCuradores.get(i), mensagem);

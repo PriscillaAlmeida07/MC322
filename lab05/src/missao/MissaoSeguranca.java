@@ -12,15 +12,12 @@ public class MissaoSeguranca implements Missao {
     
     // Armazenamos os robosProtegidos para ser possivel mudar o estado da variavel protegido quando executarmos a missao
     ArrayList<Robo> robosProtegidos;
-    private final double raio;
 
     public MissaoSeguranca(){
-        raio = 10;
         robosProtegidos = new ArrayList<>();
     }
 
     @Override
-    // acho q as missoes sempre vao precisar de sensores entao faz sentido retornar arrays
     public ArrayList<Robo> executar(Robo robo, Ambiente ambiente, ArrayList<Entidade> robosProx, Arquivo arquivo){
         // Vamos escrever no arquivo sobre a missao realizada
         String conteudo;
@@ -43,8 +40,4 @@ public class MissaoSeguranca implements Missao {
             }
         }
     }
-    public double getRaio(){
-        return raio;
-    }
-
 }

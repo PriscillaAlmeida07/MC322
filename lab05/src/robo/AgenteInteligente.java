@@ -2,15 +2,13 @@ package robo;
 
 import ambiente.Ambiente;
 import arquivos.Arquivo;
-import comunicacao.CentralComunicacao;
 import enums.EstadoRobo;
 import missao.*;
-import subsistemas.ControleMovimento;
-import subsistemas.GerenciadorSensores;
-import subsistemas.ModuloComunicacao;
+import subsistemas.*;
 
 public abstract class AgenteInteligente extends Robo {
     
+    // Robô autônomo capaz de realizar missões e que contém subsistemas internos
     protected Missao missao;
     protected ControleMovimento controleMovimento;
     protected GerenciadorSensores gerenciadorSensores;
@@ -24,10 +22,17 @@ public abstract class AgenteInteligente extends Robo {
         this.moduloComunicacao = moduloComunicacao;
     }
 
+    // Obtém o controle de movimento do robô.
+    public ControleMovimento getControleMovimento(){
+        return controleMovimento;
+    }
+
+    // Obtém o gerenciador de sensores do robô.
     public GerenciadorSensores getGerenciadorSensores(){
         return gerenciadorSensores;
     }
 
+    // Obtém o módulo de comunicação do robô.
     public ModuloComunicacao getModuloComunicacao(){
         return moduloComunicacao;
     }
@@ -55,8 +60,9 @@ public abstract class AgenteInteligente extends Robo {
     }
 
     // Método abstrato que permite a realização de uma missão.
-    public abstract void executarMissao(Ambiente ambiente, CentralComunicacao centralComunicacao, Arquivo arquivo);
+    public abstract void executarMissao(Ambiente ambiente, Arquivo arquivo);
 
+    // Método que imprime uma mensagem sobre o progresso para o usuário e também guarda essa informação em um arquivo.
     public void arquivarEPrintar(String mensagem, Arquivo arquivo){
         arquivo.escreverNoArquivo(mensagem);
         System.out.println(mensagem);

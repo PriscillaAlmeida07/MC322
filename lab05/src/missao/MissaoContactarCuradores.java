@@ -1,10 +1,8 @@
 package missao;
 
-import java.util.ArrayList;
-
 import ambiente.Ambiente;
 import arquivos.Arquivo;
-import interfaces.Entidade;
+import java.util.ArrayList;
 import robo.AgenteInteligente;
 import robo.Robo;
 
@@ -14,12 +12,14 @@ public class MissaoContactarCuradores implements Missao {
     @Override
     public void executar(AgenteInteligente robo, Ambiente ambiente, Arquivo arquivo){
         String mensagem;
-        ArrayList<Curador> robosCuradores = robo.getGerenciadorSensores().getRobosCuradores();
+        ArrayList<Robo> robosCuradores = robo.getGerenciadorSensores().getRobosCuradores();
         ArrayList<Robo> robosFracos = robo.getGerenciadorSensores().getRobosFracos();
 
+        // Contacta os curadores e registra os robôs fracos
         for (int i = 0; i < robosFracos.size(); i++){
-            mensagem = "O robô " + robosFracos.get(i).getNome() + " que está na posição (" robosFracos.get(i).getX() + "," + robosFracos.get(i).getY() + "," + robosFracos.get(i).getZ() + ") está com apenas " + robosFracos.get(i).getVida() + "/10 de vida, por favor ajude-o";
+            mensagem = "O robô " + robosFracos.get(i).getNome() + " que está na posição (" + robosFracos.get(i).getX() + "," + robosFracos.get(i).getY() + "," + robosFracos.get(i).getZ() + ") está com apenas " + robosFracos.get(i).getVida() + "/10 de vida, por favor ajude-o";
             robo.getModuloComunicacao().comunicarCuradores(ambiente.getCentralComunicacao(), robosCuradores, robo, mensagem);
+
             mensagem = robosFracos.get(i).getNome() + " com " + robosFracos.get(i).getVida() + "/10 de vida";
             robo.arquivarEPrintar(mensagem, arquivo);
         }

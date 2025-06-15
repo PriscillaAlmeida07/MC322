@@ -2,7 +2,6 @@ package robo;
 
 import ambiente.Ambiente;
 import arquivos.Arquivo;
-import comunicacao.CentralComunicacao;
 import enums.EstadoRobo;
 import exceptions.*;
 import interfaces.*;
@@ -40,19 +39,23 @@ public class AgenteVida extends AgenteInteligente {
 
     // Realiza a missão já atribuida ao robô.
     @Override
-    public void executarMissao(Ambiente ambiente, CentralComunicacao centralComunicacao, Arquivo arquivo){
+    public void executarMissao(Ambiente ambiente, Arquivo arquivo){
 
         String mensagem;
-        ArrayList<Entidade> robosEmAlcance = gerenciadorSensores.utilizarSensorRobos(ambiente, this);
+        ArrayList<Entidade> robosEmAlcance = gerenciadorSensores.utilizarSensorRobos(ambiente, this, 30);
 
-        if (missao instanceof MissaoReviver){
+        if (missao == null){
+            mensagem = "Nenhuma missão foi atribuida ao agente, por favor tente novamente após realizar uma atribuição\n";
+            arquivarEPrintar(mensagem, arquivo);
+
+        } else if (missao instanceof MissaoReviver){
             System.out.println("O robô está procurando robôs mortos para revivê-los\n");
 
             ArrayList<Robo> robosMortos = gerenciadorSensores.encontrarRobosMortos(robosEmAlcance);
      
             if (!robosMortos.isEmpty()){
                 missao.executar(this, ambiente, arquivo);
-                moduloComunicacao.comunicarRevividos(centralComunicacao, robosMortos, this);
+                moduloComunicacao.comunicarRevividos(ambiente.getCentralComunicacao(), robosMortos, this);
 
             } else { // robosMortos está vazio
                 mensagem = "Não há robôs mortos no raio de alcançe\n";
@@ -63,7 +66,7 @@ public class AgenteVida extends AgenteInteligente {
             System.out.println("O robô está procurando robôs com pouca vida e irá comunicar as suas posições para os curadores próximos\n");
 
             ArrayList<Robo> robosFracos = gerenciadorSensores.encontrarRobosFracos(robosEmAlcance);
-            ArrayList<Curador> robosCuradores = gerenciadorSensores.encontrarRobosCuradores(robosEmAlcance);
+            ArrayList<Robo> robosCuradores = gerenciadorSensores.encontrarRobosCuradores(robosEmAlcance);
 
             if ((!robosFracos.isEmpty()) && (!robosCuradores.isEmpty())){
                 mensagem = "Os robôs curadores próximos foram alertados sobre os seguintes robôs com pouca vida:";
