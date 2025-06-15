@@ -53,9 +53,9 @@ public abstract class AgenteInteligente extends Robo {
     }
 
     // Retira a missão de um agente.
-    public void excluirMissao(){
+    public void excluirMissao(AgenteInteligente robo){
         if (missao instanceof MissaoSeguranca missaoSeguranca)
-            missaoSeguranca.encerrarMissao();
+            missaoSeguranca.encerrarMissao(robo);
         missao = null;
     }
 

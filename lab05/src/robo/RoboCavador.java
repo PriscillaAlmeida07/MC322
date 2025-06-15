@@ -134,7 +134,7 @@ public class RoboCavador extends RoboTerrestre implements Atacante, DestroiObsta
         ArrayList<Entidade> robos = sensor.monitorar(ambiente, vetorPosicao, 1);
 
         for (int i = 0; i < robos.size(); i++){
-            if (robos.get(i) instanceof Robo robo){ // Aqui ja garante que agentes inteligentes nao serao mortos
+            if (robos.get(i) instanceof Robo robo && !(robo instanceof AgenteInteligente)){ // Aqui ja garante que agentes inteligentes nao serao mortos
                 if (!robo.getID().equals(this.getID())){
 
                     if (robo.getVida() == 0) {

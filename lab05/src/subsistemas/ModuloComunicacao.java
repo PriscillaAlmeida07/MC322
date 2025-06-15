@@ -32,4 +32,17 @@ public class ModuloComunicacao {
         }
     }
 
+        // Comunica todos os robôs que foram revividos por uma missão reviver.
+    public void comunicarProtegidos(CentralComunicacao centralComunicacao, ArrayList<Robo> robosProtegidos, Robo robo){
+        String mensagem;
+
+        for (int i = 0; i < robosProtegidos.size(); i++){
+            try {
+                mensagem = "Você " + robosProtegidos.get(i).getNome() + " está sendo protegido pelo Agente Segurança";
+                robo.enviarMensagem(centralComunicacao, robosProtegidos.get(i), mensagem);
+            } catch (ErroComunicacaoException e) {
+                System.err.println("Erro: " + e.getMessage());
+            }
+        }
+    }
 }

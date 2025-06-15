@@ -14,6 +14,7 @@ public class GerenciadorSensores {
     private ArrayList<Robo> robosMortos;
     private ArrayList<Robo> robosFracos;
     private ArrayList<Robo> robosCuradores;
+    private ArrayList<Robo> robosProtegidos;
 
     // Construtor.
     public GerenciadorSensores(){
@@ -21,6 +22,7 @@ public class GerenciadorSensores {
         robosMortos = null;
         robosFracos = null;
         robosCuradores = null;
+        robosProtegidos = null;
     }
 
     // Obtém a lista de robôs no raio de alcançe da missão.
@@ -42,6 +44,11 @@ public class GerenciadorSensores {
     public ArrayList<Robo> getRobosCuradores(){
         return robosCuradores;
     }
+
+    // Obtém a lista de robôs protegidos afetados pela missão.
+    public  ArrayList<Robo> getRobosPrtegidos(){
+        return robosProtegidos;
+    }
     
     // Utiliza o sensor robôs para o raio da missão e depois reseta as suas configurações.
     public ArrayList<Entidade> utilizarSensorRobos(Ambiente ambiente, Robo robo, int raio){
@@ -58,6 +65,18 @@ public class GerenciadorSensores {
         // Retorno.
         this.robosEmAlcance = robosEmAlcance;
         return robosEmAlcance;
+    }
+
+    // retorna os robos protegidos
+    public ArrayList<Robo> protegidos(ArrayList<Entidade> robosEmAlcance){
+        ArrayList<Robo> robosProtegidos = new ArrayList<>();
+        for (int i = 0; i < robosEmAlcance.size(); i++){
+            if (robosEmAlcance.get(i) instanceof Robo robo){
+                robosProtegidos.add(robo);
+            }
+        }
+        this.robosProtegidos = robosProtegidos;
+        return robosProtegidos;       
     }
 
     // Confere quais robôs no alcançe estão mortos.

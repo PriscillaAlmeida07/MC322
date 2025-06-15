@@ -24,4 +24,5 @@ public class MissaoContactarCuradores implements Missao {
             robo.arquivarEPrintar(mensagem, arquivo);
         }
     }
+    
 }

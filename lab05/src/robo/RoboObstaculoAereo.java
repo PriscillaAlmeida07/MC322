@@ -129,7 +129,7 @@ public class RoboObstaculoAereo extends RoboAereo implements  Atacante {
         ArrayList<Entidade> robos = sensor.monitorar(ambiente, vetorPosicao, 1);
 
         for (int i = 0; i < robos.size(); i++){
-            if (robos.get(i) instanceof Robo robo){
+            if (robos.get(i) instanceof Robo robo && !(robo instanceof AgenteInteligente)){ // ja garante que nao atacara agentes inteligentes
                 if (!robo.getID().equals(this.getID())){
 
                     if (robo.getVida() == 0) {

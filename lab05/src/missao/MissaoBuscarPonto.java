@@ -1,12 +1,9 @@
 package missao;
-
-import java.util.ArrayList;
-
 import ambiente.Ambiente;
 import arquivos.Arquivo;
-import interfaces.Entidade;
+import exceptions.ColisaoException;
+import exceptions.ForaDosLimitesException;
 import robo.AgenteInteligente;
-import robo.Robo;
 
 public class MissaoBuscarPonto implements Missao {
     
@@ -18,7 +15,11 @@ public class MissaoBuscarPonto implements Missao {
         int Xfinal = 30; int Yfinal = 30;
         int deltaX = Xfinal - robo.getX();
         int deltaY = Yfinal - robo.getY();
-        robo.moverPara(deltaX, deltaY, 0, ambiente);
-        return null;
+        // Vamos tratar aqui
+        try {
+            robo.getControleMovimento().movimentarAgente(robo, ambiente, deltaX, deltaY, 0);
+        }catch (ForaDosLimitesException | ColisaoException e){
+            System.err.println("Erro: " + e.getMessage());
+        }
     }
 }

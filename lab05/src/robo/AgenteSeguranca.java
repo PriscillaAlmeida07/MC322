@@ -2,21 +2,19 @@ package robo;
 
 import ambiente.Ambiente;
 import arquivos.Arquivo;
-import comunicacao.CentralComunicacao;
 import enums.EstadoRobo;
 import exceptions.*;
 import interfaces.Entidade;
 import java.util.ArrayList;
 import java.util.Scanner;
 import missao.*;
-import sensores.Sensor;
 import subsistemas.*;
 
 public class AgenteSeguranca extends AgenteInteligente {
     
     // Construtor.
-    public AgenteSeguranca(String nome, String id, EstadoRobo estado, int posicaoX, int posicaoY, int posicaoZ, ControleMovimento controleMovimento, GerenciadorSensores gerenciadorSensores, ModuloComunicacao moduloComunicacao){
-        super(nome, id, estado, posicaoX, posicaoY, posicaoZ, controleMovimento, gerenciadorSensores, moduloComunicacao);
+    public AgenteSeguranca(String nome, String id, EstadoRobo estado, int posicaoX, int posicaoY, int posicaoZ){
+        super(nome, id, estado, posicaoX, posicaoY, posicaoZ, new ControleMovimento(), new GerenciadorSensores(), new ModuloComunicacao());
     }
 
     // Obtém a descrição desse robô.
@@ -43,44 +41,30 @@ public class AgenteSeguranca extends AgenteInteligente {
     @Override
     public void executarMissao(Ambiente ambiente, Arquivo arquivo){
         String mensagem;
+        ArrayList<Entidade> robosEmAlcance = gerenciadorSensores.utilizarSensorRobos(ambiente, this, 10);
+
 
         if (missao == null){
             mensagem = "Nenhuma missão foi atribuida ao agente, por favor tente novamente após realizar uma atribuição\n";
             arquivarEPrintar(mensagem, arquivo);
 
         } else if (missao instanceof MissaoSeguranca){
+           
             System.out.println("O robô esta protegendo os seguintes robôs:\n");
-
-            ArrayList<Entidade> robosEmAlcance = gerenciadorSensores.utilizarSensorRobos(ambiente, this, 10);
-
-
-            ArrayList<Entidade> robosProx = sensor.monitorar(ambiente, vetorPosicao, 1);
-            ArrayList<Robo> robosProtegidos = missao.executar(this, ambiente, robosProx, arquivo);
+            ArrayList<Robo> robosProtegidos = gerenciadorSensores.protegidos(robosEmAlcance);
 
             if (!robosProtegidos.isEmpty()){
-                for (int i=0; i< robosProtegidos.size(); i++){
-                    try {
-                        System.out.println("O " + robosProtegidos.get(i).getNome() + " está sendo protegido.");
-                        enviarMensagem(centralComunicacao, robosProtegidos.get(i), "Você " + robosProtegidos.get(i).getNome() + " está sendo protegido pelo Agente Vida"); //sempre sera valido mas temos q tratar com try msm assim
-                    }  catch (ErroComunicacaoException e){
-                        System.err.println("Erro: " + e.getMessage());
-                    }
-                }
+                missao.executar(this, ambiente, arquivo);
+                moduloComunicacao.comunicarProtegidos(ambiente.getCentralComunicacao(), robosProtegidos, this);
 
-            } else { // robosEmAlcance está vazio
+            } else { // robosProtegidos está vazio
                 mensagem = "Nenhum robô está no raio de segurança do agente, logo nenhum robô pode ser protegido\n";
                 arquivarEPrintar(mensagem, arquivo);
             }
 
-        } else { // missao instanceof MissaoBuscarPonto
-
+        } else { 
+            // Aqui tera um analogo ao missacontactar?
         }
     }
 }
 
-        // if(getMissao() = missaoVida)
-        // Missao missao = new MissaoSeguranca();
-
-        // definirMissao(missao);
-        // missao.executar(this, ambiente);
-        // System.out.println("O robo esta patrulhando\n");

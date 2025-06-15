@@ -13,8 +13,8 @@ import subsistemas.*;
 public class AgenteVida extends AgenteInteligente {
 
     // Construtor.
-    public AgenteVida(String nome, String id, EstadoRobo estado, int posicaoX, int posicaoY, int posicaoZ, ControleMovimento controleMovimento, GerenciadorSensores gerenciadorSensores, ModuloComunicacao moduloComunicacao){ 
-        super(nome, id, estado, posicaoX, posicaoY, posicaoZ, controleMovimento, gerenciadorSensores, moduloComunicacao);
+    public AgenteVida(String nome, String id, EstadoRobo estado, int posicaoX, int posicaoY, int posicaoZ){ 
+        super(nome, id, estado, posicaoX, posicaoY, posicaoZ, new ControleMovimento(), new GerenciadorSensores(), new ModuloComunicacao());
     }
 
     // Obtém a descrição desse robô.

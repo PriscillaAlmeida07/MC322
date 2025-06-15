@@ -9,8 +9,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import missao.MissaoReviver;
-import missao.MissaoSeguranca;
 import obstaculos_tapetes.Obstaculo;
 import obstaculos_tapetes.TapeteReposicao;
 import robo.*;
@@ -198,22 +196,38 @@ public class Main {
                         // metodo que escreve no arquivo (só precisa do conteudo a ser inserido)
                         arquivo.escreverNoArquivo(conteudo);
 
-                        MissaoSeguranca missaoSeguranca = new MissaoSeguranca();
-                        agenteSeguranca1.definirMissao(missaoSeguranca);
-                        agenteSeguranca1.executarMissao(ambiente1, centralComunicacao, arquivo);
+                        try {
+                            agenteSeguranca1.executarTarefa(entrada, ambiente1, 0, 0, 0, 1);
+                        } catch (RoboDesligadoException | ForaDosLimitesException | ColisaoException | VidaNulaException e){
+                            System.err.println("Erro: " + e.getMessage());
+                        }
+                        agenteSeguranca1.executarMissao(ambiente1, arquivo);
                     } else {
                         System.out.println("O robo ja esta realizando uma missao"); // podemos trocar por exception se for necessario
                     }
                     break;
                 case 2:
-                    // vamos criar uma missao mais basica so para ter duas, mas sera a mesma logica
-                    // if(agenteSeguranca1.temMissao() == false){
-                    //     MissaoSeguranca missaoSeguranca = new MissaoSeguranca();
-                    //     agenteSeguranca1.definirMissao(missaoSeguranca);
-                    //     agenteSeguranca1.executarMissao(ambiente1);
-                    // } else {
-                    //     System.out.println("O robo ja esta realizando uma missao"); // podemos trocar por exception se for necessario
-                    // }
+                    // Missao buscar ponto
+                    if(agenteSeguranca1.temMissao() == false){
+                        // Adicionando data o hora da inicializacao da missao
+                        LocalDateTime agora = LocalDateTime.now();
+                        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+                        String dataHoraFormatada = agora.format(formato);
+
+
+                        String conteudo = "-------------------------------------" + "\n\n" + "O Agente Segurança está executando a Missão Buscar Ponto. Ela foi iniciada às: " + dataHoraFormatada + "\n";
+
+                        // metodo que escreve no arquivo (só precisa do conteudo a ser inserido)
+                        arquivo.escreverNoArquivo(conteudo);
+                        try {
+                            agenteSeguranca1.executarTarefa(entrada, ambiente1, 0, 0, 0, 2);
+                        } catch (RoboDesligadoException | ForaDosLimitesException | ColisaoException | VidaNulaException e){
+                            System.err.println("Erro: " + e.getMessage());
+                        }
+                        agenteSeguranca1.executarMissao(ambiente1, arquivo);
+                    } else {
+                        System.out.println("O robo ja esta realizando uma missao"); // podemos trocar por exception se for necessario
+                    }
                     break;
                 case 3:
                     // Adicionando data o hora da finalizacao da missao
@@ -226,9 +240,7 @@ public class Main {
 
                     // metodo que escreve no arquivo (só precisa do conteudo a ser inserido)
                     arquivo.escreverNoArquivo(conteudo);
-
-                    agenteSeguranca1.excluirMissao();
-                    // nao dara erro pois se nao tiver missao ainda vai mudar para null (mesmo sendo null, mas nao dara problema)
+                    agenteSeguranca1.excluirMissao(agenteSeguranca1); // nao dara erro pois se nao tiver missao ainda vai mudar para null (mesmo sendo null, mas nao dara problema)
                     System.out.println("A missão atual foi encerrada");
                     break;
                 case 0:
@@ -267,18 +279,41 @@ public class Main {
                         // metodo que escreve no arquivo (só precisa do conteudo a ser inserido)
                         arquivo.escreverNoArquivo(conteudo);
 
-                        MissaoReviver missaoVida = new MissaoReviver();
-                        agenteVida1.definirMissao(missaoVida);
-                        agenteVida1.executarMissao(ambiente1, centralComunicacao, arquivo);
+                        try {
+                            agenteVida1.executarTarefa(entrada, ambiente1, 0, 0, 0, 1);
+                        } catch (RoboDesligadoException | ForaDosLimitesException | ColisaoException | VidaNulaException e){
+                            System.err.println("Erro: " + e.getMessage());
+                        }
+                        agenteVida1.executarMissao(ambiente1, arquivo);
                     } else {
                         System.out.println("O robo ja esta realizando uma missao"); // podemos trocar por exception se for necessario
                     }
                     break;
                 case 2:
-                    // vamos criar uma missao mais basica so para ter duas
-                    // MissaoBasica missaoBasica = new MissaoBasica();
-                    // agenteSeguranca1.definirMissao(missaoBasica);
-                    // agenteSeguranca1.executarMissao(ambiente1);
+                    // Missao Contactar Curadores
+                    if(agenteVida1.temMissao() == false){
+                        // Adicionando data o hora da inicializacao da missao
+                        LocalDateTime agora = LocalDateTime.now();
+                        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+                        String dataHoraFormatada = agora.format(formato);
+
+
+                        String conteudo = "-------------------------------------" + "\n\n" + "O Agente Vida está executando a Missão Contactar Curadores. Ela foi iniciada às: " + dataHoraFormatada + "\n";
+
+                        // metodo que escreve no arquivo (só precisa do conteudo a ser inserido)
+                        arquivo.escreverNoArquivo(conteudo);
+
+                        try {
+                            agenteVida1.executarTarefa(entrada, ambiente1, 0, 0, 0, 2);
+                        } catch (RoboDesligadoException | ForaDosLimitesException | ColisaoException | VidaNulaException e){
+                            System.err.println("Erro: " + e.getMessage());
+                        }
+
+                        agenteVida1.executarMissao(ambiente1, arquivo);
+
+                    } else {
+                        System.out.println("O robo ja esta realizando uma missao"); // podemos trocar por exception se for necessario
+                    }
                     break;
                 case 3:
                     // Adicionando data o hora da finalizacao da missao
@@ -291,8 +326,8 @@ public class Main {
 
                     // metodo que escreve no arquivo (só precisa do conteudo a ser inserido)
                     arquivo.escreverNoArquivo(conteudo);
-                    agenteVida1.excluirMissao();
-                    // nao dara erro pois se nao tiver missao ainda vai mudar para null (mesmo sendo null, mas nao dara problema)
+
+                    agenteVida1.excluirMissao(agenteVida1);// nao dara erro pois se nao tiver missao ainda vai mudar para null (mesmo sendo null, mas nao dara problema)
                     System.out.println("A missão atual foi encerrada");
                     break;    
                 case 0:

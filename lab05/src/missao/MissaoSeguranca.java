@@ -4,40 +4,45 @@ import java.util.ArrayList;
 
 import ambiente.Ambiente;
 import arquivos.Arquivo;
-import interfaces.Entidade;
 import robo.AgenteInteligente;
 import robo.Robo;
 
 public class MissaoSeguranca implements Missao {
+    private int raio = 10;
     
-    // Armazenamos os robosProtegidos para ser possivel mudar o estado da variavel protegido quando executarmos a missao
-    ArrayList<Robo> robosProtegidos;
-
-    public MissaoSeguranca(){
-        robosProtegidos = new ArrayList<>();
-    }
-
     @Override
-    public ArrayList<Robo> executar(Robo robo, Ambiente ambiente, ArrayList<Entidade> robosProx, Arquivo arquivo){
+    public void executar(AgenteInteligente robo, Ambiente ambiente, Arquivo arquivo){
         // Vamos escrever no arquivo sobre a missao realizada
-        String conteudo;
+        String mensagem;
+        ArrayList<Robo> robosProtegidos = robo.getGerenciadorSensores().getRobosPrtegidos();
 
-        for (int i = 0; i < robosProx.size(); i++){
-            if(robosProx.get(i) instanceof Robo roboP && !(roboP instanceof AgenteInteligente)){
-                roboP.setProtegido(); // vai mudar para true
-                robosProtegidos.add(roboP);
-                conteudo = "O Agente Segurança está protegendo o "  + roboP.getNome() + "\n";
-                arquivo.escreverNoArquivo(conteudo);
-            }
+        for (int i = 0; i < robosProtegidos.size(); i++){
+            robosProtegidos.get(i).setProtegido(); // uda para true
+            mensagem = "O agente está protegendo o " + robosProtegidos.get(i).getNome() + "\n";
+            robo.arquivarEPrintar(mensagem, arquivo);
         }
-        return robosProtegidos;
     }
 
-    public void encerrarMissao(){
+    public void encerrarMissao(AgenteInteligente robo){
+        ArrayList<Robo> robosProtegidos = robo.getGerenciadorSensores().getRobosPrtegidos();
         for (int i = 0; i < robosProtegidos.size(); i++){
             if(robosProtegidos.get(i) instanceof Robo roboProtegido){
                 roboProtegido.setProtegido(); // vai mudar para false
             }
         }
     }
+
+    public double getRaio(){
+        return raio;
+    }
+
 }
+
+// Achoq nao sera mais necessario
+    // public void encerrarMissao(){
+    //     for (int i = 0; i < robosProtegidos.size(); i++){
+    //         if(robosProtegidos.get(i) instanceof Robo roboProtegido){
+    //             roboProtegido.setProtegido(); // vai mudar para false
+    //         }
+    //     }
+    // }
