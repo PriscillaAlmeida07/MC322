@@ -6,7 +6,7 @@ import exceptions.ForaDosLimitesException;
 import robo.AgenteInteligente;
 
 public class ControleMovimento {
-    // Usado para a missao buscar ponto
+    // Usado para a missão buscar ponto
     public void movimentarAgente(AgenteInteligente robo, Ambiente ambiente, int deltaX, int deltaY, int deltaZ) throws ColisaoException, ForaDosLimitesException{
         robo.moverPara(deltaX, deltaY, 0, ambiente);
     }

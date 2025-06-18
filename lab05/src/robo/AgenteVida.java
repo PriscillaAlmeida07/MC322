@@ -13,8 +13,8 @@ import subsistemas.*;
 public class AgenteVida extends AgenteInteligente {
 
     // Construtor.
-    public AgenteVida(String nome, String id, EstadoRobo estado, int posicaoX, int posicaoY, int posicaoZ){ 
-        super(nome, id, estado, posicaoX, posicaoY, posicaoZ, new ControleMovimento(), new GerenciadorSensores(), new ModuloComunicacao());
+    public AgenteVida(String nome, String id, EstadoRobo estado, int posicaoX, int posicaoY, int posicaoZ, ControleMovimento controleMovimento, GerenciadorSensores gerenciadorSensores, ModuloComunicacao moduloComunicacao){
+        super(nome, id, estado, posicaoX, posicaoY, posicaoZ, controleMovimento, gerenciadorSensores, moduloComunicacao);
     }
 
     // Obtém a descrição desse robô.
@@ -39,7 +39,7 @@ public class AgenteVida extends AgenteInteligente {
 
     // Realiza a missão já atribuida ao robô.
     @Override
-    public void executarMissao(Ambiente ambiente, Arquivo arquivo){
+    public void executarMissao(Ambiente ambiente, Arquivo arquivo, Scanner entrada){
 
         String mensagem;
         ArrayList<Entidade> robosEmAlcance = gerenciadorSensores.utilizarSensorRobos(ambiente, this, 30);
@@ -54,7 +54,7 @@ public class AgenteVida extends AgenteInteligente {
             ArrayList<Robo> robosMortos = gerenciadorSensores.encontrarRobosMortos(robosEmAlcance);
      
             if (!robosMortos.isEmpty()){
-                missao.executar(this, ambiente, arquivo);
+                missao.executar(this, ambiente, arquivo, entrada);
                 moduloComunicacao.comunicarRevividos(ambiente.getCentralComunicacao(), robosMortos, this);
 
             } else { // robosMortos está vazio
@@ -71,7 +71,7 @@ public class AgenteVida extends AgenteInteligente {
             if ((!robosFracos.isEmpty()) && (!robosCuradores.isEmpty())){
                 mensagem = "Os robôs curadores próximos foram alertados sobre os seguintes robôs com pouca vida:";
                 arquivarEPrintar(mensagem, arquivo);
-                missao.executar(this, ambiente, arquivo);
+                missao.executar(this, ambiente, arquivo, entrada);
 
             } else if (robosFracos.isEmpty()){
                 mensagem = "Não há robôs com pouca vida no raio de alcançe\n";
@@ -83,4 +83,5 @@ public class AgenteVida extends AgenteInteligente {
             }
         }
     } 
+
 }

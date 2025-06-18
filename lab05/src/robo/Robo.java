@@ -232,7 +232,7 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
 
         destinatario.receberMensagem(this.getNome() + ": " + mensagem);
         centralComunicacao.registrarMensagens(this.getNome(), mensagem);
-        System.out.println("Mensagem enviada.\n");
+        System.out.println("Mensagem enviada.");
     }
 
     // Recebe uma mensagem de outro robô (se não estiver desligado).

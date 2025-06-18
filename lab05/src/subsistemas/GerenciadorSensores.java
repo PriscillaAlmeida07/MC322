@@ -3,6 +3,8 @@ package subsistemas;
 import ambiente.Ambiente;
 import interfaces.*;
 import java.util.ArrayList;
+
+import robo.AgenteInteligente;
 import robo.Robo;
 import sensores.*;
 
@@ -46,7 +48,7 @@ public class GerenciadorSensores {
     }
 
     // Obtém a lista de robôs protegidos afetados pela missão.
-    public  ArrayList<Robo> getRobosPrtegidos(){
+    public  ArrayList<Robo> getRobosProtegidos(){
         return robosProtegidos;
     }
     
@@ -67,11 +69,11 @@ public class GerenciadorSensores {
         return robosEmAlcance;
     }
 
-    // retorna os robos protegidos
-    public ArrayList<Robo> protegidos(ArrayList<Entidade> robosEmAlcance){
+    // Confere quais robôs no alcançe estão protegidos.
+    public ArrayList<Robo> encontrarRobosProtegidos(ArrayList<Entidade> robosEmAlcance){
         ArrayList<Robo> robosProtegidos = new ArrayList<>();
         for (int i = 0; i < robosEmAlcance.size(); i++){
-            if (robosEmAlcance.get(i) instanceof Robo robo){
+            if (robosEmAlcance.get(i) instanceof Robo robo && !(robo instanceof AgenteInteligente)){ // Garante que não estaremos protegendo agentes, apenas robôs
                 robosProtegidos.add(robo);
             }
         }
@@ -83,7 +85,7 @@ public class GerenciadorSensores {
     public ArrayList<Robo> encontrarRobosMortos(ArrayList<Entidade> robosEmAlcance){
         ArrayList<Robo> robosMortos = new ArrayList<>();
         for (int i = 0; i < robosEmAlcance.size(); i++){
-            if (robosEmAlcance.get(i) instanceof Robo robo){
+            if (robosEmAlcance.get(i) instanceof Robo robo && !(robo instanceof AgenteInteligente)){ // Garante que não estaremos protegendo agentes, apenas robôs
                 if (robo.getVida() == 0){
                     robosMortos.add(robo);
                 }
@@ -97,7 +99,7 @@ public class GerenciadorSensores {
     public ArrayList<Robo> encontrarRobosFracos(ArrayList<Entidade> robosEmAlcance){
         ArrayList<Robo> robosFracos = new ArrayList<>();
         for (int i = 0; i < robosEmAlcance.size(); i++){
-            if (robosEmAlcance.get(i) instanceof Robo robo){
+            if (robosEmAlcance.get(i) instanceof Robo robo && !(robo instanceof AgenteInteligente)){ // Garante que não estaremos protegendo agentes, apenas robôs
                 if ((robo.getVida() >= 1) && (robo.getVida() < 5)){
                     robosFracos.add(robo);
                 }
@@ -111,7 +113,7 @@ public class GerenciadorSensores {
     public ArrayList<Robo> encontrarRobosCuradores(ArrayList<Entidade> robosEmAlcance){
         ArrayList<Robo> robosCuradores = new ArrayList<>();
         for (int i = 0; i < robosEmAlcance.size(); i++){
-            if (robosEmAlcance.get(i) instanceof Curador curador){
+            if (robosEmAlcance.get(i) instanceof Curador curador){ // Aqui só curadores serão adicionados, já é garantido que os agentes não serão armazenados no array
                 if (curador instanceof Robo robo){
                     robosCuradores.add(robo);
                 }

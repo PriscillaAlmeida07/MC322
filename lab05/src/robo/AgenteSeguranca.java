@@ -13,8 +13,8 @@ import subsistemas.*;
 public class AgenteSeguranca extends AgenteInteligente {
     
     // Construtor.
-    public AgenteSeguranca(String nome, String id, EstadoRobo estado, int posicaoX, int posicaoY, int posicaoZ){
-        super(nome, id, estado, posicaoX, posicaoY, posicaoZ, new ControleMovimento(), new GerenciadorSensores(), new ModuloComunicacao());
+    public AgenteSeguranca(String nome, String id, EstadoRobo estado, int posicaoX, int posicaoY, int posicaoZ, ControleMovimento controleMovimento, GerenciadorSensores gerenciadorSensores, ModuloComunicacao moduloComunicacao){
+        super(nome, id, estado, posicaoX, posicaoY, posicaoZ, controleMovimento, gerenciadorSensores, moduloComunicacao);
     }
 
     // Obtém a descrição desse robô.
@@ -39,7 +39,7 @@ public class AgenteSeguranca extends AgenteInteligente {
 
     // Realiza a missão já atribuida ao robô.
     @Override
-    public void executarMissao(Ambiente ambiente, Arquivo arquivo){
+    public void executarMissao(Ambiente ambiente, Arquivo arquivo, Scanner entrada){
         String mensagem;
         ArrayList<Entidade> robosEmAlcance = gerenciadorSensores.utilizarSensorRobos(ambiente, this, 10);
 
@@ -51,10 +51,10 @@ public class AgenteSeguranca extends AgenteInteligente {
         } else if (missao instanceof MissaoSeguranca){
            
             System.out.println("O robô esta protegendo os seguintes robôs:\n");
-            ArrayList<Robo> robosProtegidos = gerenciadorSensores.protegidos(robosEmAlcance);
+            ArrayList<Robo> robosProtegidos = gerenciadorSensores.encontrarRobosProtegidos(robosEmAlcance);
 
             if (!robosProtegidos.isEmpty()){
-                missao.executar(this, ambiente, arquivo);
+                missao.executar(this, ambiente, arquivo, entrada);
                 moduloComunicacao.comunicarProtegidos(ambiente.getCentralComunicacao(), robosProtegidos, this);
 
             } else { // robosProtegidos está vazio
@@ -63,7 +63,7 @@ public class AgenteSeguranca extends AgenteInteligente {
             }
 
         } else { 
-            missao.executar(this, ambiente, arquivo);
+            missao.executar(this, ambiente, arquivo, entrada);
 
         }
     }

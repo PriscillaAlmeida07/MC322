@@ -3,6 +3,8 @@ package missao;
 import ambiente.Ambiente;
 import arquivos.Arquivo;
 import java.util.ArrayList;
+import java.util.Scanner;
+
 import robo.AgenteInteligente;
 import robo.Robo;
 
@@ -10,7 +12,7 @@ public class MissaoContactarCuradores implements Missao {
     
     // Alerta todos os robôs curadores dentro de um raio de alcançe de 20 metros sobre os robôs com pouca vida nesse mesmo raio.
     @Override
-    public void executar(AgenteInteligente robo, Ambiente ambiente, Arquivo arquivo){
+    public void executar(AgenteInteligente robo, Ambiente ambiente, Arquivo arquivo, Scanner entrada){
         String mensagem;
         ArrayList<Robo> robosCuradores = robo.getGerenciadorSensores().getRobosCuradores();
         ArrayList<Robo> robosFracos = robo.getGerenciadorSensores().getRobosFracos();

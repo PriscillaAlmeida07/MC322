@@ -32,7 +32,7 @@ public class ModuloComunicacao {
         }
     }
 
-        // Comunica todos os robôs que foram revividos por uma missão reviver.
+    // Comunica todos os robôs que estão sendo protegidos por uma missão segurança.
     public void comunicarProtegidos(CentralComunicacao centralComunicacao, ArrayList<Robo> robosProtegidos, Robo robo){
         String mensagem;
 

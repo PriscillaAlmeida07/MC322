@@ -1,5 +1,7 @@
 package robo;
 
+import java.util.Scanner;
+
 import ambiente.Ambiente;
 import arquivos.Arquivo;
 import enums.EstadoRobo;
@@ -55,12 +57,12 @@ public abstract class AgenteInteligente extends Robo {
     // Retira a missão de um agente.
     public void excluirMissao(AgenteInteligente robo){
         if (missao instanceof MissaoSeguranca missaoSeguranca)
-            missaoSeguranca.encerrarMissao(robo);
+            missaoSeguranca.encerrarMissao(robo); // Para a missão segurança precisamos alterar o estado protegido de cada robô que estava sendo protegido
         missao = null;
     }
 
     // Método abstrato que permite a realização de uma missão.
-    public abstract void executarMissao(Ambiente ambiente, Arquivo arquivo);
+    public abstract void executarMissao(Ambiente ambiente, Arquivo arquivo, Scanner entrada);
 
     // Método que imprime uma mensagem sobre o progresso para o usuário e também guarda essa informação em um arquivo.
     public void arquivarEPrintar(String mensagem, Arquivo arquivo){

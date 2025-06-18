@@ -1,4 +1,7 @@
 package missao;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 import ambiente.Ambiente;
 import arquivos.Arquivo;
 import exceptions.ColisaoException;
@@ -10,16 +13,35 @@ public class MissaoBuscarPonto implements Missao {
     // Missão capaz de encontrar um caminho para levar os Agentes a um ponto específico do mapa
 
     @Override
-    // Ainda tem que dar um jeito de escolher o ponto final que ele quer ir
-    public void executar(AgenteInteligente robo, Ambiente ambiente, Arquivo arquivo){
-        int Xfinal = 30; int Yfinal = 30;
-        int deltaX = Xfinal - robo.getX();
-        int deltaY = Yfinal - robo.getY();
-        // Vamos tratar aqui
+    public void executar(AgenteInteligente robo, Ambiente ambiente, Arquivo arquivo, Scanner entrada) {
+        int Xfinal = 0;
+        int Yfinal = 0;
+
+        // Loop para garantir entrada correta
+        while (true) {
+            try {
+                System.out.print("Informe as coordenadas (x,y) do ponto que você deseja que o Agente Segurança busque:\n" + "Coordenada x: ");
+                Xfinal = entrada.nextInt();
+
+                System.out.print("Coordenada y: ");
+                Yfinal = entrada.nextInt();
+
+                break; // Sai do loop se leitura for correta
+            } catch (InputMismatchException e) {
+                System.err.println("Entrada inválida. Digite números inteiros.");
+                entrada.nextLine(); // Limpar o buffer da entrada inválida
+            }
+        }
+
+        // Agora tenta movimentar
         try {
+            int deltaX = Xfinal - robo.getX();
+            int deltaY = Yfinal - robo.getY();
+
             robo.getControleMovimento().movimentarAgente(robo, ambiente, deltaX, deltaY, 0);
-        }catch (ForaDosLimitesException | ColisaoException e){
+        } catch (ForaDosLimitesException | ColisaoException e) {
             System.err.println("Erro: " + e.getMessage());
         }
     }
+
 }

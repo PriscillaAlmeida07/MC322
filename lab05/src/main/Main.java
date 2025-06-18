@@ -5,6 +5,9 @@ import arquivos.Arquivo;
 import comunicacao.CentralComunicacao;
 import enums.*;
 import exceptions.*;
+import missao.MissaoReviver;
+import missao.MissaoSeguranca;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
@@ -12,6 +15,9 @@ import java.util.Scanner;
 import obstaculos_tapetes.Obstaculo;
 import obstaculos_tapetes.TapeteReposicao;
 import robo.*;
+import subsistemas.ControleMovimento;
+import subsistemas.GerenciadorSensores;
+import subsistemas.ModuloComunicacao;
 
 public class Main {
     public static void main(String[] args){
@@ -63,12 +69,17 @@ public class Main {
         RoboFlutuador roboFlutuador2 = new RoboFlutuador("roboFlutuador2", "RF02", EstadoRobo.DESLIGADO, 28, 25, 25);
         RoboObstaculoAereo roboObstaculoAereo2 = new RoboObstaculoAereo("roboObstaculoAereo2", "ROA02", EstadoRobo.DESLIGADO, 29, 25, 25);
 
-        //Criação dos Agentes
-        AgenteSeguranca agenteSeguranca1 = new AgenteSeguranca("agenteSeguranca1", "AI01", EstadoRobo.LIGADO, 30, 25, 25);
-        AgenteVida agenteVida1 = new AgenteVida("agenteVida1", "AV01", EstadoRobo.LIGADO, 31, 25, 25);
-
         // Criamos esse robô apenas para testar o metodo removerEntidade.
         RoboObstaculoAereo roboObstaculoAereo3 = new RoboObstaculoAereo("roboObstaculoAereo3", "ROA03", EstadoRobo.LIGADO, 32, 25, 25);
+
+        // Criação dos modulos (seram utilizados por todos os agentes)
+        ControleMovimento controleMovimento = new ControleMovimento();
+        GerenciadorSensores gerenciadorSensores = new GerenciadorSensores();
+        ModuloComunicacao moduloComunicacao = new ModuloComunicacao();
+
+        //Criação dos Agentes
+        AgenteSeguranca agenteSeguranca1 = new AgenteSeguranca("agenteSeguranca1", "AI01", EstadoRobo.LIGADO, 30, 25, 25, controleMovimento, gerenciadorSensores, moduloComunicacao);
+        AgenteVida agenteVida1 = new AgenteVida("agenteVida1", "AV01", EstadoRobo.LIGADO, 31, 25, 25, controleMovimento, gerenciadorSensores, moduloComunicacao);
 
         // Adicionando robôs ao ambiente.
         ambiente1.adicionarEntidade(roboCavador1);
@@ -103,7 +114,7 @@ public class Main {
             System.out.println("Selecione alguma das ações abaixo:\n" +
             "[1] - Selecionar um Robô (funções/interações)\n" +
             "[2] - Selecionar Agente \n" +
-            "[3] - Listar todos os Robôs\n" +
+            "[3] - Listar todos os Robôs e Agentes\n" +
             "[4] - Listar posição dos Objetos (não robôs)\n" +
             "[5] - Exibir plano xy atual do ambiente\n" +
             "[6] - Listar todas as mensagens trocadas\n" +
@@ -143,6 +154,7 @@ public class Main {
         entrada.close();
     }
 
+    // Escolhemos algum dos agentes para posteriormente realizar alguma missão:
     private static void selecionarAgente(Scanner entrada, Ambiente ambiente1, AgenteSeguranca agenteSeguranca1, AgenteVida agenteVida1, CentralComunicacao centralComunicacao, Arquivo arquivo){
         boolean continuar = true;
 
@@ -170,26 +182,27 @@ public class Main {
         }
     }
 
+    // Se escolhemos o agente Segurança, podemos escolher 1 dessas missões:
     private static void selecionarMissaoSeguranca(Scanner entrada, Ambiente ambiente1, AgenteSeguranca agenteSeguranca1, CentralComunicacao centralComunicacao, Arquivo arquivo){
         boolean continuar = true;
 
         while(continuar){
-            System.out.println("Selecione algumas das opcoes para missoes:\n" +
+            System.out.println("Selecione algumas das opções para missões:\n" +
             "[1] - Executar missão Segurança\n" +
-            "[2] - Executar missão Buscar ponto\n" + //uma missao mais basica so para ter 2 missoes pelo menos para cada
-            "[3] - Encerrada missão que esta em execução\n" +
+            "[2] - Executar missão Buscar ponto\n" + 
+            "[3] - Encerrar missão que está em execução\n" +
             "[0] - Voltar\n");
 
             int opcao = entrada.nextInt();
             switch (opcao) {
                 case 1:
-                // So podera ser feita uma missao por vez (pois no pdf do lab a missao é uma variavel nao array na classe agente inteligente)
+                    // Só poderá ser feita uma missão por vez 
+                    // Missão Segurança
                     if(agenteSeguranca1.temMissao() == false){
-                        // Adicionando data o hora da inicializacao da missao
+                        // Adicionando data o hora da inicializacao da missão (ficará armazenada no arquivo)
                         LocalDateTime agora = LocalDateTime.now();
                         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
                         String dataHoraFormatada = agora.format(formato);
-
 
                         String conteudo = "-------------------------------------" + "\n\n" + "O Agente Segurança está executando a Missão Segurança. Ela foi iniciada às: " + dataHoraFormatada + "\n";
 
@@ -201,32 +214,34 @@ public class Main {
                         } catch (RoboDesligadoException | ForaDosLimitesException | ColisaoException | VidaNulaException e){
                             System.err.println("Erro: " + e.getMessage());
                         }
-                        agenteSeguranca1.executarMissao(ambiente1, arquivo);
+
+                        agenteSeguranca1.executarMissao(ambiente1, arquivo, entrada);
                     } else {
-                        System.out.println("O robo ja esta realizando uma missao"); // podemos trocar por exception se for necessario
+                        System.out.println("O robô já está realizando uma missão, encerre a missão atual para conseguir selecionar outra"); // podemos trocar por exception se for necessario
                     }
                     break;
                 case 2:
-                    // Missao buscar ponto
+                    // Missão buscar ponto
                     if(agenteSeguranca1.temMissao() == false){
-                        // Adicionando data o hora da inicializacao da missao
+                        // Adicionando data o hora da inicializacao da missão (ficará armazenada no arquivo)
                         LocalDateTime agora = LocalDateTime.now();
                         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
                         String dataHoraFormatada = agora.format(formato);
-
 
                         String conteudo = "-------------------------------------" + "\n\n" + "O Agente Segurança está executando a Missão Buscar Ponto. Ela foi iniciada às: " + dataHoraFormatada + "\n";
 
                         // metodo que escreve no arquivo (só precisa do conteudo a ser inserido)
                         arquivo.escreverNoArquivo(conteudo);
+
                         try {
                             agenteSeguranca1.executarTarefa(entrada, ambiente1, 0, 0, 0, 2);
                         } catch (RoboDesligadoException | ForaDosLimitesException | ColisaoException | VidaNulaException e){
                             System.err.println("Erro: " + e.getMessage());
                         }
-                        agenteSeguranca1.executarMissao(ambiente1, arquivo);
+
+                        agenteSeguranca1.executarMissao(ambiente1, arquivo, entrada);
                     } else {
-                        System.out.println("O robo ja esta realizando uma missao"); // podemos trocar por exception se for necessario
+                        System.out.println("O robô já está realizando uma missão, encerre a missão atual para conseguir selecionar outra"); // podemos trocar por exception se for necessario
                     }
                     break;
                 case 3:
@@ -235,13 +250,25 @@ public class Main {
                     DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
                     String dataHoraFormatada = agora.format(formato);
 
+                    // Precisamos saber qual missão está atualmente em execução
+                    if (agenteSeguranca1.getMissao() instanceof MissaoSeguranca){
+                        String conteudo =  "-------------------------------------" + "\n\n" + "A Missão Segurança foi encerrada às: " + dataHoraFormatada + "\n";
 
-                    String conteudo =  "-------------------------------------" + "\n\n" + "A Missão Segurança foi encerrada às: " + dataHoraFormatada + "\n";
+                        // metodo que escreve no arquivo (só precisa do conteudo a ser inserido)
+                        arquivo.escreverNoArquivo(conteudo);
 
-                    // metodo que escreve no arquivo (só precisa do conteudo a ser inserido)
-                    arquivo.escreverNoArquivo(conteudo);
-                    agenteSeguranca1.excluirMissao(agenteSeguranca1); // nao dara erro pois se nao tiver missao ainda vai mudar para null (mesmo sendo null, mas nao dara problema)
-                    System.out.println("A missão atual foi encerrada");
+                        agenteSeguranca1.excluirMissao(agenteSeguranca1);
+                        System.out.println("A Missão Segurança foi encerrada");
+                    } else {
+                        String conteudo =  "-------------------------------------" + "\n\n" + "A Missão Buscar Ponto foi encerrada às: " + dataHoraFormatada + "\n";
+
+                        // metodo que escreve no arquivo (só precisa do conteudo a ser inserido)
+                        arquivo.escreverNoArquivo(conteudo);
+
+                        agenteSeguranca1.excluirMissao(agenteSeguranca1);
+                        System.out.println("A Missão Buscar Ponto foi encerrada"); 
+                    }
+
                     break;
                 case 0:
                     continuar = false;
@@ -253,28 +280,28 @@ public class Main {
         }
     }
 
+    // Se escolhemos o agente Vida, podemos escolher 1 dessas missões:
     private static void selecionarMissaoVida(Scanner entrada, Ambiente ambiente1, AgenteVida agenteVida1, CentralComunicacao centralComunicacao, Arquivo arquivo){
         boolean continuar = true;
 
         while(continuar){
-            System.out.println("Selecione algumas das opcoes para missoes:\n" +
+            System.out.println("Selecione algumas das opções para missões:\n" +
             "[1] - Executar missão Vida\n" +
-            "[2] - Executar missão Buscar ponto\n" + //uma missao mais basica so para ter 2 missoes pelo menos para cada
-            "[3] - Encerrar missão que esta em execução\n" +
+            "[2] - Executar missão Contactar Curadores\n" + 
+            "[3] - Encerrar missão que está em execução\n" +
             "[0] - Voltar\n");
 
             int opcao = entrada.nextInt();
             switch (opcao) {
                 case 1:
-                // So podera ser feita uma missao por vez (pois no pdf do lab a missao é uma variavel nao array na classe agente inteligente)
+                    // Só poderá ser feita uma missão por vez 
                     if(agenteVida1.temMissao() == false){
-                        // Adicionando data o hora da inicializacao da missao
+                        // Adicionando data o hora da inicializacao da missao (será armazenada no arquivo)
                         LocalDateTime agora = LocalDateTime.now();
                         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
                         String dataHoraFormatada = agora.format(formato);
 
-
-                        String conteudo = "-------------------------------------" + "\n\n" + "O Agente Vida está executando a Missão Vida. Ela foi iniciada às: " + dataHoraFormatada + "\n" ;
+                        String conteudo = "-------------------------------------" + "\n\n" + "O Agente Vida está executando a Missão Reviver. Ela foi iniciada às: " + dataHoraFormatada + "\n" ;
 
                         // metodo que escreve no arquivo (só precisa do conteudo a ser inserido)
                         arquivo.escreverNoArquivo(conteudo);
@@ -284,9 +311,10 @@ public class Main {
                         } catch (RoboDesligadoException | ForaDosLimitesException | ColisaoException | VidaNulaException e){
                             System.err.println("Erro: " + e.getMessage());
                         }
-                        agenteVida1.executarMissao(ambiente1, arquivo);
+
+                        agenteVida1.executarMissao(ambiente1, arquivo, entrada);
                     } else {
-                        System.out.println("O robo ja esta realizando uma missao"); // podemos trocar por exception se for necessario
+                        System.out.println("O robô já está realizando uma missão, encerre a missão atual para conseguir selecionar outra"); // podemos trocar por exception se for necessario
                     }
                     break;
                 case 2:
@@ -309,10 +337,10 @@ public class Main {
                             System.err.println("Erro: " + e.getMessage());
                         }
 
-                        agenteVida1.executarMissao(ambiente1, arquivo);
+                        agenteVida1.executarMissao(ambiente1, arquivo, entrada);
 
                     } else {
-                        System.out.println("O robo ja esta realizando uma missao"); // podemos trocar por exception se for necessario
+                        System.out.println("O robô já está realizando uma missão, encerre a missão atual para conseguir selecionar outra"); // podemos trocar por exception se for necessario
                     }
                     break;
                 case 3:
@@ -321,14 +349,24 @@ public class Main {
                     DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
                     String dataHoraFormatada = agora.format(formato);
 
+                    // Precisamos saber qual missão está atualmente em execução
+                    if (agenteVida1.getMissao() instanceof MissaoReviver){
+                        String conteudo =  "-------------------------------------" + "\n\n" + "A Missão Reviver foi encerrada às: " + dataHoraFormatada + "\n";
 
-                    String conteudo =  "-------------------------------------" + "\n\n" + "A Missão Vida foi encerrada às: " + dataHoraFormatada + "\n";
+                        // metodo que escreve no arquivo (só precisa do conteudo a ser inserido)
+                        arquivo.escreverNoArquivo(conteudo);
 
-                    // metodo que escreve no arquivo (só precisa do conteudo a ser inserido)
-                    arquivo.escreverNoArquivo(conteudo);
+                        agenteVida1.excluirMissao(agenteVida1);
+                        System.out.println("A Missão Reviver foi encerrada");
+                    } else {
+                        String conteudo =  "-------------------------------------" + "\n\n" + "A Missão Contactar Curadores foi encerrada às: " + dataHoraFormatada + "\n";
 
-                    agenteVida1.excluirMissao(agenteVida1);// nao dara erro pois se nao tiver missao ainda vai mudar para null (mesmo sendo null, mas nao dara problema)
-                    System.out.println("A missão atual foi encerrada");
+                        // metodo que escreve no arquivo (só precisa do conteudo a ser inserido)
+                        arquivo.escreverNoArquivo(conteudo);
+
+                        agenteVida1.excluirMissao(agenteVida1);
+                        System.out.println("A Missão Contactar Curadores foi encerrada"); 
+                    }
                     break;    
                 case 0:
                     continuar = false;
