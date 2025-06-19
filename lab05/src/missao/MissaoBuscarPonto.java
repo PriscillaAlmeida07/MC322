@@ -39,6 +39,8 @@ public class MissaoBuscarPonto implements Missao {
             int deltaY = Yfinal - robo.getY();
 
             robo.getControleMovimento().movimentarAgente(robo, ambiente, deltaX, deltaY, 0);
+            String mensagem = robo.getNome() + " se deslocou para o ponto (" + robo.getX() + "," + robo.getY() + "," + robo.getZUsuario() +")\n";
+            robo.arquivarEPrintar(mensagem, arquivo);
         } catch (ForaDosLimitesException | ColisaoException e) {
             System.err.println("Erro: " + e.getMessage());
         }
