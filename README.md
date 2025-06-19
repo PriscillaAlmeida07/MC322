@@ -9,14 +9,11 @@ Há também uma pasta images que contém o Diagrama de Classes.
 
 ### Principais mudanças no Lab05
 Neste laboratório, foi implementada a interface Missão e as classes Agente Inteligente, AgenteSegurança e AgenteVida:
-- Interface Missão: Define métodos obrigatórios da Classe MissãoSegurança(Principal missão do AgenteSegurança) e MissãoVida(Principal missão do AgenteVida) 
-- AgenteSegurança: capaz de proteger Robôs que estão dentro do raio, impedindo que eles sejam atacados por Robôs Atacantes
-- AgenteVida: capaz de reviver robôs que estão mortos (Robôs curadores não conseguem reviver outros robôs apenas aumentam a quantidade de vidas dos que estão vivos).
+- Interface Missão: Define métodos obrigatórios da Classe MissãoSegurança, MissãoBuscarPonto (especificas do AgenteSegurança), MissãoReviver e MissãoContactarCuradores (especificas do AgenteVida) 
+- AgenteSegurança: capaz de proteger Robôs que estão dentro do raio, impedindo que eles sejam atacados por Robôs Atacantes (se estiver realizando a missãoSegurança). Ele também é capaz do buscar um ponto desejado pelo usuário (se estiver realizando a missãoBuscarPonto) .
+- AgenteVida: capaz de reviver robôs que estão mortos, pois Robôs curadores não conseguem reviver outros robôs apenas aumentam a quantidade de vidas dos que estão vivos (se estiver realizando a missãoReviver). Ele também é capaz de contactar Curadores que estiverem próximos a um Robô com pouca vida (se estiver realizando a missãoContactarCuradores).
 
-Além disso, o mapa foi atualizado, passando a ser uma matriz também capaz de registrar quais entidades ocupam cada espaço do ambiente. 
-O menu interativo também foi alterado, pois antes o usuário selecionava a ação e em seguida o robô que a faria, agora, o menu está mais focado nos robôs, o usuário seleciona um robô e em seguida visualiza tudo o que aquele robô é capaz de fazer.
-
-### Lista de interfaces:
+### Lista de interfaces atualizada:
 - Atacante (implementada pelas classes Robô Obstáculo Aéreo e Robô Cavador);
 - Comunicavel (implementada pela classe Robo);
 - Curador (implementada pelas classes Robô Flutuador e Robô Obstáculo Terrestre);
@@ -49,9 +46,9 @@ Para executar o programa siga os seguintes passos:
   ``` bash
   javac -d bin src/*/*.java
 
-- Para rodar utilize o comando no terminal:
+- Para rodar utilize o comando no terminal (linux):
   ``` bash
   java -cp bin main.Main
 
 ### Diagrama de classes:
-![Diagrama](images/DIAGRAMA.jpg)
+![Diagrama](images/DIAGRAMA_DE_CLASSES.jpg)
