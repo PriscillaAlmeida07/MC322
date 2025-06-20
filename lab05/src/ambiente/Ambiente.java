@@ -2,52 +2,35 @@ package ambiente;
 
 import comunicacao.CentralComunicacao;
 import enums.TipoEntidade;
-import exceptions.ColisaoException;
-import exceptions.ForaDosLimitesException;
+import exceptions.*;
 import interfaces.Entidade;
 import java.util.ArrayList;
 import missao.Missao;
-import obstaculos_tapetes.Obstaculo;
-import obstaculos_tapetes.TapeteReposicao;
-import robo.AgenteInteligente;
-import robo.Robo;
+import obstaculos_tapetes.*;
+import robo.*;
 
 public class Ambiente { 
 
+    // Dimensões e mapa.
     private final int largura, comprimento, altura;
     private final TipoEntidade mapa[][][];
+
+    // Propriedades do ambiente.
     private final ArrayList<Entidade> entidades;
     private final ArrayList<AgenteInteligente> segurancasAtivos;
     private final ArrayList<Missao> missoes;
     private final CentralComunicacao centralComunicacao;
 
-    
     // Construtor.
     public Ambiente(CentralComunicacao centralComunicacao){ 
         largura = 50; comprimento = 50; altura = 50;
+        mapa = new TipoEntidade[largura][comprimento][altura];
+        inicializarMapa();
 
         this.centralComunicacao = centralComunicacao;
         entidades = new ArrayList<>();
         segurancasAtivos = new ArrayList<>();
         missoes = new ArrayList<>();
-        mapa = new TipoEntidade[largura][comprimento][altura];
-        inicializarMapa();
-    }
-
-    public CentralComunicacao getCentralComunicacao(){
-        return centralComunicacao;
-    }
-
-    public void adicionarSeguranca(AgenteInteligente seguranca){
-        segurancasAtivos.add(seguranca);
-    }
-
-    public void adicionarMissao(Missao missao){
-        missoes.add(missao);
-    }
-
-    public ArrayList<AgenteInteligente> getArraySeguranca(){
-        return segurancasAtivos;
     }
 
     // Inicializa todos os espaços do mapa como vazios.
@@ -73,6 +56,11 @@ public class Ambiente {
         System.out.print("\n");
     }
 
+    // Obtém a central de comunicação.
+    public CentralComunicacao getCentralComunicacao(){
+        return centralComunicacao;
+    }
+
     // Obtém o array de entidades no ambiente.
     public ArrayList<Entidade> getArrayEntidades(){
         return entidades;
@@ -88,6 +76,21 @@ public class Ambiente {
             }
         }
         return robos;
+    }
+
+    // Obtém o Array de agentes segurança no ambiente
+    public ArrayList<AgenteInteligente> getArraySeguranca(){
+        return segurancasAtivos;
+    }
+
+    // Registra que um agente seguraça está atuando no ambiente.
+    public void adicionarSeguranca(AgenteInteligente seguranca){
+        segurancasAtivos.add(seguranca);
+    }
+
+    // Indica que uma missão está ativa no ambiente
+    public void adicionarMissao(Missao missao){
+        missoes.add(missao);
     }
 
     // Adiciona a entidade no array de entidades e no mapa.

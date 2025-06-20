@@ -40,7 +40,6 @@ public class AgenteVida extends AgenteInteligente {
     // Realiza a missão já atribuida ao robô.
     @Override
     public void executarMissao(Ambiente ambiente, Arquivo arquivo, Scanner entrada){
-
         String mensagem;
         ArrayList<Entidade> robosEmAlcance = gerenciadorSensores.utilizarSensorRobos(ambiente, this, 30);
 
@@ -83,5 +82,4 @@ public class AgenteVida extends AgenteInteligente {
             }
         }
     } 
-
 }

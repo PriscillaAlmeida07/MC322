@@ -4,7 +4,6 @@ import ambiente.Ambiente;
 import arquivos.Arquivo;
 import java.util.ArrayList;
 import java.util.Scanner;
-
 import robo.AgenteInteligente;
 import robo.Robo;
 
@@ -25,6 +24,7 @@ public class MissaoContactarCuradores implements Missao {
             mensagem = robosFracos.get(i).getNome() + " com " + robosFracos.get(i).getVida() + "/10 de vida";
             robo.arquivarEPrintar(mensagem, arquivo);
         }
+        System.out.print("\n");
     }
     
 }

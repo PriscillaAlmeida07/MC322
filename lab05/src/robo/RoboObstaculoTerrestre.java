@@ -1,24 +1,17 @@
 package robo;
 
+import ambiente.Ambiente;
+import enums.*;
+import exceptions.*;
+import interfaces.*;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-import ambiente.Ambiente;
-import enums.EstadoRobo;
-import enums.TipoObstaculo;
-import enums.TipoSensor;
-import exceptions.ColisaoException;
-import exceptions.ForaDosLimitesException;
-import exceptions.RoboDesligadoException;
-import exceptions.VidaNulaException;
-import interfaces.Curador;
-import interfaces.Entidade;
 import obstaculos_tapetes.Obstaculo;
-import sensores.Sensor;
-import sensores.SensorReporBlocos;
+import sensores.*;
 
 public class RoboObstaculoTerrestre extends RoboTerrestre implements Curador {
     
+    // Robô capas de criar obstáculos posicionando blocos no chão.
     private int numBlocos;
     private final int reparo;
 
@@ -52,13 +45,13 @@ public class RoboObstaculoTerrestre extends RoboTerrestre implements Curador {
         if (this.getEstadoRobo() == EstadoRobo.DESLIGADO)
             throw new RoboDesligadoException("O " + this.getNome() + " está desligado");
         if (this.getVida() == 0)
-            throw new VidaNulaException("O " + this.getNome() + " está morto, portanto só poderá realizar ações quando for curado por outro robô");
+            throw new VidaNulaException("O " + this.getNome() + " está morto, portanto só poderá realizar ações quando for revivido por um agente");
 
         // Realiza a tarefa
         posicaoBloco(ambiente);
     }
 
-    // Define a posição que o bloco será posicionado de acordo com a direção do robô
+    // Define a posição que o bloco será posicionado de acordo com a direção do robô.
     public void posicaoBloco(Ambiente ambiente) throws ForaDosLimitesException, ColisaoException {
 
         // Caso os blocos já tenham acabado
@@ -118,7 +111,7 @@ public class RoboObstaculoTerrestre extends RoboTerrestre implements Curador {
         if (this.getEstadoRobo() == EstadoRobo.DESLIGADO)
             throw new RoboDesligadoException("O robô está desligado");
         if (this.getVida() == 0)
-            throw new VidaNulaException("O " + this.getNome() + " está morto, portanto só poderá realizar ações quando for curado por outro robô");
+            throw new VidaNulaException("O " + this.getNome() + " está morto, portanto só poderá realizar ações quando for revivido por um agente");
         
         // Informações necessárias para o funcionamento da função:
         Sensor sensor = getSensorRobos();
@@ -129,19 +122,29 @@ public class RoboObstaculoTerrestre extends RoboTerrestre implements Curador {
             if (robos.get(i) instanceof Robo robo){
                 if(!robo.getID().equals(this.getID())){
                     
-                    if (robo.getVida() == 10) {
+                    if (robo instanceof AgenteInteligente) {
+                        System.out.println("O " + robo.getNome() + " está no raio de alcançe, porém agentes não podem ser curados/atacados");
+
+                    } else if (robo.getVida() == 10) {
                         System.out.println("O " + robo.getNome() + " não pode ser curado, pois já está com a vida máxima");
+
                     } else if (robo.getVida() == 0){
-                        System.out.println("O " + robo.getNome() + " não pode ser curado, pois está morto e apenas o Agente Vida pode revive-lo");
+                        System.out.println("O " + robo.getNome() + " não pode ser curado, pois está morto e apenas o Agente Vida pode revivê-lo");
+
                     } else if ((robo.getVida() + reparo) >= 10){
                         robo.setVida(10 - robo.getVida());
                         System.out.println("O " + this.getNome() + " curou completamente o " + robo.getNome() + " que possui agora 10/10 de vida");
+
                     } else {
                         robo.setVida(reparo);
                         System.out.println("O " + this.getNome() + " curou o " + robo.getNome() + " que possui agora " + robo.getVida() + "/10 de vida");
                     }
                 }
             }
+        }
+
+        if (robos.isEmpty()){
+            System.out.println("Nenhum robô no raio de alcançe para cura");
         }
         System.out.print("\n");
     }

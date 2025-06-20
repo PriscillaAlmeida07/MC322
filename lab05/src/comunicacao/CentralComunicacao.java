@@ -26,6 +26,5 @@ public class CentralComunicacao {
             }
             System.out.print("\n");
         }
-
     }
 }

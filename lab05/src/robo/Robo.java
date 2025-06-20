@@ -1,29 +1,15 @@
 package robo;
+
 import ambiente.Ambiente;
 import comunicacao.CentralComunicacao;
-import enums.EstadoRobo;
-import enums.TipoEntidade;
-import enums.TipoSensor;
-import exceptions.ColisaoException;
-import exceptions.ErroComunicacaoException;
-import exceptions.ForaDosLimitesException;
-import exceptions.RoboDesligadoException;
-import exceptions.VidaNulaException;
-import interfaces.Comunicavel;
-import interfaces.Entidade;
-import interfaces.Sensoreavel;
+import enums.*;
+import exceptions.*;
+import interfaces.*;
 import java.util.ArrayList;
 import java.util.Scanner;
-import sensores.Sensor;
-import sensores.SensorObstaculos;
-import sensores.SensorReporBlocos;
-import sensores.SensorRobos;
-
+import sensores.*;
 
 public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
-
-    // para definir se o robo esta sendo protegido
-    private boolean protegido;
 
     // Identificação do robô.
     private final String nome, id;
@@ -34,6 +20,7 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
 
     // Outras características.
     private final TipoEntidade tipoEntidade;
+    private boolean protegido;
     private EstadoRobo estado;
     private int vida;
     private final ArrayList<Sensor> sensores;
@@ -48,7 +35,7 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
         vida = 10;
         protegido = false;
 
-        if(this instanceof AgenteInteligente)
+        if (this instanceof AgenteInteligente)
             tipoEntidade = TipoEntidade.AGENTE;
         else
             tipoEntidade = TipoEntidade.ROBO;
@@ -61,20 +48,6 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
         sensores.add(new SensorRobos(4, TipoSensor.ROBOS));
     }
 
-    public void setProtegido(){
-        if(protegido == false){
-            protegido = true;
-        } else {
-            protegido = false;
-        }
-    }
-
-    public boolean getProtegido(){
-        if(protegido == true)
-            return true;
-        else
-            return false;
-    }
     // Adiciona um sensor de reposição de blocos, se o robô o possuir.
     public void adicionaSensorReporBlocos(SensorReporBlocos sensorReporBlocos){
         sensores.add(sensorReporBlocos);
@@ -103,6 +76,16 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
     // Desliga o robô.
     public void desligar(){
         estado = EstadoRobo.DESLIGADO;
+    }
+
+    // Descobre se o robô está ou não sendo protegido
+    public boolean getProtegido(){
+        return protegido;
+    }
+
+    // Altera o estado de proteção do robô.
+    public void setProtegido(){
+        protegido = !protegido;
     }
 
     // Obtém a vida atual do robô.
@@ -183,7 +166,7 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
 
         // Movendo a entidade no ambiente
         ambiente.moverEntidade(this, posicaoAnterior);
-        System.out.println("O "+ this.getNome() + " está na posição: (" + this.getX() + "," + this.getY() + "," + this.getZ() + ")");
+        System.out.println("O "+ this.getNome() + " está na posição: (" + this.getX() + "," + this.getY() + "," + this.getZUsuario() + ")");
     }
 
     // Todos os robôs devem implementar a função "executarTarefa"
@@ -213,7 +196,7 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
         if (this.getEstadoRobo() == EstadoRobo.DESLIGADO)
             throw new RoboDesligadoException("O " + this.getNome() + " está desligado");
         if (this.getVida() == 0)
-            throw new VidaNulaException("O " + this.getNome() + " está morto, portanto só poderá realizar ações quando for curado por outro robô");
+            throw new VidaNulaException("O " + this.getNome() + " está morto, portanto só poderá realizar ações quando for revivido por um agente");
 
         int[] vetorPosicao = getPosicao();
         ArrayList<Entidade> resultado;
@@ -232,7 +215,6 @@ public abstract class Robo implements Entidade, Sensoreavel, Comunicavel {
 
         destinatario.receberMensagem(this.getNome() + ": " + mensagem);
         centralComunicacao.registrarMensagens(this.getNome(), mensagem);
-        System.out.println("Mensagem enviada.");
     }
 
     // Recebe uma mensagem de outro robô (se não estiver desligado).

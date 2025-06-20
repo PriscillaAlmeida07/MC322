@@ -1,16 +1,15 @@
 package robo;
 
-import java.util.Scanner;
-
 import ambiente.Ambiente;
 import arquivos.Arquivo;
 import enums.EstadoRobo;
+import java.util.Scanner;
 import missao.*;
 import subsistemas.*;
 
 public abstract class AgenteInteligente extends Robo {
     
-    // Robô autônomo capaz de realizar missões e que contém subsistemas internos
+    // Robô autônomo capaz de realizar missões e que contém subsistemas internos.
     protected Missao missao;
     protected ControleMovimento controleMovimento;
     protected GerenciadorSensores gerenciadorSensores;

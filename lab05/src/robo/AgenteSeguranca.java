@@ -64,7 +64,6 @@ public class AgenteSeguranca extends AgenteInteligente {
 
         } else { 
             missao.executar(this, ambiente, arquivo, entrada);
-
         }
     }
 }

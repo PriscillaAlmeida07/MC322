@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import robo.Robo;
 
 public class ModuloComunicacao {
+
+    // Subsistema que auxilia os agentes no envio de mensagens padronizadas de qualquer natureza.
     
     // Comunica todos os robôs que foram revividos por uma missão reviver.
     public void comunicarRevividos(CentralComunicacao centralComunicacao, ArrayList<Robo> robosRevividos, Robo robo){
@@ -15,7 +17,7 @@ public class ModuloComunicacao {
             try {
                 mensagem = "Você " + robosRevividos.get(i).getNome() + " reviveu por causa do Agente Vida";
                 robo.enviarMensagem(centralComunicacao, robosRevividos.get(i), mensagem);
-            } catch (ErroComunicacaoException e) {
+            } catch (ErroComunicacaoException e){
                 System.err.println("Erro: " + e.getMessage());
             }
         }

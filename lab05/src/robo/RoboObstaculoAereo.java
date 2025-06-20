@@ -1,19 +1,12 @@
 package robo;
 
 import ambiente.Ambiente;
-import enums.EstadoRobo;
-import enums.TipoObstaculo;
-import exceptions.AreaProtegidaException;
-import exceptions.ColisaoException;
-import exceptions.ForaDosLimitesException;
-import exceptions.RoboDesligadoException;
-import exceptions.VidaNulaException;
-import interfaces.Atacante;
-import interfaces.Entidade;
-import missao.MissaoSeguranca;
-
+import enums.*;
+import exceptions.*;
+import interfaces.*;
 import java.util.ArrayList;
 import java.util.Scanner;
+import missao.MissaoSeguranca;
 import obstaculos_tapetes.Obstaculo;
 import sensores.Sensor;
 
@@ -46,7 +39,7 @@ public class RoboObstaculoAereo extends RoboAereo implements  Atacante {
         if (this.getEstadoRobo() == EstadoRobo.DESLIGADO)
             throw new RoboDesligadoException("O " + this.getNome() + " está desligado");
         if (this.getVida() == 10)
-            throw new VidaNulaException("O " + this.getNome() + " está morto, portanto só poderá realizar ações quando for curado por outro robô");
+            throw new VidaNulaException("O " + this.getNome() + " está morto, portanto só poderá realizar ações quando for revivido por um agente");
 
         // Realiza a tarefa
         posicaoNuvem(ambiente);
@@ -112,13 +105,13 @@ public class RoboObstaculoAereo extends RoboAereo implements  Atacante {
         if (this.getEstadoRobo() == EstadoRobo.DESLIGADO)
             throw new RoboDesligadoException("O robô está desligado");
         if (this.getVida() == 0)
-            throw new VidaNulaException("O " + this.getNome() + " está morto, portanto só poderá realizar ações quando for curado por outro robô");
+            throw new VidaNulaException("O " + this.getNome() + " está morto, portanto só poderá realizar ações quando for revivido por um agente");
 
         ArrayList<AgenteInteligente> segurancas = ambiente.getArraySeguranca();
         for (int i = 0; i < segurancas.size(); i++){
-            if(segurancas.get(i).getMissao() instanceof MissaoSeguranca missaoSeguranca){
+            if (segurancas.get(i).getMissao() instanceof MissaoSeguranca missaoSeguranca){
                 if (Math.sqrt(Math.pow((segurancas.get(i).getX() - this.getX()), 2)) + (Math.pow((segurancas.get(i).getY() - this.getY()), 2)) + (Math.pow((segurancas.get(i).getZ() - this.getZ()), 2)) < missaoSeguranca.getRaio()){
-                    throw new AreaProtegidaException("O " + this.getNome() + " está em uma area protegida pelo " + segurancas.get(i).getNome() + " e nao pode atacar");
+                    throw new AreaProtegidaException("O " + this.getNome() + " está em uma área protegida pelo " + segurancas.get(i).getNome() + " e não pode atacar\n");
                 }
             }
         }
@@ -132,18 +125,27 @@ public class RoboObstaculoAereo extends RoboAereo implements  Atacante {
             if (robos.get(i) instanceof Robo robo && !(robo instanceof AgenteInteligente)){ // ja garante que nao atacara agentes inteligentes
                 if (!robo.getID().equals(this.getID())){
 
-                    if (robo.getVida() == 0) {
+                    if (robo instanceof AgenteInteligente){
+                        System.out.println("O " + robo.getNome() + " está no raio de alcançe, porém agentes não podem ser curados/atacados");
+
+                    } else if (robo.getVida() == 0) {
                         System.out.println("O " + robo.getNome() + " não pode ser atacado, pois já está morto");
+
                     } else if ((robo.getVida() - dano) <= 0){
                         robo.setVida(-robo.getVida());
-                        robo.desligar(); // desligamos o robo quando ele morre
+                        robo.desligar(); // desligamos o robô quando ele morre
                         System.out.println("O " + this.getNome() + " matou o " + robo.getNome());
+                        
                     } else {
                         robo.setVida(-dano);
                         System.out.println("O " + this.getNome() + " atacou o " + robo.getNome() + " que possui agora " + robo.getVida() + "/10 de vida");
                     }
                 }
             }
+        }
+
+        if (robos.isEmpty()){
+            System.out.println("Nenhum robô no raio de alcançe para o ataque");
         }
         System.out.print("\n");
     }

@@ -2,10 +2,9 @@ package robo;
 
 import ambiente.Ambiente;
 import enums.EstadoRobo;
-import exceptions.ColisaoException;
-import exceptions.ForaDosLimitesException;
+import exceptions.*;
 
-abstract class RoboAereo extends Robo { 
+public abstract class RoboAereo extends Robo { 
 
     // Robôs que podem realizar subidas no eixo Z
 

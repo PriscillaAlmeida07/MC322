@@ -3,7 +3,6 @@ package subsistemas;
 import ambiente.Ambiente;
 import interfaces.*;
 import java.util.ArrayList;
-
 import robo.AgenteInteligente;
 import robo.Robo;
 import sensores.*;

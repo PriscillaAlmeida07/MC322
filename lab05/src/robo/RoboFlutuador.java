@@ -1,21 +1,16 @@
 package robo;
 
-import java.util.ArrayList;
-import java.util.Scanner;
-
 import ambiente.Ambiente;
 import enums.EstadoRobo;
-import exceptions.ColisaoException;
-import exceptions.ForaDosLimitesException;
-import exceptions.RoboDesligadoException;
-import exceptions.VidaNulaException;
-import interfaces.Curador;
-import interfaces.Entidade;
+import exceptions.*;
+import interfaces.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 import sensores.Sensor;
 
 public class RoboFlutuador extends RoboAereo implements Curador {
     
-    // Robo flutuador: incapaz de realizar subidas e descidas muito bruscas.
+    // Robo incapaz de realizar subidas e descidas muito bruscas.
     private final int subidaMaxima;
     private final int descidaMaxima;
     private final int reparo;
@@ -44,7 +39,7 @@ public class RoboFlutuador extends RoboAereo implements Curador {
         if (this.getEstadoRobo() == EstadoRobo.DESLIGADO)
             throw new RoboDesligadoException("O " + this.getNome() + " está desligado");
         if (this.getVida() == 0)
-            throw new VidaNulaException("O " + this.getNome() + " está morto, portanto só poderá realizar ações quando for curado por outro robô");
+            throw new VidaNulaException("O " + this.getNome() + " está morto, portanto só poderá realizar ações quando for revivido por um agente");
 
         // Decide se o robô irá subir ou descer, dependendo do caso
         if (caso == 1){
@@ -82,7 +77,7 @@ public class RoboFlutuador extends RoboAereo implements Curador {
         if (this.getEstadoRobo() == EstadoRobo.DESLIGADO)
             throw new RoboDesligadoException("O robô está desligado");
         if (this.getVida() == 0)
-            throw new VidaNulaException("O " + this.getNome() + " está morto, portanto só poderá realizar ações quando for curado por outro robô");
+            throw new VidaNulaException("O " + this.getNome() + " está morto, portanto só poderá realizar ações quando for revivido por um agente");
         
         // Informações necessárias para o funcionamento da função:
         Sensor sensor = getSensorRobos();
@@ -93,19 +88,29 @@ public class RoboFlutuador extends RoboAereo implements Curador {
             if (robos.get(i) instanceof Robo robo){
                 if(!robo.getID().equals(this.getID())){
                     
-                    if (robo.getVida() == 10) {
+                    if (robo instanceof AgenteInteligente) {
+                        System.out.println("O " + robo.getNome() + " está no raio de alcançe, porém agentes não podem ser curados/atacados");
+
+                    } else if (robo.getVida() == 10) {
                         System.out.println("O " + robo.getNome() + " não pode ser curado, pois já está com a vida máxima");
+
                     } else if (robo.getVida() == 0){
-                        System.out.println("O " + robo.getNome() + " não pode ser curado, pois está morto e apenas o Agente Vida pode revive-lo");
-                    }else if ((robo.getVida() + reparo) >= 10){
+                        System.out.println("O " + robo.getNome() + " não pode ser curado, pois está morto e apenas o Agente Vida pode revivê-lo");
+
+                    } else if ((robo.getVida() + reparo) >= 10){
                         robo.setVida(10 - robo.getVida());
                         System.out.println("O " + this.getNome() + " curou completamente o " + robo.getNome() + " que possui agora 10/10 de vida");
+
                     } else {
                         robo.setVida(reparo);
                         System.out.println("O " + this.getNome() + " curou o " + robo.getNome() + " que possui agora " + robo.getVida() + "/10 de vida");
                     }
                 }
             }
+        }
+
+        if (robos.isEmpty()){
+            System.out.println("Nenhum robô no raio de alcançe para cura");
         }
         System.out.print("\n");
     }

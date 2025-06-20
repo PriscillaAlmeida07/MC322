@@ -1,7 +1,6 @@
 package obstaculos_tapetes;
 
-import enums.TipoEntidade;
-import enums.TipoObstaculo;
+import enums.*;
 import interfaces.Entidade;
 
 public class Obstaculo implements Entidade {

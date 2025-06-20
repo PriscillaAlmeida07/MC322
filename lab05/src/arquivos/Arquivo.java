@@ -1,13 +1,13 @@
 package arquivos;
 import java.io.*;
 
-public class Arquivo{
+public class Arquivo {
     File arquivo;
 
-    // construtor
+    // Construtor.
     public Arquivo(String caminho){
         
-        // Vamos verificar se o arquivo existe, se nao existir criaremos
+        // Vamos verificar se o arquivo existe, se não existir, criaremos:
         arquivo = new File(caminho);
         try {
             if (arquivo.createNewFile()) {
@@ -25,8 +25,8 @@ public class Arquivo{
 
     }
 
-    // Função para gravar dados no arquivo
-    public void escreverNoArquivo(String conteudo) {
+    // Função para gravar dados no arquivo.
+    public void escreverNoArquivo(String conteudo){
 
         // FileWrite:  Novos dados serão adicionados ao final do arquivo.
         // BufferedWriter: Armazena o conteudo na memória antes de realmente gravar no arquivo. Isso deixa a escrita mais eficiente, principalmente escrevermos várias linhas.
@@ -39,8 +39,8 @@ public class Arquivo{
         }
     }
 
-    // Função para ler dados do arquivo
-    public void lerArquivo() {
+    // Função para ler dados do arquivo.
+    public void lerArquivo(){
 
         // FileReader: le cada caracter do arquivo
         // BufferedReader: Armazena temporariamente partes do arquivo na memória e fornece métodos mais fáceis, como .readLine().

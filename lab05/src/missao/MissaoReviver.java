@@ -4,7 +4,6 @@ import ambiente.Ambiente;
 import arquivos.Arquivo;
 import java.util.ArrayList;
 import java.util.Scanner;
-
 import robo.*;
 
 public class MissaoReviver implements Missao {
@@ -21,5 +20,6 @@ public class MissaoReviver implements Missao {
             mensagem = "O agente reviveu o " + robosMortos.get(i).getNome() + " que agora está com vida " + robosMortos.get(i).getVida() + "/10";
             robo.arquivarEPrintar(mensagem, arquivo);
         }
+        System.out.print("\n");
     }
 }
