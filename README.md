@@ -12,6 +12,7 @@ Neste laboratório, foi implementada a interface Missão e as classes AgenteInte
 - Interface Missão: Define métodos obrigatórios da Classe MissãoSegurança, MissãoBuscarPonto (especificas do AgenteSegurança), MissãoReviver e MissãoContactarCuradores (especificas do AgenteVida) 
 - AgenteSegurança: capaz de proteger Robôs que estão dentro do raio, impedindo que eles sejam atacados por Robôs Atacantes (se estiver realizando a missãoSegurança). Ele também é capaz do buscar um ponto desejado pelo usuário (se estiver realizando a missãoBuscarPonto) .
 - AgenteVida: capaz de reviver robôs que estão mortos, pois Robôs curadores não conseguem reviver outros robôs apenas aumentam a quantidade de vidas dos que estão vivos (se estiver realizando a missãoReviver). Ele também é capaz de contactar Curadores que estiverem próximos a um Robô com pouca vida (se estiver realizando a missãoContactarCuradores).
+
 O funcionamento dos agentes também foi modularizado de acordo com os subsistemas passados por agregação: ControleMovimento, GerenciadorSensores e ModuloComunicacao.
 
 ### Lista de interfaces atualizada:
