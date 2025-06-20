@@ -49,7 +49,8 @@ Para executar o programa siga os seguintes passos:
   ``` bash
   javac -d bin src/*/*.java
 
-  No Windows é possível que não funcione dessa maneira, alternativamente utilizar:
+- No Windows é possível que não funcione dessa maneira, alternativamente utilizar:
+  ``` bash
   javac -d bin src\ambiente\*.java src\arquivos\*.java src\comunicacao\*.java src\enums\*.java src\exceptions\*.java src\interfaces\*.java src\main\*.java src\missao\*.java src\obstaculos_tapetes\*.java src\robo\*.java src\sensores\*.java src\subsistemas\*.java
 
 
