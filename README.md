@@ -8,10 +8,11 @@ O projeto está organizado em diferentes laboratórios (labs), cada um represent
 Há também uma pasta images que contém o Diagrama de Classes.
 
 ### Principais mudanças no Lab05
-Neste laboratório, foi implementada a interface Missão e as classes Agente Inteligente, AgenteSegurança e AgenteVida:
+Neste laboratório, foi implementada a interface Missão e as classes AgenteInteligente, AgenteSegurança e AgenteVida:
 - Interface Missão: Define métodos obrigatórios da Classe MissãoSegurança, MissãoBuscarPonto (especificas do AgenteSegurança), MissãoReviver e MissãoContactarCuradores (especificas do AgenteVida) 
 - AgenteSegurança: capaz de proteger Robôs que estão dentro do raio, impedindo que eles sejam atacados por Robôs Atacantes (se estiver realizando a missãoSegurança). Ele também é capaz do buscar um ponto desejado pelo usuário (se estiver realizando a missãoBuscarPonto) .
 - AgenteVida: capaz de reviver robôs que estão mortos, pois Robôs curadores não conseguem reviver outros robôs apenas aumentam a quantidade de vidas dos que estão vivos (se estiver realizando a missãoReviver). Ele também é capaz de contactar Curadores que estiverem próximos a um Robô com pouca vida (se estiver realizando a missãoContactarCuradores).
+O funcionamento dos agentes também foi modularizado de acordo com os subsistemas passados por agregação: ControleMovimento, GerenciadorSensores e ModuloComunicacao.
 
 ### Lista de interfaces atualizada:
 - Atacante (implementada pelas classes Robô Obstáculo Aéreo e Robô Cavador);
@@ -22,7 +23,7 @@ Neste laboratório, foi implementada a interface Missão e as classes Agente Int
 - Sensoreavel (implementada pela classe Robô);
 - Missao (implementada pelas classes Missão Vida e Missão Segurança)
   
-### Lista de exceções:
+### Lista de exceções atualizada:
 - ColisãoException (exceção lançada na classe Ambiente);
 - ErroComunicacaoException (exceção lançada na classe Robô);
 - ForaDosLimitesException (exceção lançada na classe Ambiente)
@@ -42,11 +43,16 @@ Para executar o programa siga os seguintes passos:
   Exemplo:
   ``` bash
   cd MC322/lab05
+  
 - Para compilar o programa utilize o comando no terminal (linux):
   ``` bash
   javac -d bin src/*/*.java
 
-- Para rodar utilize o comando no terminal (linux):
+  No Windows é possível que não funcione dessa maneira, alternativamente utilizar:
+  javac -d bin src\ambiente\*.java src\arquivos\*.java src\comunicacao\*.java src\enums\*.java src\exceptions\*.java src\interfaces\*.java src\main\*.java src\missao\*.java src\obstaculos_tapetes\*.java src\robo\*.java src\sensores\*.java src\subsistemas\*.java
+
+
+- Para rodar utilize o comando no terminal:
   ``` bash
   java -cp bin main.Main
 
